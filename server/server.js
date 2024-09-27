@@ -2,16 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-// require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const authRoute = require("./Routes/AuthRoutes");
-const MONGO_URL = 'mongodb://127.0.0.1:27017/'
+const authRoute = require("./routes/AuthRoutes");
+const categoryRout = require("./routes/ControllerRoutes")
+const MONGO_URL = 'mongodb://127.0.0.1:27017/Main'
 const PORT = 4000;
 
 mongoose
   .connect(MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
@@ -32,3 +32,5 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/", authRoute);
+
+app.use("/get",categoryRout )
