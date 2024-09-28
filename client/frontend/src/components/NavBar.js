@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Axios from 'axios'
 import {
     AppBar,
     Box,
@@ -39,6 +40,15 @@ function NavBar() {
             </MenuItem>
         ))
     );
+// ----------------------------- categiries ----------------
+    const [categories, setcategories] = React.useState([])
+
+    React.useEffect(() => {
+        Axios.get('http://localhost:4000/get/categories').then(res => {
+            console.log(res.data);
+            setcategories(res.data)
+        })
+    }, []);
 
     return (
         <AppBar position="static">
@@ -60,7 +70,7 @@ function NavBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        OotyOrigins
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -83,7 +93,7 @@ function NavBar() {
                     </Box>
 
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
+                    {/* <Typography
                         variant="h5"
                         noWrap
                         component="a"
@@ -99,8 +109,8 @@ function NavBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
-                    </Typography>
+                        LAVANGAM
+                    </Typography> */}
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -126,7 +136,7 @@ function NavBar() {
                                         open={openDropMenu}
                                         onClose={handleCloseMenu('drop')}
                                     >
-                                        {renderMenuItems(['Profile', 'My account', 'Logout'], handleCloseMenu('drop'))}
+                                        {renderMenuItems(['categories.map()'], handleCloseMenu('drop'))}
                                     </Menu>
                                 </React.Fragment>
                             )
