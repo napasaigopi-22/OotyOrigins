@@ -14,6 +14,7 @@ module.exports.UserController = async (req, res, next) => {
 module.exports.CategoryController = async (req, res, next) => {
     try {
         const listOfCategories = await models.Category.find({});
+        console.log("in category controller")
         return res.json(listOfCategories);
     } catch (error) {
         console.log(error);

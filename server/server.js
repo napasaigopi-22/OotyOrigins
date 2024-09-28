@@ -22,7 +22,7 @@ app.listen(PORT, () => {
 
 app.use(
   cors({
-    origin: ["http://localhost:4000"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -33,4 +33,4 @@ app.use(express.json());
 
 app.use("/", authRoute);
 
-app.use("/get",categoryRout )
+app.use("/get",categoryRout );
