@@ -11,6 +11,7 @@ function App() {
   return (
     <div className="App">
       <>
+      
             {/* This is the alias of BrowserRouter i.e. Router */}
             <Router>
                 <Routes>

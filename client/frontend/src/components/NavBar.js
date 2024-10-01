@@ -1,5 +1,7 @@
 import * as React from 'react';
-import Axios from 'axios'
+import Axios from 'axios';
+import { styled, alpha } from '@mui/material/styles';
+
 import {
     AppBar,
     Box,
@@ -13,8 +15,10 @@ import {
     Tooltip,
     MenuItem
 } from '@mui/material';
+import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
+import SearchIcon from '@mui/icons-material/Search';
 
 const pages = ['Products', 'Category'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -24,6 +28,42 @@ function NavBar() {
     const openNavMenu = Boolean(anchorEl.nav);
     const openUserMenu = Boolean(anchorEl.user);
     const openDropMenu = Boolean(anchorEl.drop);
+
+    const Search = styled('div')(({ theme }) => ({
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(1),
+            width: 'auto',
+        },
+    }));
+
+    const SearchIconWrapper = styled('div')(({ theme }) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+
+    const StyledInputBase = styled(InputBase)(({ theme }) => ({
+        color: 'inherit',
+        width: '100%',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+
+        },
+    }));
 
     const handleMenuClick = (menu) => (event) => {
         setAnchorEl((prev) => ({ ...prev, [menu]: event.currentTarget }));
@@ -40,7 +80,7 @@ function NavBar() {
             </MenuItem>
         ))
     );
-// ----------------------------- categiries ----------------
+    // ----------------------------- categiries ----------------
     const [categories, setcategories] = React.useState([])
 
     React.useEffect(() => {
@@ -93,25 +133,6 @@ function NavBar() {
                     </Box>
 
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    {/* <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LAVANGAM
-                    </Typography> */}
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             page !== 'Category' ? (
@@ -141,6 +162,17 @@ function NavBar() {
                                 </React.Fragment>
                             )
                         ))}
+                    </Box>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
