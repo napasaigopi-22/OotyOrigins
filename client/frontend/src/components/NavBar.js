@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Axios from 'axios';
 import { styled, alpha } from '@mui/material/styles';
-
+import { Link, useNavigate } from 'react-router-dom';
 import {
     AppBar,
     Box,
@@ -28,6 +28,7 @@ function NavBar() {
     const openNavMenu = Boolean(anchorEl.nav);
     const openUserMenu = Boolean(anchorEl.user);
     const openDropMenu = Boolean(anchorEl.drop);
+    const navigate = useNavigate();
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -73,11 +74,18 @@ function NavBar() {
         setAnchorEl((prev) => ({ ...prev, [menu]: null }));
     };
 
+    const redirectWithState = (val) => {
+        // event.preventDefault();
+        navigate('/category', val);
+      };
+
     const renderMenuItems = (menuItems, handleClose) => (
         menuItems.map((item) => (
-            <MenuItem key={item} onClick={handleClose}>
-                <Typography sx={{ textAlign: 'center' }}>{item}</Typography>
+            <div onClick={() =>{handleClose(); redirectWithState({state:{name: item.name}})}}>
+            <MenuItem key={item.name} >
+                <Typography  sx={{ textAlign: 'center' }}>{item.name}</Typography>
             </MenuItem>
+            </div>
         ))
     );
     // ----------------------------- categiries ----------------
@@ -85,8 +93,7 @@ function NavBar() {
 
     React.useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
-            console.log(res.data);
-            setcategories(res.data)
+            setcategories(res.data);
         })
     }, []);
 
@@ -99,7 +106,7 @@ function NavBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -139,6 +146,7 @@ function NavBar() {
                                 <Button
                                     key={page}
                                     onClick={handleCloseMenu('nav')}
+                                    href={'/'+page}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
                                     {page}
@@ -157,7 +165,7 @@ function NavBar() {
                                         open={openDropMenu}
                                         onClose={handleCloseMenu('drop')}
                                     >
-                                        {renderMenuItems(['categories.map()'], handleCloseMenu('drop'))}
+                                        {renderMenuItems(categories, handleCloseMenu('drop'))}
                                     </Menu>
                                 </React.Fragment>
                             )

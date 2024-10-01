@@ -1,11 +1,13 @@
 import './App.css';
 import Homepage from './components/Homepage/HomePage';
+import Category from './components/Category'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
+import Products from './components/Products';
 
 function App() {
   return (
@@ -27,18 +29,18 @@ function App() {
                     {/* This route is for about component 
           with exact path "/about", in component 
           props we passes the imported component*/}
-                    {/* <Route
-                        path="/about"
-                        element={<About />}
-                    /> */}
+                    <Route
+                        path="/Category"
+                        element={<Category />}
+                    />
 
                     {/* This route is for contactus component
           with exact path "/contactus", in 
           component props we passes the imported component*/}
-                    {/* <Route
-                        path="/contactus"
-                        element={<ContactUs />}
-                    /> */}
+                    <Route
+                        path="/products"
+                        element={<Products />}
+                    />
 
                     {/* If any route mismatches the upper 
           route endpoints then, redirect triggers 

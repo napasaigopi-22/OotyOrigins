@@ -61,9 +61,14 @@
   padding: 10px;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 0.6px;
+  cursor: pointer;
 }
 
 .MuiTypography-root.MuiTypography-h1.css-gw2ppn-MuiTypography-root
 {
   font-size: 150px;
+}
+
+ul a{
+  text-decoration: none;
 }
