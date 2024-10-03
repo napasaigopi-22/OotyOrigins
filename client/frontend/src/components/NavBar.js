@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Axios from 'axios';
 import { styled, alpha } from '@mui/material/styles';
+import CategoryIcon from '@mui/icons-material/Category';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     AppBar,
@@ -94,6 +95,8 @@ function NavBar() {
     React.useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
             setcategories(res.data);
+        }).catch(function (error){
+            console.log(error);
         })
     }, []);
 
@@ -140,7 +143,7 @@ function NavBar() {
                     </Box>
 
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 2, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             page !== 'Category' ? (
                                 <Button
@@ -153,11 +156,13 @@ function NavBar() {
                                 </Button>
                             ) : (
                                 <React.Fragment key={page}>
+                                    
                                     <Button
+                                        // endIcon={<CategoryIcon />}
                                         onClick={handleMenuClick('drop')}
-                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                        sx={{ my: 0, color: 'white', display: 'block' }}
                                     >
-                                        {page}
+                                        <p style={{display:'inline-block'}} >{page}</p>
                                     </Button>
                                     <Menu
                                         className='navDrop'

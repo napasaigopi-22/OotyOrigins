@@ -1,4 +1,4 @@
-import { Grid2 } from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import NavBar from "./NavBar";
 import Product from "./Product";
 import { useEffect, useState } from "react";
@@ -10,12 +10,15 @@ function Products() {
     useEffect(() => {
         axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
+        }).catch(function (error){
+            console.log(error);
         })
     }, []);
     return (
         <>
             <NavBar></NavBar>
             <h1>Products Page</h1>
+            <Box sx={{ flexGrow: 1 }}>
             <Grid2
                 container
                 spacing={2}
@@ -26,12 +29,13 @@ function Products() {
             >
                 {
                     product.map((val, key) => {
-                        return <Grid2 item xs={4}>
+                        return <Grid2 item xs={4} size={4} >
                             <Product style={{ margin: 'auto' }} name={val.name} cost={val.price} stock={val.stock}  ></Product>
                         </Grid2>
                     })
                 }
             </Grid2>
+            </Box>
         </>
     )
 }
