@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+
+.navDrop .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper.css-1xomo8h-MuiPaper-root-MuiPopover-paper-MuiMenu-paper
+{
+  margin-top: 25px;
+}
+
+.HeroSection
+{
+  padding: 50px;
+  height: 60vh;
+}
+
+.HeroSection h1{
+  font-size: 75px;
+  /* margin: auto; */
+}
+
+.categoriesList
+{
+  background-color: #61dafb;
+  margin: 5px !important;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 0.6px;
+  cursor: pointer;
+}
+
+.MuiTypography-root.MuiTypography-h1.css-gw2ppn-MuiTypography-root
+{
+  font-size: 150px;
+}
+
+ul a{
+  text-decoration: none;
+}
