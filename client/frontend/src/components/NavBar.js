@@ -54,7 +54,7 @@ function NavBar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-    }));
+    })); 
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
         color: 'inherit',
