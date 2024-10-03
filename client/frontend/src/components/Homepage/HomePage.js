@@ -14,6 +14,8 @@ function HomePage() {
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
             setcategories(res.data)
+        }).catch(function (error){
+            console.log(error);
         })
     }, []);
 
@@ -22,11 +24,12 @@ function HomePage() {
     useEffect(() => {
         Axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
+        }).catch(function (error){
+            console.log(error);
         })
     }, []);
 
     const redirectWithState = (val) => {
-        // event.preventDefault();
         navigate('/category', val);
       };
 
@@ -69,7 +72,6 @@ function HomePage() {
                         })
                     }
                 </Grid>
-                {/* </Box> */}
             </div>
             <div>
                 footer
