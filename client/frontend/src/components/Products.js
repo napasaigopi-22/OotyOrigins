@@ -1,6 +1,6 @@
 import { Box, Grid2 } from "@mui/material";
-import NavBar from "./NavBar";
-import Product from "./Product";
+import NavBar from "../Assets/NavBar";
+import Product from "../Assets/Product";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
