@@ -41,7 +41,6 @@ function NavBar() {
     const [open, setOpen] = React.useState(false);
     const [opensnack, setOpensnack] = React.useState(false);
 
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const logout = ()=>{localStorage.setItem("Token","");localStorage.setItem("username","");setToken("");setsnackMessage("Log Out Succesfull!");
@@ -180,16 +179,34 @@ function NavBar() {
                 </IconButton>
             </React.Fragment>
         );
+        
         // ----------------------------- categiries ----------------
-        const [categories, setcategories] = React.useState([])
+    const [categories, setcategories] = React.useState([])
 
-        React.useEffect(() => {
-            Axios.get('http://localhost:4000/get/categories').then(res => {
-                setcategories(res.data);
-            }).catch(function (error) {
-                console.log(error);
-            })
-        }, []);
+    React.useEffect(() => {
+        Axios.get('http://localhost:4000/get/categories').then(res => {
+            setcategories(res.data);
+            console.log("categories ======== ",res.data)
+        }).catch(function (error) {
+            console.log(error);
+        })
+    },[]);
+
+        const renderMenuItemsCategories = (menuItems, handleClose) => (
+            menuItems.map((item) => (
+                <div onClick={() => { handleClose(); handleCategoryClick({state:{name:item.name}}) }}>
+                    <MenuItem key={item.name} >
+                        <Typography sx={{ textAlign: 'center' }}>{item.name}</Typography>
+                    </MenuItem>
+                </div>
+            ))
+        );
+
+        const handleCategoryClick = (val) => {
+            // event.preventDefault();
+            navigate('/category', val);
+            console.log("navigating to category ",val)
+        };
 
         return (
             <AppBar position="static">
@@ -261,7 +278,7 @@ function NavBar() {
                                             open={openDropMenu}
                                             onClose={handleCloseMenu('drop')}
                                         >
-                                            {renderMenuItems(categories, handleCloseMenu('drop'))}
+                                            {renderMenuItemsCategories(categories, handleCloseMenu('drop'))}
                                         </Menu>
                                     </React.Fragment>
                                 )
@@ -307,6 +324,7 @@ function NavBar() {
                                     aria-describedby="modal-modal-description"
                                 >
                                     <Box sx={style}>
+                                        <h3></h3>
                                         <form className="form">
                                             <Grid2 container sx={{ width: '100%' }} justifyContent="center">
                                                 <Grid2 item >

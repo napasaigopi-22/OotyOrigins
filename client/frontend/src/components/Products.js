@@ -14,6 +14,8 @@ function Products() {
             console.log(error);
         })
     }, []);
+
+    
     return (
         <>
             <NavBar></NavBar>
@@ -30,7 +32,7 @@ function Products() {
                 {
                     product.map((val, key) => {
                         return <Grid2 item xs={4} size={4} >
-                            <Product style={{ margin: 'auto' }} name={val.name} cost={val.price} stock={val.stock}  ></Product>
+                            <Product style={{ margin: 'auto' }} prdId={val.productId} name={val.name} cost={val.price} stock={val.stock}  ></Product>
                         </Grid2>
                     })
                 }

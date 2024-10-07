@@ -8,6 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Products from './components/Products';
+import ProductDetail from './components/ProductDetail';
 
 function App() {
   return (
@@ -46,10 +47,10 @@ function App() {
           route endpoints then, redirect triggers 
           and redirects app to home component with to="/" */}
                     {/* <Redirect to="/" /> */}
-                    {/* <Route
-                        path="*"
-                        element={<Navigate to="/" />}
-                    /> */}
+                    <Route
+                        path="/ProductDetail"
+                        element={<ProductDetail />}
+                    />
                 </Routes>
             </Router>
         </>
