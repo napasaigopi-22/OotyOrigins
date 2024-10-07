@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "../Assets/NavBar";
 
 function Category()
 {

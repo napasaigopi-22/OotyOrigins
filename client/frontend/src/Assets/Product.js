@@ -4,6 +4,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import * as React from 'react';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Typography from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
 
@@ -31,7 +32,7 @@ export default function Product(props) {
                         <p style={{textAlign:'right'}}><b>Rs: </b>{props.cost}/-</p>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Learn More</Button>
+                        <Button startIcon={<ShoppingCartIcon />} sx={{width: '45%', margin:'auto'}} variant="contained" color="success" size="large">Buy</Button>
                     </CardActions>
                 </React.Fragment>
             </Card>
