@@ -69,9 +69,9 @@ export default function Product(props) {
         <Box sx={{ width: '100%' }}>
             <Card>
                 <React.Fragment>
-                    <CardContent onClick={handleProdClick}>
+                    <CardContent >
                         <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{props.name}</Typography>
-                        <CardMedia
+                        <CardMedia onClick={handleProdClick}
                             component="img"
                             height="194"
                             image={props.img}

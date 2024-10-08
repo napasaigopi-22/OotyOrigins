@@ -108,12 +108,9 @@ function HomePage() {
                 }
 
             </div>
-            <div>
+            <div style={{height:"100px"}}>
                 footer
             </div>
-            <footer>
-                lvangam
-            </footer>
         </>
     )
 }
