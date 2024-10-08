@@ -27,7 +27,7 @@ function Products() {
                 direction="row"
                 justify="flex-start"
                 alignItems="flex-start"
-                style={{ margin: "auto", width: '90%' }}
+                style={{ margin: "auto", width: '90%'}}
             >
                 {
                     product.map((val, key) => {
