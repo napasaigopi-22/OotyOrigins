@@ -32,8 +32,6 @@ module.exports.Signup = async (req, res) => {
     console.log("kakakaka---",userobj);
 
     const savedUser = await User.findOne({ email: userobj.email });
-    console.log("Saved user's hashed password:", savedUser.password);
-    console.log("saveduser is userobj ?", savedUser==userobj);
 
     // Set token in cookie
     res.cookie("token", token, {

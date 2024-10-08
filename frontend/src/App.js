@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
+import Userprofile from './components/UserProfile';
 
 function App() {
   return (
@@ -50,6 +51,10 @@ function App() {
                     <Route
                         path="/ProductDetail"
                         element={<ProductDetail />}
+                    />
+                    <Route
+                        path="/UserProfile"
+                        element={<Userprofile />}
                     />
                 </Routes>
             </Router>
