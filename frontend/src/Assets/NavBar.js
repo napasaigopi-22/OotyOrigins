@@ -4,21 +4,54 @@ import { styled, alpha } from '@mui/material/styles';
 import {
     AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, InputBase, Modal,
     TextField, Snackbar,
-    Grid2
+    Grid2,
+    Tabs
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import Tab from '@mui/material/Tab';
+import PropTypes from 'prop-types';
 
+
+function CustomTabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        </div>
+    );
+}
+
+CustomTabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 1100,
+    hieght: 1000,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -210,6 +243,12 @@ function NavBar() {
         console.log("navigating to category ", val)
     };
 
+    const [value, setValue] = React.useState(0);
+
+    const handleTabChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -322,23 +361,193 @@ function NavBar() {
                             <Modal
                                 open={open}
                                 onClose={handleClose}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
+                                style={{ overflow: 'scroll', top: '10px' }}
                             >
-                                <Box sx={style}>
-                                    <h3></h3>
-                                    <form className="form">
-                                        <Grid2 container sx={{ width: '100%' }} justifyContent="center">
-                                            <Grid2 item >
-                                                <TextField required sx={{ margin: 'auto', display: 'block', width: '100%', padding: '5px' }} onChange={(event) => { setUsername(event.target.value) }} label="Username" variant="outlined" />
-                                                <TextField type='password' required sx={{ margin: 'auto', display: 'block', width: '100%', padding: '5px' }} onChange={(event) => { setPassword(event.target.value) }} label="Password" variant="outlined" />
-                                            </Grid2>
-                                        </Grid2>
-                                        <Button sx={{ margin: 'auto', display: 'block' }} onClick={submitLogin} variant="contained" style={{ backgroundColor: '#616161' }}>
-                                            Log In
-                                        </Button>
-                                    </form>
+                                <Box sx={style} >
+                                    <Box sx={{ width: '100%', height: "100%" }}>
+                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                            <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example">
+                                                <Tab label="Login" {...a11yProps(0)} />
+                                                <Tab label="Sign Up" {...a11yProps(1)} />
+                                            </Tabs>
+                                        </Box>
+                                        <CustomTabPanel value={value} index={0}>
+                                            <form className="form">
+                                                <Grid2 container sx={{ width: '100%' }} justifyContent="center">
+                                                    <Grid2 item >
+                                                        <TextField required sx={{ margin: 'auto', display: 'block', width: '100%', padding: '5px' }} onChange={(event) => { setUsername(event.target.value) }} label="Username" variant="outlined" />
+                                                        <TextField type='password' required sx={{ margin: 'auto', display: 'block', width: '100%', padding: '5px' }} onChange={(event) => { setPassword(event.target.value) }} label="Password" variant="outlined" />
+                                                    </Grid2>
+                                                </Grid2>
+                                                <Button sx={{ margin: 'auto', display: 'block' }} onClick={submitLogin} variant="contained" style={{ backgroundColor: '#616161' }}>
+                                                    Log In
+                                                </Button>
+                                            </form>
+                                        </CustomTabPanel>
+                                        <CustomTabPanel value={value} index={1}>
+                                            <form className='form'>
+                                                <Typography variant="h5" gutterBottom>User Information</Typography>
+
+                                                <Grid2 container spacing={2}>
+                                                    {/* User ID and Username side by side */}
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="userId"
+                                                            label="User ID"
+                                                            variant="outlined"
+                                                            defaultValue="lvgum_kyng"
+                                                            InputProps={{
+                                                                readOnly: true,
+                                                            }}
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="username"
+                                                            label="Username"
+                                                            variant="outlined"
+                                                            defaultValue="lvgum king"
+                                                            inputProps={{ pattern: "[a-zA-Z0-9\\s]+" }}
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    {/* Email and Password side by side */}
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="email"
+                                                            label="Email"
+                                                            variant="outlined"
+                                                            type="email"
+                                                            defaultValue="lvgum.king@example.com"
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="password"
+                                                            label="Password"
+                                                            variant="outlined"
+                                                            type="password"
+                                                            required
+                                                            inputProps={{ minLength: 8 }}
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    <Typography variant="h6" gutterBottom>Address</Typography>
+
+                                                    {/* Street and City side by side */}
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="street"
+                                                            label="Street"
+                                                            variant="outlined"
+                                                            defaultValue="31 Herbal Garden"
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="city"
+                                                            label="City"
+                                                            variant="outlined"
+                                                            defaultValue="Ooty"
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    {/* State and Zip Code side by side */}
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="state"
+                                                            label="State"
+                                                            variant="outlined"
+                                                            defaultValue="Tamil Nadu"
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="zipcode"
+                                                            label="Zip Code"
+                                                            variant="outlined"
+                                                            defaultValue="643010"
+                                                            inputProps={{ pattern: "\\d{6}" }}
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    {/* Phone, Created At, Updated At */}
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="phone"
+                                                            label="Phone"
+                                                            variant="outlined"
+                                                            defaultValue="+91-7006543210"
+                                                            inputProps={{ pattern: "^\\+91-\\d{10}$" }}
+                                                            required
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="createdAt"
+                                                            label="Created At"
+                                                            variant="outlined"
+                                                            type="datetime-local"
+                                                            defaultValue="2024-09-27T17:20"
+                                                            InputProps={{
+                                                                readOnly: true,
+                                                            }}
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    <Grid2 item xs={12} md={6}>
+                                                        <TextField
+                                                            id="updatedAt"
+                                                            label="Updated At"
+                                                            variant="outlined"
+                                                            type="datetime-local"
+                                                            defaultValue="2024-09-27T17:20"
+                                                            InputProps={{
+                                                                readOnly: true,
+                                                            }}
+                                                            fullWidth
+                                                            margin="normal"
+                                                        />
+                                                    </Grid2>
+
+                                                    <Grid2 item xs={12}>
+                                                        <Button variant="contained" color="primary" type="submit">
+                                                            Submit
+                                                        </Button>
+                                                    </Grid2>
+                                                </Grid2>
+                                            </form>
+                                        </CustomTabPanel>
+                                    </Box>
                                 </Box>
+
                             </Modal>
                         </Box>
                     }
