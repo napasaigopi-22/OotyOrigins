@@ -86,7 +86,7 @@ module.exports.Login = async (req, res) => {
     // Generate JWT token
     const jwtToken = jwt.sign(
       { username: user.username, _id: user._id },
-      'fullstack',
+      'Ooty Origins',
       { expiresIn: '24h' }
     );
 

@@ -63,7 +63,7 @@ export default function Product(props) {
 
     const handleProdClick = () =>{
         console.log("clicked on ",prd );
-        navigate('/ProductDetail');
+        navigate('/ProductDetail',{state:prd});
     }
     return (
         <Box sx={{ width: '100%' }}>
