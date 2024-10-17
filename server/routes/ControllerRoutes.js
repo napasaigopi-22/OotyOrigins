@@ -5,7 +5,8 @@ const {
     OrderController,
     ReviewController,
     CartController,
-    PaymentController
+    PaymentController,
+    getProductById
 } = require('../Controllers/GetController');
 const router = require("express").Router();
 
@@ -18,6 +19,9 @@ router.get('/categories', CategoryController);
 
 // Route for fetching products
 router.get('/products', ProductController);
+
+// Route for fetching products
+router.post('/GetproductById', getProductById);
 
 // Route for fetching orders
 router.get('/orders', OrderController);

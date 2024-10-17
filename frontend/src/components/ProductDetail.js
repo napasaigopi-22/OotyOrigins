@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Box, Typography, Card, CardMedia, CardContent, Button, Rating } from '@mui/material';
+import axios from "axios";
 
 
 function ProductDetail() {
@@ -10,6 +11,15 @@ function ProductDetail() {
     const location = useLocation();
     var value = location.state;
     console.log(value)
+
+    useEffect(()=>{
+      axios.post('http://localhost:4000/get/GetproductById',{"id":value}).then(res => {
+        setProduct(res.data[0]);
+        console.log("categories ======== ", product)
+    }).catch(function (error) {
+        console.log(error);
+    })
+    },[])
   
     if (!product) {
       return <div><h1>Loading....</h1></div>;
@@ -29,7 +39,7 @@ function ProductDetail() {
               <Typography variant="h4">{product.name}</Typography>
               <Typography variant="body1">{product.description}</Typography>
               <Typography variant="h5" sx={{ mt: 2 }}>
-                Price: Rs {product.cost}/-
+                Price: Rs {product.price}/-
               </Typography>
               <Button variant="contained" color="primary" sx={{ mt: 3 }}>Add to Cart</Button>
             </CardContent>
