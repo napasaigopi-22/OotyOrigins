@@ -182,7 +182,7 @@ function NavBar() {
         </React.Fragment>
     );
 
-    // ----------------------------- categiries ----------------
+    // ----------------------------- categories ----------------
     const [categories, setcategories] = React.useState([])
 
     React.useEffect(() => {
