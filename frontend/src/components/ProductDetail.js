@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, Button, Rating } from '@mui/material';
 
 
 function ProductDetail() {
@@ -12,10 +12,11 @@ function ProductDetail() {
     console.log(value)
   
     if (!product) {
-      return <div>Loading...</div>;
+      return <div><h1>Loading....</h1></div>;
     }
 
     return (
+      
         <Box sx={{ width: '100%', padding: '20px' }}>
           <Card>
             <CardMedia
