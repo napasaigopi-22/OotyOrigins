@@ -32,6 +32,24 @@ module.exports.ProductController = async (req, res, next) => {
     }
 };
 
+module.exports.getProductById = async (req, res) => {
+    try {
+        const productId = req.body.id;
+        const product = await models.Product.find({"productId":productId});
+        console.log(productId,product)
+        
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        
+        return res.json(product);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error fetching product" });
+    }
+};
+
+
 // Order Controller
 module.exports.OrderController = async (req, res, next) => {
     try {

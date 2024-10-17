@@ -249,6 +249,10 @@ function NavBar() {
         setValue(newValue);
     };
 
+    const signup = () =>{  
+        console.log("signup clicked");
+    }
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -389,26 +393,12 @@ function NavBar() {
                                                 <Typography variant="h5" gutterBottom>User Information</Typography>
 
                                                 <Grid2 container spacing={2}>
-                                                    {/* User ID and Username side by side */}
-                                                    <Grid2 item xs={12} md={6}>
-                                                        <TextField
-                                                            id="userId"
-                                                            label="User ID"
-                                                            variant="outlined"
-                                                            defaultValue="lvgum_kyng"
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
                                                     <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="username"
                                                             label="Username"
                                                             variant="outlined"
-                                                            defaultValue="lvgum king"
+                                                            //defaultValue="lvgum king"
                                                             inputProps={{ pattern: "[a-zA-Z0-9\\s]+" }}
                                                             required
                                                             fullWidth
@@ -423,7 +413,7 @@ function NavBar() {
                                                             label="Email"
                                                             variant="outlined"
                                                             type="email"
-                                                            defaultValue="lvgum.king@example.com"
+                                                            //defaultValue="lvgum.king@example.com"
                                                             required
                                                             fullWidth
                                                             margin="normal"
@@ -450,7 +440,7 @@ function NavBar() {
                                                             id="street"
                                                             label="Street"
                                                             variant="outlined"
-                                                            defaultValue="31 Herbal Garden"
+                                                            //defaultValue="31 Herbal Garden"
                                                             required
                                                             fullWidth
                                                             margin="normal"
@@ -461,7 +451,7 @@ function NavBar() {
                                                             id="city"
                                                             label="City"
                                                             variant="outlined"
-                                                            defaultValue="Ooty"
+                                                            //defaultValue="Ooty"
                                                             required
                                                             fullWidth
                                                             margin="normal"
@@ -474,7 +464,7 @@ function NavBar() {
                                                             id="state"
                                                             label="State"
                                                             variant="outlined"
-                                                            defaultValue="Tamil Nadu"
+                                                            //defaultValue="Tamil Nadu"
                                                             required
                                                             fullWidth
                                                             margin="normal"
@@ -485,7 +475,7 @@ function NavBar() {
                                                             id="zipcode"
                                                             label="Zip Code"
                                                             variant="outlined"
-                                                            defaultValue="643010"
+                                                            //defaultValue="643010"
                                                             inputProps={{ pattern: "\\d{6}" }}
                                                             required
                                                             fullWidth
@@ -499,46 +489,16 @@ function NavBar() {
                                                             id="phone"
                                                             label="Phone"
                                                             variant="outlined"
-                                                            defaultValue="+91-7006543210"
-                                                            inputProps={{ pattern: "^\\+91-\\d{10}$" }}
+                                                            //defaultValue="+91-7006543210"
+                                                            inputProps={{ pattern: "^\\91\\d{10}$" }}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
 
-                                                    <Grid2 item xs={12} md={6}>
-                                                        <TextField
-                                                            id="createdAt"
-                                                            label="Created At"
-                                                            variant="outlined"
-                                                            type="datetime-local"
-                                                            defaultValue="2024-09-27T17:20"
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-
-                                                    <Grid2 item xs={12} md={6}>
-                                                        <TextField
-                                                            id="updatedAt"
-                                                            label="Updated At"
-                                                            variant="outlined"
-                                                            type="datetime-local"
-                                                            defaultValue="2024-09-27T17:20"
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-
                                                     <Grid2 item xs={12}>
-                                                        <Button variant="contained" color="primary" type="submit">
+                                                        <Button variant="contained" color="primary" type="submit" onClick={signup}>
                                                             Submit
                                                         </Button>
                                                     </Grid2>

@@ -20,11 +20,19 @@ import { useNavigate } from 'react-router-dom';
 export default function Product(props) {
 
     const [prd, setPrd] = React.useState("");
+    const [msg,setMsg] = React.useState("Added To Cart Succesfully");
+    const [token, setToken] = React.useState("");
+
     const navigate = useNavigate();
 
     React.useEffect(() => {
         setPrd(props.prdId);
-    }, [prd])
+    }, [prd]);
+
+    React.useEffect(() => {
+        setToken(localStorage.getItem('Token'));
+    }, [token]);
+
 
     const [open, setOpen] = React.useState(false);
 
@@ -58,6 +66,8 @@ export default function Product(props) {
 
     const addToCart = () => {
         console.log("added to cart == ", prd);
+        if(token) setMsg("Added To Cart Succesfully");
+        else setMsg("Please Login to continue")
         handleClick();
     }
 
@@ -90,7 +100,7 @@ export default function Product(props) {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message="Added To Cart Succesfully"
+                message={msg}
                 action={action}
             />
         </Box>
