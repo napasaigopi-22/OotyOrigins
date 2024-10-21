@@ -92,7 +92,7 @@ export default function Product(props) {
                         <p style={{ textAlign: 'right' }}><b>Rs: </b>{props.cost}/-</p>
                     </CardContent>
                     <CardActions>
-                        <Button onClick={addToCart} startIcon={<ShoppingCartIcon />} sx={{ width: '45%', margin: 'auto' }} variant="contained" color="success" size="large">Buy</Button>
+                        <Button onClick={addToCart} startIcon={<ShoppingCartIcon />} sx={{ width: '45%', margin: 'auto' }} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
                 </React.Fragment>
             </Card>
