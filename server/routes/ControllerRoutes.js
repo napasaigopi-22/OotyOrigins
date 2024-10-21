@@ -1,3 +1,4 @@
+const { Signup } = require('../Controllers/Auth');
 const {
     UserController,
     CategoryController,
@@ -10,7 +11,6 @@ const {
 } = require('../Controllers/GetController');
 const router = require("express").Router();
 
-console.log("category is ",CategoryController)
 // Route for fetching users
 router.get('/users', UserController);
 

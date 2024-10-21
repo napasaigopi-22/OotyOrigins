@@ -1,6 +1,7 @@
-const {User} = require("../Models/Models");
+const { User } = require("../Models/Models");
 const { createSecretToken } = require("../Middleware/SecretToken");
 const bcrypt = require("bcryptjs");
+const models = require("../Models/Models");
 const jwt = require("jsonwebtoken");
 
 module.exports.Signup = async (req, res) => {
@@ -16,7 +17,7 @@ module.exports.Signup = async (req, res) => {
     const existingUser = await User.findOne({ 'username': username });
 
     if (existingUser) {
-      console.log("Existing user:", email);
+      console.log("Existing user:", req.body.email);
       return res.status(400).json({ message: "User already exists" });
     }
 
@@ -24,12 +25,20 @@ module.exports.Signup = async (req, res) => {
     const userobj = new User(req.body);
     userobj.password = await bcrypt.hash(password, 12);
 
+    
+
+    //--------------------generating userid--------------------------
+    const listOfUsers = await models.User.find({});
+    userobj.userId="user "+(listOfUsers.length+1);
+    
+    
     console.log("hashed pass is --- ", userobj.password)
-    console.log("lalalala--",userobj);
+    console.log("lalalala--", userobj);
+
 
     await userobj.save();
     const token = createSecretToken(userobj._id);
-    console.log("kakakaka---",userobj);
+    console.log("kakakaka---", userobj);
 
     const savedUser = await User.findOne({ email: userobj.email });
 
@@ -40,13 +49,21 @@ module.exports.Signup = async (req, res) => {
       sameSite: "Strict",
     });
 
-    res.status(201).json({
-      message: "User signed up successfully",
+    const jwtToken = jwt.sign(
+      { username: userobj.username, _id: userobj._id },
+      'Ooty Origins',
+      { expiresIn: '24h' }
+    );
+
+    res.status(200).json({
+      message: "Login successful",
       success: true,
-      user: { email: userobj.email, name: userobj.name }, // Return only non-sensitive data
+      jwtToken,
+      username: userobj.username,
+      name: userobj.name,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error("Error during login process:", err);
     res.status(500).json({
       message: "Internal server error",
       success: false,
