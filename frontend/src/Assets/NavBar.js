@@ -16,6 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import CartModal from './CartModal';
 
 
 function CustomTabPanel(props) {
@@ -317,7 +318,7 @@ function NavBar() {
                 updatedAt: new Date(),
             };
             console.log('Form data submitted:', user);
-            axios.post('http://localhost:4000/signup',user).then(res => {
+            axios.post('http://localhost:4000/signup', user).then(res => {
                 console.log(res.data);
                 const data = res.data;
                 localStorage.setItem('Token', data.jwtToken);
@@ -334,8 +335,15 @@ function NavBar() {
         } else {
             console.log('Validation failed:', errors);
         }
-        
+
     };
+
+    //-----------------------------cart modal-------------------------
+    const [opencart, setOpencart] = React.useState(false);
+  const handlecartOpen = () => setOpen(true);
+  const handlecartClose = () => setOpen(false);
+
+    
 
     return (
         <AppBar position="static">
@@ -426,10 +434,25 @@ function NavBar() {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
-                            <IconButton onClick={handleOpen} sx={{ p: 3, m: 0 }}>
+                            <IconButton onClick={handlecartOpen} sx={{ p: 3, m: 0 }}>
                                 <ShoppingCartIcon />
                             </IconButton>
                         </Tooltip>
+                        <Modal
+                            open={open}
+                            onClose={handlecartClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Text in a modal
+                                </Typography>
+                                <Typography id="modal-modal-description">
+                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                </Typography>
+                            </Box>
+                        </Modal>
                     </Box>
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
