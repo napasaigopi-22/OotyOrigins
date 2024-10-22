@@ -4,7 +4,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Typography from '@mui/material/Typography';
 import { CardMedia, IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -92,7 +92,7 @@ export default function Product(props) {
                         <p style={{ textAlign: 'right' }}><b>Rs: </b>{props.cost}/-</p>
                     </CardContent>
                     <CardActions>
-                        <Button onClick={addToCart} startIcon={<ShoppingCartIcon />} sx={{ width: '45%', margin: 'auto' }} variant="contained" color="success" size="large">Add To Cart</Button>
+                        <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} sx={{ width: '45%', margin: 'auto' }} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
                 </React.Fragment>
             </Card>

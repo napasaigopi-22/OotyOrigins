@@ -12,8 +12,11 @@ import AdbIcon from '@mui/icons-material/Adb';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import CartModal from './CartModal';
 
 
 function CustomTabPanel(props) {
@@ -249,9 +252,98 @@ function NavBar() {
         setValue(newValue);
     };
 
-    const signup = () =>{  
-        console.log("signup clicked");
-    }
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        street: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        phone: '',
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        const phonePattern = /^\d{10}$/; // Adjusting regex for phone format
+        const zipPattern = /^\d{6}$/;
+
+        if (!formData.username) newErrors.username = "Username is required.";
+        if (!formData.email) newErrors.email = "Email is required.";
+        if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
+        if (!formData.street) newErrors.street = "Street is required.";
+        if (!formData.city) newErrors.city = "City is required.";
+        if (!formData.state) newErrors.state = "State is required.";
+        if (!zipPattern.test(formData.zipcode)) newErrors.zipcode = "Zip Code must be 6 digits.";
+        if (!phonePattern.test(formData.phone)) newErrors.phone = "Phone must be in the format +91XXXXXXXXXX.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Returns true if no errors
+    };
+
+    const signup = (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        if (validateForm()) {
+            setFormData({
+                username: '',
+                email: '',
+                password: '',
+                street: '',
+                city: '',
+                state: '',
+                zipcode: '',
+                phone: '',
+            });
+            setErrors({});
+            const user = {// Implement a function to generate a unique user ID
+                username: formData.username,
+                email: formData.email,
+                password: formData.password, // Implement a function to hash the password
+                address: {
+                    street: formData.street,
+                    city: formData.city,
+                    state: formData.state,
+                    zipcode: formData.zipcode,
+                },
+                phone: formData.phone,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            };
+            console.log('Form data submitted:', user);
+            axios.post('http://localhost:4000/signup', user).then(res => {
+                console.log(res.data);
+                const data = res.data;
+                localStorage.setItem('Token', data.jwtToken);
+                setToken(data.jwtToken);
+                localStorage.setItem('username', data.username)
+                console.log(data.jwtToken);
+                setsnackMessage("Log in Succesfull!");
+                handleClicksnack();
+            }).catch(function (error) {
+                console.log(error);
+                setsnackMessage("Login Failed Succesfully!");
+                handleClicksnack();
+            })
+        } else {
+            console.log('Validation failed:', errors);
+        }
+
+    };
+
+    //-----------------------------cart modal-------------------------
+    const [opencart, setOpencart] = React.useState(false);
+  const handlecartOpen = () => setOpen(true);
+  const handlecartClose = () => setOpen(false);
+
+    
 
     return (
         <AppBar position="static">
@@ -340,6 +432,28 @@ function NavBar() {
                             />
                         </Search>
                     </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
+                            <IconButton onClick={handlecartOpen} sx={{ p: 3, m: 0 }}>
+                                <ShoppingCartIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Modal
+                            open={open}
+                            onClose={handlecartClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Text in a modal
+                                </Typography>
+                                <Typography id="modal-modal-description">
+                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                </Typography>
+                            </Box>
+                        </Modal>
+                    </Box>
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
@@ -389,119 +503,143 @@ function NavBar() {
                                             </form>
                                         </CustomTabPanel>
                                         <CustomTabPanel value={value} index={1}>
-                                            <form className='form'>
+                                            <form className='form' onSubmit={signup}>
                                                 <Typography variant="h5" gutterBottom>User Information</Typography>
 
                                                 <Grid2 container spacing={2}>
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={6} md={1} mr={2} ml={2}>
                                                         <TextField
                                                             id="username"
+                                                            name="username"
                                                             label="Username"
                                                             variant="outlined"
-                                                            //defaultValue="lvgum king"
-                                                            inputProps={{ pattern: "[a-zA-Z0-9\\s]+" }}
+                                                            value={formData.username}
+                                                            onChange={handleChange}
+                                                            error={!!errors.username}
+                                                            helperText={errors.username}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
 
-                                                    {/* Email and Password side by side */}
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={24} md={8} mr={2} ml={2}>
                                                         <TextField
                                                             id="email"
+                                                            name="email"
                                                             label="Email"
                                                             variant="outlined"
                                                             type="email"
-                                                            //defaultValue="lvgum.king@example.com"
+                                                            value={formData.email}
+                                                            onChange={handleChange}
+                                                            error={!!errors.email}
+                                                            helperText={errors.email}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
                                                         <TextField
                                                             id="password"
+                                                            name="password"
                                                             label="Password"
                                                             variant="outlined"
                                                             type="password"
+                                                            value={formData.password}
+                                                            onChange={handleChange}
+                                                            error={!!errors.password}
+                                                            helperText={errors.password}
                                                             required
                                                             inputProps={{ minLength: 8 }}
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-
-                                                    <Typography variant="h6" gutterBottom>Address</Typography>
-
-                                                    {/* Street and City side by side */}
-                                                    <Grid2 item xs={12} md={6}>
+                                                </Grid2>
+                                                <Typography variant="h6" gutterBottom>Address</Typography>
+                                                <Grid2 container spacing={3}>
+                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
                                                         <TextField
                                                             id="street"
+                                                            name="street"
                                                             label="Street"
                                                             variant="outlined"
-                                                            //defaultValue="31 Herbal Garden"
+                                                            value={formData.street}
+                                                            onChange={handleChange}
+                                                            error={!!errors.street}
+                                                            helperText={errors.street}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
                                                         <TextField
                                                             id="city"
+                                                            name="city"
                                                             label="City"
                                                             variant="outlined"
-                                                            //defaultValue="Ooty"
+                                                            value={formData.city}
+                                                            onChange={handleChange}
+                                                            error={!!errors.city}
+                                                            helperText={errors.city}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-
-                                                    {/* State and Zip Code side by side */}
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
                                                         <TextField
                                                             id="state"
+                                                            name="state"
                                                             label="State"
                                                             variant="outlined"
-                                                            //defaultValue="Tamil Nadu"
+                                                            value={formData.state}
+                                                            onChange={handleChange}
+                                                            error={!!errors.state}
+                                                            helperText={errors.state}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
                                                         <TextField
                                                             id="zipcode"
+                                                            name="zipcode"
                                                             label="Zip Code"
                                                             variant="outlined"
-                                                            //defaultValue="643010"
+                                                            value={formData.zipcode}
+                                                            onChange={handleChange}
+                                                            error={!!errors.zipcode}
+                                                            helperText={errors.zipcode}
                                                             inputProps={{ pattern: "\\d{6}" }}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-
-                                                    {/* Phone, Created At, Updated At */}
-                                                    <Grid2 item xs={12} md={6}>
+                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
                                                         <TextField
                                                             id="phone"
+                                                            name="phone"
                                                             label="Phone"
                                                             variant="outlined"
-                                                            //defaultValue="+91-7006543210"
-                                                            inputProps={{ pattern: "^\\91\\d{10}$" }}
+                                                            value={formData.phone}
+                                                            onChange={handleChange}
+                                                            error={!!errors.phone}
+                                                            helperText={errors.phone}
                                                             required
                                                             fullWidth
                                                             margin="normal"
                                                         />
                                                     </Grid2>
-
-                                                    <Grid2 item xs={12}>
-                                                        <Button variant="contained" color="primary" type="submit" onClick={signup}>
-                                                            Submit
-                                                        </Button>
-                                                    </Grid2>
+                                                </Grid2>
+                                                <Grid2 item xs={12} mr={2} ml={2} mt={4}>
+                                                    <Button variant="contained" color="primary" type="submit">
+                                                        Submit
+                                                    </Button>
                                                 </Grid2>
                                             </form>
                                         </CustomTabPanel>
@@ -511,6 +649,7 @@ function NavBar() {
                             </Modal>
                         </Box>
                     }
+
                 </Toolbar>
             </Container>
             <Snackbar
