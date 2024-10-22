@@ -10,6 +10,9 @@ import {
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Userprofile from './components/UserProfile';
+import Footer from './components/Footer';
+
+
 
 function App() {
   return (
@@ -23,7 +26,6 @@ function App() {
           with exact path "/", in component props 
           we passes the imported component*/}
                     <Route
-                        exact
                         path="/"
                         element={<Homepage />}
                     />
@@ -56,7 +58,14 @@ function App() {
                         path="/UserProfile"
                         element={<Userprofile />}
                     />
+
+                    <Route 
+                        path="*" 
+                        element={<Navigate to="/" />} 
+                    />
+                    
                 </Routes>
+                <Footer/>
             </Router>
         </>
     </div>

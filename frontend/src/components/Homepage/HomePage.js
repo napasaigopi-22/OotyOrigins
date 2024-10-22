@@ -3,8 +3,9 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
 import { Card, CardContent, CardMedia, Container, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-
+import { Facebook, Instagram, Twitter, Google } from '@mui/icons-material';
+import '../../components/Header.css';
+import '../../components/ExploreProducts/ExploreProducts.css';
 
 
 
@@ -40,14 +41,20 @@ function HomePage() {
     };
 
 
-
     return (
         <>
             <div>
                 <NavBar></NavBar>
             </div>
             <div className="HeroSection">
-                <Typography sx={{ color: 'text.heading', mb: 2.5, mt: 2.5 }} variant="h1">OotyOrigins</Typography>
+                <div className="header">
+                    <div className="header-container">
+                <Typography sx={{ color: 'white', mb: 2.5, mt: 2.5 }} variant="h1">Ooty Origins</Typography>
+                <Typography variant="h6" sx={{ color: 'white' }}>
+                        Experience the rich heritage and culture of Ooty through our tribal crafts and products.
+                    </Typography>
+                </div>
+                </div>
             </div>
             <div>
 
@@ -62,6 +69,7 @@ function HomePage() {
                         })
                     }
                 </ul>
+              
 
                 <div style={{ height: "50px" }} ></div>
                 {
@@ -108,9 +116,7 @@ function HomePage() {
                 }
 
             </div>
-            <div style={{height:"100px"}}>
-                footer
-            </div>
+        
         </>
     )
 }
