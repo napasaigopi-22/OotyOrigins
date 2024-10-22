@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Box, Typography, Card, CardMedia, CardContent, Button, Rating } from '@mui/material';
+import { useLocation } from "react-router-dom";
+// import {useParams} from "react-router-dom"''
+import { Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material';
 import axios from "axios";
 
 
 function ProductDetail() {
-    const { id } = useParams();
+    // const { id } = useParams();
     const [product, setProduct] = useState(null);
     
     const location = useLocation();
@@ -19,7 +20,7 @@ function ProductDetail() {
     }).catch(function (error) {
         console.log(error);
     })
-    },[])
+    })
   
     if (!product) {
       return <div><h1>Loading....</h1></div>;

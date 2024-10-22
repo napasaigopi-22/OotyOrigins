@@ -1,15 +1,11 @@
 import NavBar from "../../Assets/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Container, Grid2, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../components/Header.css';
 import item_product_1 from '../../Assets/item_product_1.png'
-import meta from '../../Assets/meta.png'
-import mainpage from '../../Assets/mainpage.png'
-import instagram  from '../../Assets/instagram.png'
-// import google from './google.png'
-import explorecategories from '../../components/ExploreProducts/Explorecategories.css'
+import explorecategories from '../../components/Explorecategories/Explorecategories.css'
 
 
 

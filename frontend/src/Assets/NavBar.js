@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import { styled, alpha } from '@mui/material/styles';
 import {
@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import CartModal from './CartModal';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+//import CartModal from './CartModal';
 
 
 function CustomTabPanel(props) {
@@ -149,7 +150,7 @@ function NavBar() {
         // event.preventDefault();
         console.log(clickedvals[val]);
         clickedvals[val]();
-        if (val == "Account")
+        if (val === "Account")
             console.log("clicked -", val);
         // navigate('/category', val);
     };
@@ -341,8 +342,8 @@ function NavBar() {
 
     //-----------------------------cart modal-------------------------
     const [opencart, setOpencart] = React.useState(false);
-  const handlecartOpen = () => setOpen(true);
-  const handlecartClose = () => setOpen(false);
+  const handlecartOpen = () => setOpencart(true);
+  const handlecartClose = () => setOpencart(false);
 
     
 
@@ -440,7 +441,7 @@ function NavBar() {
                             </IconButton>
                         </Tooltip>
                         <Modal
-                            open={open}
+                            open={opencart}
                             onClose={handlecartClose}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
