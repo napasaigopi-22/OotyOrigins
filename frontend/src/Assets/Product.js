@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { CardMedia, IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
@@ -27,7 +28,7 @@ export default function Product(props) {
 
     React.useEffect(() => {
         setPrd(props.prdId);
-    }, [prd]);
+    },[props.prdId]);
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
@@ -66,7 +67,10 @@ export default function Product(props) {
 
     const addToCart = () => {
         console.log("added to cart == ", prd);
-        if(token) setMsg("Added To Cart Succesfully");
+        if(token) {
+            setMsg("Added To Cart Succesfully");
+            axios.post("")
+        }
         else setMsg("Please Login to continue")
         handleClick();
     }

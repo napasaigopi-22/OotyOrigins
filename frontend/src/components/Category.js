@@ -11,28 +11,28 @@ function Category() {
     console.log(value.name);
     const [product, setproduct] = useState([]);
     const [showProd, setshowProd] = useState([]);
-    const [loaded, setloaded] = useState(false);
+    // const [loaded, setloaded] = useState(false);
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
             console.log("product called ",product,"==setted prods==",res.data);
-            setshowProd(product.filter(ele=> ele.category == value.name));
+            setshowProd(product.filter(ele=> ele.category === value.name));
         }).catch(function (error) {
             console.log(error);
         });
-    },[loaded]);
+    });
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
             console.log("product called ",product,"==setted prods==",res.data);
-            setshowProd(product.filter(ele=> ele.category == value.name));
-            setloaded(true);
+            setshowProd(product.filter(ele=> ele.category === value.name));
+            // setloaded(true);
         }).catch(function (error) {
             console.log(error);
         });
-    }, [location.state]);
+    });
 
 
     return (
