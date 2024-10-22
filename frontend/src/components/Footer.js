@@ -5,6 +5,7 @@ import insta from  '../Assets/instagram.png';
 import twitter from '../Assets/twitter.png';
 import meta from  '../Assets/meta.png';
 import google from '../Assets/google.png';
+import Asserts from '../Assets/Asserts';
 
 
 const Footer = () => {
@@ -40,7 +41,7 @@ const Footer = () => {
           <h3>Follow Us</h3>
           <div className="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
-            <img src={meta} alt="meta" className="social-icons" />
+            <img src={Asserts.meta} alt="meta" className="social-icons" />
               <i className="fab fa-facebook-f"></i>
             </a>
             <a href="https://twitter.com" target="_blank" rel="noreferrer">

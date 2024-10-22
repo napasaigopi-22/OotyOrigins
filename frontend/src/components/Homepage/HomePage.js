@@ -3,9 +3,13 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
 import { Card, CardContent, CardMedia, Container, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Google } from '@mui/icons-material';
 import '../../components/Header.css';
-import '../../components/ExploreProducts/ExploreProducts.css';
+import item_product_1 from '../../Assets/item_product_1.png'
+import meta from '../../Assets/meta.png'
+import mainpage from '../../Assets/mainpage.png'
+import instagram  from '../../Assets/instagram.png'
+// import google from './google.png'
+import explorecategories from '../../components/ExploreProducts/Explorecategories.css'
 
 
 
@@ -15,6 +19,10 @@ function HomePage() {
     const [product, setproduct] = useState([]);
     const [pageLoaded, setPageLoaded] = useState(false);
     const navigate = useNavigate();
+
+    var imageobjs={
+        "Jewellry":item_product_1
+    }
 
 
     useEffect(() => {
@@ -62,7 +70,8 @@ function HomePage() {
                     {
                         categories.map((val, key) => {
                             return <>
-                                <li style={{ display: 'inline-block', padding: '10px' }}>
+                                <li style={{ display: 'inline-block', padding: '35px', height: '50px' }}>
+                                    <img className="explore-categories" src={imageobjs[val.name]} width={"130px"} height={"130px"} />
                                     <a onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</a>
                                 </li>
                             </>

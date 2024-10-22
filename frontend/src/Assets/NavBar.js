@@ -17,6 +17,7 @@ import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CartModal from './CartModal';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 
 
 function CustomTabPanel(props) {
