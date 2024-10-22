@@ -1,9 +1,8 @@
 import NavBar from "../../Assets/NavBar";
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Container, Grid2, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Google } from '@mui/icons-material';
 import '../../components/Header.css';
 import '../../components/ExploreProducts/ExploreProducts.css';
 
@@ -15,7 +14,7 @@ function HomePage() {
     const [product, setproduct] = useState([]);
     const [pageLoaded, setPageLoaded] = useState(false);
     const navigate = useNavigate();
-
+    // var imageurls=[""];
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -23,7 +22,7 @@ function HomePage() {
         }).catch(function (error) {
             console.log(error);
         })
-    }, []);
+    });
 
 
     useEffect(() => {
@@ -33,7 +32,7 @@ function HomePage() {
         }).catch(function (error) {
             console.log(error);
         });
-    }, [])
+    })
     console.log('call done', product);
 
     const redirectWithState = (val) => {
@@ -63,7 +62,7 @@ function HomePage() {
                         categories.map((val, key) => {
                             return <>
                                 <li style={{ display: 'inline-block', padding: '10px' }}>
-                                    <a onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</a>
+                                    <button onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</button>
                                 </li>
                             </>
                         })

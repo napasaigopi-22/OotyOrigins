@@ -4,7 +4,6 @@ import {jewellery} from '../../Assets/jewellery.png'
 import Product from '../../Assets/Product'
 
 const ExploreProducts = (categories,setcategories) => {
-
     return (
         <div className='explore-products' id='explore-products'>
             <h1>Explore Our Products</h1>
