@@ -113,6 +113,7 @@ module.exports.Login = async (req, res) => {
       jwtToken,
       username: user.username,
       name: user.name,
+      userId:user.userId
     });
   } catch (err) {
     console.error("Error during login process:", err);

@@ -82,7 +82,8 @@ const cartSchema = new mongoose.Schema({
       productId: { type: String, required: true },
       quantity: { type: Number, required: true }
     }
-  ],
+  ],  
+  isActive : { type : Number, required : true},
   totalAmount: { type: Number, required: true },
   updatedAt: { type: Date, default: Date.now }
 });

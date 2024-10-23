@@ -4,7 +4,9 @@ const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/AuthRoutes");
-const categoryRout = require("./routes/ControllerRoutes")
+const Rout = require("./routes/ControllerRoutes")
+
+const PostRout = require("./routes/PostRouts")
 const MONGO_URL = 'mongodb://127.0.0.1:27017/Main'
 const PORT = 4000;
 
@@ -33,4 +35,6 @@ app.use(express.json());
 
 app.use("/", authRoute);
 
-app.use("/get",categoryRout );
+app.use("/get",Rout );
+
+app.use("/post",PostRout)

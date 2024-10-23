@@ -22,7 +22,7 @@ function HomePage() {
         }).catch(function (error) {
             console.log(error);
         })
-    });
+    },[]);
 
 
     useEffect(() => {
@@ -32,7 +32,7 @@ function HomePage() {
         }).catch(function (error) {
             console.log(error);
         });
-    })
+    },[])
     console.log('call done', product);
 
     const redirectWithState = (val) => {

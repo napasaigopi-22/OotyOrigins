@@ -1,9 +1,21 @@
 const models = require("../Models/Models");
 
-module.exports.UserController = async (req, res, next) => {
+module.exports.UsersController = async (req, res, next) => {
     try {
         const listOfUsers = await models.User.find({});
         return res.json(listOfUsers);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error fetching users" });
+    }
+};
+
+module.exports.UserController = async (req, res, next) => {
+    try {
+        console.log("\n\n\n",req.body)
+        const listOfUsers = await models.User.find({username:req.body.username});
+        console.log(listOfUsers)
+        return res.json(listOfUsers[0]);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error fetching users" });
