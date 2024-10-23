@@ -5,7 +5,11 @@ import {
     AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, InputBase, Modal,
     TextField, Snackbar,
     Grid2,
-    Tabs
+    Tabs,
+    List,
+    ListItem,
+    ListItemText,
+    Divider
 } from '@mui/material';
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
@@ -79,6 +83,7 @@ function NavBar() {
     const [snackMessage, setsnackMessage] = React.useState("");
     const [open, setOpen] = React.useState(false);
     const [opensnack, setOpensnack] = React.useState(false);
+    const [user, setuser] = React.useState("");
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -174,7 +179,9 @@ function NavBar() {
                 const data = res.data;
                 localStorage.setItem('Token', data.jwtToken);
                 setToken(data.jwtToken);
-                localStorage.setItem('username', data.username)
+                localStorage.setItem('username', data.username);
+                console.log("id is =======", data.userId);
+                localStorage.setItem('userId', data.userId);
                 console.log(data.jwtToken);
                 setsnackMessage("Log in Succesfull!");
                 handleClicksnack();
@@ -248,6 +255,27 @@ function NavBar() {
         navigate('/category', val);
         console.log("navigating to category ", val)
     };
+
+    //-------------------------------------showCart----------------------------------
+    const [cart, setcart] = React.useState({})
+    const [CartProductsList, setCartProductsList] = React.useState([])
+    var i = 0;
+    React.useEffect(() => { console.log("called ", i++) })
+    React.useEffect(() => {
+        Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            setcart(res.data[0]);
+            var products = res.data[0].products;
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
+            products.forEach(element => {
+                CartProductsList.push(element);
+            });
+            setCartProductsList(CartProductsList);
+            console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }, []);
 
     const [value, setValue] = React.useState(0);
 
@@ -343,10 +371,10 @@ function NavBar() {
 
     //-----------------------------cart modal-------------------------
     const [opencart, setOpencart] = React.useState(false);
-  const handlecartOpen = () => setOpencart(true);
-  const handlecartClose = () => setOpencart(false);
+    const handlecartOpen = () => setOpencart(true);
+    const handlecartClose = () => setOpencart(false);
 
-    
+
 
     return (
         <AppBar position="static">
@@ -452,7 +480,25 @@ function NavBar() {
                                     Text in a modal
                                 </Typography>
                                 <Typography id="modal-modal-description">
-                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                    
+                                    <List>
+                                        {CartProductsList.map((item, index) => (
+                                            <React.Fragment key={index}>
+                                                <ListItem>
+                                                    <ListItemText
+                                                        primary={<Typography variant="subtitle1">{item.product.name}</Typography>}
+                                                        secondary={<Typography variant="body2">₹ {item.product.price}</Typography>}
+                                                    />
+                                                </ListItem>
+                                                {index < CartProductsList.length - 1 && <Divider />}
+                                            </React.Fragment>
+                                        ))}
+                                    </List>
+
+                                    <Divider sx={{ my: 2 }} />
+                                    <Typography variant="h6" align="right">
+                                        Total: ₹ {cart.totalAmount}
+                                    </Typography>
                                 </Typography>
                             </Box>
                         </Modal>

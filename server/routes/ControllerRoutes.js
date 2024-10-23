@@ -12,7 +12,7 @@ const {
 const router = require("express").Router();
 
 // Route for fetching users
-router.get('/users', UserController);
+router.post('/users', UserController);
 
 // Route for fetching categories
 router.get('/categories', CategoryController);

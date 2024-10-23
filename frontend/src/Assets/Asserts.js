@@ -1,8 +1,8 @@
 import item_product_1 from './item_product_1.png'
-import meta from './meta.png'
-import mainpage from './mainpage.png'
-import instagram  from './instagram.png'
-import google from './google.png'
+import meta from './images/meta.png'
+import mainpage from './images/mainpage.png'
+import instagram  from './images/instagram.png'
+import google from './images/google.png'
 
 
 

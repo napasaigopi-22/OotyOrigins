@@ -21,8 +21,12 @@ export default function Product(props) {
     const [prd, setPrd] = React.useState("");
     const [msg,setMsg] = React.useState("Added To Cart Succesfully");
     const [token, setToken] = React.useState("");
+    const [username,setusername] = React.useState("");
+    
+
 
     const navigate = useNavigate();
+    console.log("\n\n\n\n\n\n\n\n user is ",localStorage.getItem("userobject"));
 
     React.useEffect(() => {
         setPrd(props.prdId);
@@ -31,7 +35,6 @@ export default function Product(props) {
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
     }, [token]);
-
 
     const [open, setOpen] = React.useState(false);
 
@@ -64,10 +67,20 @@ export default function Product(props) {
     );
 
     const addToCart = () => {
-        console.log("added to cart == ", prd);
+        var luserid = localStorage.getItem("userId");
+        console.log("added to cart == ", prd,luserid);
+            axios.post('http://localhost:4000/get/users',{"username":username}).then(res => {
+                console.log("userdata ======== ", res.data);
+            }).catch(function (error) {
+                console.log(error);
+            })
         if(token) {
-            setMsg("Added To Cart Succesfully");
-            axios.post("")
+            axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
+                console.log(res.data);
+                setMsg("Added To Cart Succesfully");
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
         else setMsg("Please Login to continue")
         handleClick();
@@ -108,18 +121,3 @@ export default function Product(props) {
         </Box>
     );
 }
-
-
-// function Product(props)
-// {
-//     return (
-//         <>
-//             <div>
-//                 <p>{props.name}</p>
-//             </div>
-//         </>
-//     )
-
-// }
-
-// export default Product;

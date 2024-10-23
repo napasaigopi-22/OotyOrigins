@@ -1,10 +1,9 @@
-// components/Footer.js
 import React from 'react';
-import './Footer.css'; // Ensure you create or update Footer styles
-import insta from  '../Assets/instagram.png';
-import twitter from '../Assets/twitter.png';
-import meta from  '../Assets/meta.png';
-import google from '../Assets/google.png';
+import './Footer.css'; // Ensure yo
+import insta from  '../Assets/images/instagram.png';
+import twitter from '../Assets/images/twitter.png';
+import meta from  '../Assets/images/meta.png';
+import google from '../Assets/images/google.png';
 import Asserts from '../Assets/Asserts';
 import { Box } from '@mui/material';
 
