@@ -1,18 +1,22 @@
-// components/Footer.js
 import React from 'react';
-import './Footer.css'; // Ensure you create or update Footer styles
+import './Footer.css'; // Ensure yo
 import insta from  '../Assets/images/instagram.png';
 import twitter from '../Assets/images/twitter.png';
 import meta from  '../Assets/images/meta.png';
 import google from '../Assets/images/google.png';
+import Asserts from '../Assets/Asserts';
+import { Box } from '@mui/material';
+
 
 const Footer = () => {
   return (
+    <Box sx={{ width: '95%', padding: '10px' }}>
     <footer className="footer">
       <div className="footer-container">
 
     <div className="footer-top-strip">
     <div className="footer-content">
+      
     </div>
     <h4>OOTY,TAMILNADU</h4>
     </div>
@@ -39,7 +43,7 @@ const Footer = () => {
           <h3>Follow Us</h3>
           <div className="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
-            <img src={meta} alt="meta" className="social-icons" />
+            <img src={Asserts.meta} alt="meta" className="social-icons" />
               <i className="fab fa-facebook-f"></i>
             </a>
             <a href="https://twitter.com" target="_blank" rel="noreferrer">
@@ -71,6 +75,7 @@ const Footer = () => {
         <p>&copy; 2024 Ooty Origins</p>
       </div>
     </footer>
+    </Box>
   );
 };
 

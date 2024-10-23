@@ -10,10 +10,7 @@ import { CardMedia, IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import user from './NavBar'
-
-
-
+import './Product.css';
 
 
 
@@ -34,16 +31,6 @@ export default function Product(props) {
     React.useEffect(() => {
         setPrd(props.prdId);
     },[props.prdId]);
-
-    // React.useEffect(()=>{
-    //     axios.post('http://localhost:4000/get/users',{"username":username}).then(res => {
-    //         // setcategories(res.data);
-    //         console.log("userdata ======== ", res.data);
-    //         setuser(res.data);
-    //     }).catch(function (error) {
-    //         console.log(error);
-    //     })
-    // },[username]);
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
@@ -134,18 +121,3 @@ export default function Product(props) {
         </Box>
     );
 }
-
-
-// function Product(props)
-// {
-//     return (
-//         <>
-//             <div>
-//                 <p>{props.name}</p>
-//             </div>
-//         </>
-//     )
-
-// }
-
-// export default Product;

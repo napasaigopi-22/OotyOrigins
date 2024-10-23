@@ -11,6 +11,7 @@ import {
     ListItemText,
     Divider
 } from '@mui/material';
+import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
 import CloseIcon from '@mui/icons-material/Close';
@@ -20,7 +21,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-// import CartModal from './CartModal';
+import CartModal from './CartModal';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+//import CartModal from './CartModal';
 
 
 function CustomTabPanel(props) {
@@ -184,7 +187,7 @@ function NavBar() {
                 handleClicksnack();
             }).catch(function (error) {
                 console.log(error);
-                setsnackMessage("Login Failed Succesfully!");
+                setsnackMessage("Login Failed! Try Again");
                 handleClicksnack();
             })
         }
@@ -460,9 +463,9 @@ function NavBar() {
                             />
                         </Search>
                     </Box>
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0.2 }}>
                         <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
-                            <IconButton onClick={handlecartOpen} sx={{ p: 3, m: 0 }}>
+                            <IconButton onClick={handlecartOpen} sx={{ p: 1, m: 0, bgcolor: deepPurple[300] }}>
                                 <ShoppingCartIcon />
                             </IconButton>
                         </Tooltip>
@@ -504,7 +507,8 @@ function NavBar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleMenuClick('user')} sx={{ p: 0 }}>
-                                    <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                                
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -519,7 +523,7 @@ function NavBar() {
                         <Box>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpen} sx={{ p: 0 }}>
-                                    <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Modal

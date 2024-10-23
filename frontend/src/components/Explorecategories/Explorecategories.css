@@ -1,0 +1,59 @@
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+
+ul li {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px; 
+    transition: transform 0.1s; 
+}
+
+
+ul li img.explore-categories {
+    border-radius: 50%; 
+    transition: transform 0.1s ease;
+    min-width: 80px;
+}
+
+
+ul li img.explore-categories:hover {
+    box-shadow: 0px 4px 8px rgba(170, 56, 56, 0.91);
+    transform: scale(1.1); 
+    border: 1px solid red;
+
+}
+
+
+ul li a.categoriesList {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none; 
+    color: #410231; 
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.1s ease; 
+
+}
+
+
+ul li a.categoriesList:hover {
+    color: #faf9f9; 
+
+}
+
+ul li.active a.categoriesList {
+    color: #e63946; 
+}
+
+
+@media (max-width: 600px) {
+    ul li {
+        display: block;
+        margin: 10px 0;
+    }
+}

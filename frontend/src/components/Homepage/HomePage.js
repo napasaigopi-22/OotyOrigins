@@ -1,10 +1,21 @@
 import NavBar from "../../Assets/NavBar";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
 import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../components/Header.css';
-import '../../components/ExploreProducts/ExploreProducts.css';
+import item_product_1 from '../../Assets/item_product_1.png'
+import explorecategories from '../../components/Explorecategories/Explorecategories.css'
+import item_product_2 from '../../Assets/item_product_2.png'
+import item_product_3 from '../../Assets/item_product_3.png'
+import item_product_4 from '../../Assets/item_product_4.png'
+import item_product_5 from '../../Assets/item_product_5.png'
+import item_product_6 from '../../Assets/item_product_6.png'
+import item_product_7 from '../../Assets/item_product_7.png'
+import item_product_8 from '../../Assets/item_product_8.png'
+import item_product_9 from '../../Assets/item_product_9.png'
+import item_product_10 from '../../Assets/item_product_10.png'
+
 
 
 
@@ -14,7 +25,23 @@ function HomePage() {
     const [product, setproduct] = useState([]);
     const [pageLoaded, setPageLoaded] = useState(false);
     const navigate = useNavigate();
-    // var imageurls=[""];
+
+
+
+    var imageobjs={
+        "Jewellry":item_product_1,
+        "Organic Rice":item_product_2,
+        "Clothing":item_product_3,
+        "Food & Beverages":item_product_4,
+        "Handicraft":item_product_5,
+        "Personal Care":item_product_6,
+        "Kitchenware":item_product_7,
+        "Furniture":item_product_8,
+        "Toys & Games":item_product_9,
+        "Home Decor":item_product_10,
+
+    }
+
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -32,7 +59,7 @@ function HomePage() {
         }).catch(function (error) {
             console.log(error);
         });
-    },[])
+    },[]);
     console.log('call done', product);
 
     const redirectWithState = (val) => {
@@ -61,8 +88,9 @@ function HomePage() {
                     {
                         categories.map((val, key) => {
                             return <>
-                                <li style={{ display: 'inline-block', padding: '10px' }}>
-                                    <button onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</button>
+                                <li style={{ display: 'inline-block', padding: '35px', height: '50px' }}>
+                                    <img className="explore-categories" src={imageobjs[val.name]} width={"130px"} height={"130px"} />
+                                    <a onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</a>
                                 </li>
                             </>
                         })
