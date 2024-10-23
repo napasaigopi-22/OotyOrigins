@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #090909;
 }
 
 @keyframes App-logo-spin {
@@ -51,17 +51,19 @@
 
 .HeroSection h1{
   font-size: 75px;
-  /* margin: auto; */
+
 }
 
 .categoriesList
 {
-  background-color: #61dafb;
+  background-color: #b48888c4;
   margin: 5px !important;
   padding: 10px;
   border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 0.6px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 0.6px;
   cursor: pointer;
+  border: 1px solid red;
+
 }
 
 .MuiTypography-root.MuiTypography-h1.css-gw2ppn-MuiTypography-root

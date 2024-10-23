@@ -28,11 +28,11 @@ function ProductDetail() {
 
     return (
       
-        <Box sx={{ width: '100%', padding: '20px' }}>
+        <Box sx={{ width: '97%', padding: '20px' }}>
           <Card>
             <CardMedia
               component="img"
-              height="500"
+              height="400"
               image={product.imageUrl}
               alt={product.name}
             />
@@ -41,6 +41,9 @@ function ProductDetail() {
               <Typography variant="body1">{product.description}</Typography>
               <Typography variant="h5" sx={{ mt: 2 }}>
                 Price: Rs {product.price}/-
+                </Typography>
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                Rating: {product.rating}
               </Typography>
               <Button variant="contained" color="primary" sx={{ mt: 3 }}>Add to Cart</Button>
             </CardContent>

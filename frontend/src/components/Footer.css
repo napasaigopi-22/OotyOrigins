@@ -72,6 +72,12 @@
     display: flex;
     gap: 10px;
   }
+
+  .social-icons img{
+    border-radius: 25px;
+    border: 3px solid white;
+    
+  }
   
   .social-icons a {
     color: #060606;
