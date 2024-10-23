@@ -6,6 +6,16 @@ import { useNavigate } from "react-router-dom";
 import '../../components/Header.css';
 import item_product_1 from '../../Assets/item_product_1.png'
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
+import item_product_2 from '../../Assets/item_product_2.png'
+import item_product_3 from '../../Assets/item_product_3.png'
+import item_product_4 from '../../Assets/item_product_4.png'
+import item_product_5 from '../../Assets/item_product_5.png'
+import item_product_6 from '../../Assets/item_product_6.png'
+import item_product_7 from '../../Assets/item_product_7.png'
+import item_product_8 from '../../Assets/item_product_8.png'
+import item_product_9 from '../../Assets/item_product_9.png'
+import item_product_10 from '../../Assets/item_product_10.png'
+
 
 
 
@@ -16,8 +26,20 @@ function HomePage() {
     const [pageLoaded, setPageLoaded] = useState(false);
     const navigate = useNavigate();
 
+
+
     var imageobjs={
-        "Jewellry":item_product_1
+        "Jewellry":item_product_1,
+        "Organic Rice":item_product_2,
+        "Clothing":item_product_3,
+        "Food & Beverages":item_product_4,
+        "Handicraft":item_product_5,
+        "Personal Care":item_product_6,
+        "Kitchenware":item_product_7,
+        "Furniture":item_product_8,
+        "Toys & Games":item_product_9,
+        "Home Decor":item_product_10,
+
     }
 
 

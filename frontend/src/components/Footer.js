@@ -6,15 +6,18 @@ import twitter from '../Assets/twitter.png';
 import meta from  '../Assets/meta.png';
 import google from '../Assets/google.png';
 import Asserts from '../Assets/Asserts';
+import { Box } from '@mui/material';
 
 
 const Footer = () => {
   return (
+    <Box sx={{ width: '95%', padding: '10px' }}>
     <footer className="footer">
       <div className="footer-container">
 
     <div className="footer-top-strip">
     <div className="footer-content">
+      
     </div>
     <h4>OOTY,TAMILNADU</h4>
     </div>
@@ -73,6 +76,7 @@ const Footer = () => {
         <p>&copy; 2024 Ooty Origins</p>
       </div>
     </footer>
+    </Box>
   );
 };
 

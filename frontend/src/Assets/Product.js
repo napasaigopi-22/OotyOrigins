@@ -10,9 +10,7 @@ import { CardMedia, IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-
-
+import './Product.css';
 
 
 
