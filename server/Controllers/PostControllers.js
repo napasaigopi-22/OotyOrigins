@@ -164,7 +164,6 @@ module.exports.showCart = async (req, res, next) => {
         for(let i=0;i<cart[0].products.length;i++){
             cart[0].products[i].product=products[i];
         };
-        console.log(cart[0]);
 
         
         return res.json(cart);

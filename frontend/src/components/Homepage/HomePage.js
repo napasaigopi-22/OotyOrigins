@@ -4,18 +4,19 @@ import Axios from 'axios';
 import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../components/Header.css';
-import item_product_1 from '../../Assets/item_product_1.png'
+import item_product_1 from '../../Assets/images/item_product_1.png'
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
-import item_product_2 from '../../Assets/item_product_2.png'
-import item_product_3 from '../../Assets/item_product_3.png'
-import item_product_4 from '../../Assets/item_product_4.png'
-import item_product_5 from '../../Assets/item_product_5.png'
-import item_product_6 from '../../Assets/item_product_6.png'
-import item_product_7 from '../../Assets/item_product_7.png'
-import item_product_8 from '../../Assets/item_product_8.png'
-import item_product_9 from '../../Assets/item_product_9.png'
-import item_product_10 from '../../Assets/item_product_10.png'
-
+import item_product_2 from '../../Assets/images/item_product_2.png'
+import item_product_3 from '../../Assets/images/item_product_3.png'
+import item_product_4 from '../../Assets/images/item_product_4.png'
+import item_product_5 from '../../Assets/images/item_product_5.png'
+import item_product_6 from '../../Assets/images/item_product_6.png'
+import item_product_7 from '../../Assets/images/item_product_7.png'
+import item_product_8 from '../../Assets/images/item_product_8.png'
+import item_product_9 from '../../Assets/images/item_product_9.png'
+import item_product_10 from '../../Assets/images/item_product_10.png'
+import { useSelector } from "react-redux";
+import store from '../../Store';
 
 
 
@@ -39,28 +40,31 @@ function HomePage() {
         "Furniture":item_product_8,
         "Toys & Games":item_product_9,
         "Home Decor":item_product_10,
-
     }
 
+    
+    
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
-            setcategories(res.data); console.log("categories calls ", res.data)
+            setcategories(res.data); 
+            console.log("categories calls ", res.data);
         }).catch(function (error) {
             console.log(error);
-        })
+        });
     },[]);
 
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/products').then(res => {
-            setproduct(res.data); console.log("products calls ", res.data); setPageLoaded(true);
+            setproduct(res.data); 
+            console.log("products calls ", res.data); 
+            setPageLoaded(true);
             return product;
         }).catch(function (error) {
             console.log(error);
         });
     },[]);
-    console.log('call done', product);
 
     const redirectWithState = (val) => {
         navigate('/category', val);

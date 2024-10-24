@@ -2,30 +2,26 @@ import React from "react";
 import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
 import { Box, Container, Grid2, Paper, Typography } from "@mui/material";
+import store from '../Store';
 
 function Userprofile()
 {
     const [username,setusername] = React.useState("");
     const [user,setuser] = React.useState(null);
     const [userload,setuserload] = React.useState(false);
+    // setusername(localStorage.getItem("username"));
    
     React.useEffect(()=>{
-        setusername(localStorage.getItem("username"));
-        console.log("setting usernmae")
-    });
-    
-    React.useEffect(()=>{
-        Axios.post('http://localhost:4000/get/users',{"username":username}).then(res => {
-            // setcategories(res.data);
-            console.log("userdata ======== ", res.data);
-            setuser(res.data);
-            setuserload(true);
-        }).catch(function (error) {
-            console.log(error);
-        })
-    },[username]);
-
-    
+      Axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem("username")}).then(res => {
+          // setcategories(res.data);
+          console.log("userdata ======== ", res.data," ~~~~ ",localStorage.getItem("username"));
+          setusername(localStorage.getItem("username"))
+          store.getState().user=res.data;
+          setuser(store.getState().user);
+      }).catch(function (error) {
+          console.log(error);
+      });
+  },[]) 
 
     return (
         <>
@@ -50,7 +46,7 @@ function Userprofile()
               <Grid2 container spacing={2}>
                 <Grid2 item xs={6}>
                   <Typography variant="body2" gutterBottom>Street</Typography>
-                  <Typography>{user ? user.address["street"] : ""}</Typography>
+                  <Typography>{user ? user.address.street : ""}</Typography>
                 </Grid2>
     
                 <Grid2 item xs={6}>

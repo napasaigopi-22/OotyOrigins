@@ -1,4 +1,4 @@
-import item_product_1 from './item_product_1.png'
+import item_product_1 from './images/item_product_1.png'
 import meta from './images/meta.png'
 import mainpage from './images/mainpage.png'
 import instagram  from './images/instagram.png'

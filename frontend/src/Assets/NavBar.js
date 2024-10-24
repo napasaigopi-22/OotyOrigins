@@ -21,9 +21,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import CartModal from './CartModal';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-//import CartModal from './CartModal';
+import store from '../Store';
 
 
 function CustomTabPanel(props) {
@@ -72,6 +70,7 @@ const pages = ['Products', 'Category'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function NavBar() {
+    console.log("loading navbar");
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
     const openNavMenu = Boolean(anchorEl.nav);
     const openUserMenu = Boolean(anchorEl.user);
@@ -85,10 +84,11 @@ function NavBar() {
     const [opensnack, setOpensnack] = React.useState(false);
     const [user, setuser] = React.useState("");
 
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
     const logout = () => {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
+        localStorage.setItem("userId", "");
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
@@ -102,7 +102,6 @@ function NavBar() {
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
-        console.log("token is ", token ? "somevalexists" : "null");
         return () => {
             handleClose();
         }
@@ -171,6 +170,9 @@ function NavBar() {
         ))
     );
 
+
+
+
     const submitLogin = () => {
         if (Username && Password) {
             console.log("vls are not empty");
@@ -180,9 +182,23 @@ function NavBar() {
                 localStorage.setItem('Token', data.jwtToken);
                 setToken(data.jwtToken);
                 localStorage.setItem('username', data.username);
-                console.log("id is =======", data.userId);
                 localStorage.setItem('userId', data.userId);
-                console.log(data.jwtToken);
+                store.getState().userId = data.userId;
+                const user = {// Implement a function to generate a unique user ID
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password, // Implement a function to hash the password
+                    address: {
+                        street: formData.street,
+                        city: formData.city,
+                        state: formData.state,
+                        zipcode: formData.zipcode,
+                    },
+                    phone: formData.phone,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                };
+                user.username = data.username;
                 setsnackMessage("Log in Succesfull!");
                 handleClicksnack();
             }).catch(function (error) {
@@ -206,7 +222,7 @@ function NavBar() {
         }
         setOpensnack(false);
         // };
-        console.log("Opensnackbar is ", opensnack)
+        // console.log("Opensnackbar is ", opensnack)
     }
     const handleClicksnack = () => {
         setOpensnack(true);
@@ -234,7 +250,6 @@ function NavBar() {
     React.useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
             setcategories(res.data);
-            console.log("categories ======== ", res.data)
         }).catch(function (error) {
             console.log(error);
         })
@@ -260,7 +275,6 @@ function NavBar() {
     const [cart, setcart] = React.useState({})
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
-    React.useEffect(() => { console.log("called ", i++) })
     React.useEffect(() => {
         Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
             setcart(res.data[0]);
@@ -270,10 +284,14 @@ function NavBar() {
             products.forEach(element => {
                 CartProductsList.push(element);
             });
+            console.log("carts product is == cost is ",res.data[0].products[0].product.price*res.data[0].products[0].quantity," ",cart, );
+
             setCartProductsList(CartProductsList);
-            console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length);
+            console.log("cart is ",cart);
         }).catch(function (error) {
             console.log(error);
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
         })
     }, []);
 
@@ -371,7 +389,28 @@ function NavBar() {
 
     //-----------------------------cart modal-------------------------
     const [opencart, setOpencart] = React.useState(false);
-    const handlecartOpen = () => setOpencart(true);
+    const handlecartOpen = () => {
+        Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            setcart(res.data[0]);
+            console.log("use ris ", store.getState().userId)
+            var products = res.data[0].products;
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
+            products.forEach(element => {
+                CartProductsList.push(element);
+            });
+            setCartProductsList(CartProductsList);
+            console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length, "  ", localStorage.getItem("userId"));
+            setOpencart(true);
+        }).catch(function (error) {
+            console.log(error);
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
+            setOpencart(false);
+            setsnackMessage("Log In For Adding To Cart");
+            handleClicksnack();
+        });
+    };
     const handlecartClose = () => setOpencart(false);
 
 
@@ -479,15 +518,28 @@ function NavBar() {
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Text in a modal
                                 </Typography>
-                                <Typography id="modal-modal-description">
-                                    
+                                <Typography id="modal-modal-description" component="div">
                                     <List>
                                         {CartProductsList.map((item, index) => (
                                             <React.Fragment key={index}>
                                                 <ListItem>
                                                     <ListItemText
-                                                        primary={<Typography variant="subtitle1">{item.product.name}</Typography>}
-                                                        secondary={<Typography variant="body2">₹ {item.product.price}</Typography>}
+                                                        primary={
+                                                            <Typography
+                                                                variant="subtitle1"
+                                                                sx={{ textAlign: 'left' }} // Ensure name is aligned to the left
+                                                            >
+                                                                {item.product.name} x {cart.products[index].quantity} -> {cart.products[index].quantity*cart.products[index].product.price}
+                                                            </Typography>
+                                                        }
+                                                        secondary={
+                                                            <Typography
+                                                                variant="body2"
+                                                                sx={{ textAlign: 'left' }} // Ensure price is aligned to the left
+                                                            >
+                                                                ₹ {item.product.price}
+                                                            </Typography>
+                                                        }
                                                     />
                                                 </ListItem>
                                                 {index < CartProductsList.length - 1 && <Divider />}
@@ -502,13 +554,14 @@ function NavBar() {
                                 </Typography>
                             </Box>
                         </Modal>
+
                     </Box>
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleMenuClick('user')} sx={{ p: 0 }}>
-                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
-                                
+                                    <Avatar sx={{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
+
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -523,7 +576,7 @@ function NavBar() {
                         <Box>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpen} sx={{ p: 0 }}>
-                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                                    <Avatar sx={{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Modal

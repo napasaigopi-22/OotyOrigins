@@ -11,7 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Product.css';
-
+import { Provider } from 'react-redux'
+import store from '../Store'
 
 
 
@@ -67,7 +68,7 @@ export default function Product(props) {
     );
 
     const addToCart = () => {
-        var luserid = localStorage.getItem("userId");
+        var luserid = store.getState().userId;
         console.log("added to cart == ", prd,luserid);
             axios.post('http://localhost:4000/get/users',{"username":username}).then(res => {
                 console.log("userdata ======== ", res.data);
