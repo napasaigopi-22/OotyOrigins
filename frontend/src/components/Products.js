@@ -15,7 +15,7 @@ function Products() {
     useEffect(() => {
         axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
-        }).catch(function (error){
+        }).catch(function (error) {
             console.log(error);
         })
     }, []);
@@ -30,77 +30,89 @@ function Products() {
         console.log("Updated Rating Range:", newValue);
     };
 
-    return ( 
+    return (
         <>
             <NavBar></NavBar>
-            <Typography sx = {{ color : 'red'}} variant = 'h3'>Top Products </Typography>
+            <Typography sx={{ color: 'red' }} variant='h3'>Top Products </Typography>
             <div className="product-page-container">
                 {/* Filter Section */}
                 <Box className="filter-section">
                     <Typography variant="h5" gutterBottom>
                         Filter by
 
-                        </Typography>
+                    </Typography>
 
                     {/* Price Range Filter */}
                     <Box className='filter-box'>
-                    <Typography gutterBottom>Price Range</Typography>
-                    <Slider
-                        value={priceRange}
-                        onChange={handlePriceChange}
-                        valueLabelDisplay="auto"
-                        min={0}
-                        max={1500}
-                        className="slider"
-                    />
-                    <Typography>₹{priceRange[0]} - ₹{priceRange[1]}</Typography>
+                        <Typography gutterBottom>Price Range</Typography>
+                        <Slider
+                            value={priceRange}
+                            onChange={handlePriceChange}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={1500}
+                            className="slider"
+                        />
+                        <Typography>₹{priceRange[0]} - ₹{priceRange[1]}</Typography>
                     </Box>
 
                     {/* Rating Filter */}
                     <Box className='filter-box'>
-                    <Typography gutterBottom>Rating</Typography>
-                    <Slider
-                        value={rating}
-                        onChange={handleRatingChange}
-                        valueLabelDisplay="auto"
-                        min={1}
-                        max={5}
-                        step={0.5}
-                        className="slider"
-                    />
-                    <Typography>{rating[0]} - {rating[1]} Stars</Typography>
-                   
+                        <Typography gutterBottom>Rating</Typography>
+                        <Slider
+                            value={rating}
+                            onChange={handleRatingChange}
+                            valueLabelDisplay="auto"
+                            min={1}
+                            max={5}
+                            step={0.5}
+                            className="slider"
+                        />
+                        <Typography>{rating[0]} - {rating[1]} Stars</Typography>
+
+                    </Box>
                 </Box>
+
+
+
+                <Box className="product-grid-container">
+                    <Grid2
+                        container
+                        spacing={3}
+
+                    >
+                        {
+                            product
+                                .filter(
+
+                                    (val) =>
+                                        val.price >= priceRange[0] &&
+                                        val.price <= priceRange[1] &&
+                                        val.rating >= rating[0] &&
+                                        val.rating <= rating[1]
+                                )
+
+
+                                .map((val, key) => {
+                                    return <Grid2
+                                            item
+                                            xs={12} sm={6} md={4}
+                                            key={key}
+                                            style={{ height: "100%", display: "flex" }}
+                                        >
+                                            <Product
+                                                prdId={val.productId}
+                                                name={val.name}
+                                                cost={val.price}
+                                                stock={val.stock}
+                                                rating={val.rating}
+                                                style={{ flex: 1 }}
+                                            />
+                                        </Grid2>
+                                })}
+                    </Grid2>
                 </Box>
-
-
-
-            <Box className="product-grid-container">
-            <Grid2 
-                container
-                spacing={3}
-    
-            >
-                {
-                    product
-                        .filter(
-
-                            (val) => 
-                                val.price >= priceRange[0] &&
-                                val.price <= priceRange[1] &&
-                                val.rating >= rating[0] &&
-                                val.rating <= rating[1] 
-                        )
-                    
-                        
-                        .map((val, key) => {
-                        return <Grid2 item xs={12} sm={6} md={4} key={key} >
-                            <Product prdId={val.productId} name={val.name} cost={val.price} stock={val.stock} rating= {val.rating} ></Product>
-                        </Grid2>
-                    })}
-            </Grid2>
-          </Box>
-        </div>
+            </div>
         </>
     );
 }

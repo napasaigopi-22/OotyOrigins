@@ -11,6 +11,7 @@ import {
     ListItemText,
     Divider
 } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent} from '@mui/material';
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -22,7 +23,7 @@ import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import store from '../Store';
-
+import '../index.css';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -284,10 +285,10 @@ function NavBar() {
             products.forEach(element => {
                 CartProductsList.push(element);
             });
-            console.log("carts product is == cost is ",res.data[0].products[0].product.price*res.data[0].products[0].quantity," ",cart, );
+            console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
 
             setCartProductsList(CartProductsList);
-            console.log("cart is ",cart);
+            console.log("cart is ", cart);
         }).catch(function (error) {
             console.log(error);
             while (CartProductsList.length > 0)
@@ -414,6 +415,121 @@ function NavBar() {
     const handlecartClose = () => setOpencart(false);
 
 
+    const decreasecountof = (index) => {
+        cart.products.filter(e => e.productId == index)[0].quantity++;
+        console.log(cart.products.filter(e => e.productId == index)[0].product)
+        var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+        var luserid = localStorage.getItem("userId");
+        if (token) {
+            var qty;
+            qty = cart.products.filter(e => e.productId == index);
+            console.log("qty is ", qty[0].productId);
+            if (qty.length != 0)
+                axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: -1 }).then(res => {
+                    console.log("add qty to prod is -", res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            else
+                axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
+                    console.log(res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            console.log("{productId: prd, userId: luserid, additionalQuantity: qty }", { productId: prd, userId: luserid, additionalQuantity: qty })
+
+        }
+
+    }
+
+    const increasecountof = (index) => {
+        cart.products.filter(e => e.productId == index)[0].quantity++;
+        console.log(cart.products.filter(e => e.productId == index)[0].product)
+        var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+        var luserid = localStorage.getItem("userId");
+        if (token) {
+            var qty;
+            qty = cart.products.filter(e => e.productId == index);
+            console.log("qty is ", qty[0].productId);
+            if (qty.length != 0)
+                axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: 1 }).then(res => {
+                    console.log("add qty to prod is -", res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            else
+                axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
+                    console.log(res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            console.log("{productId: prd, userId: luserid, additionalQuantity: qty }", { productId: prd, userId: luserid, additionalQuantity: qty })
+
+        }
+
+    }
+
+
 
     return (
         <AppBar position="static">
@@ -508,52 +624,54 @@ function NavBar() {
                                 <ShoppingCartIcon />
                             </IconButton>
                         </Tooltip>
-                        <Modal
+                        <Dialog
                             open={opencart}
                             onClose={handlecartClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
+                            aria-labelledby="dialog-title"
+                            aria-describedby="dialog-description"
+                            fullWidth
+                            maxWidth="sm" // Adjust the dialog width as needed
                         >
-                            <Box sx={style}>
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Text in a modal
-                                </Typography>
-                                <Typography id="modal-modal-description" component="div">
-                                    <List>
-                                        {CartProductsList.map((item, index) => (
-                                            <React.Fragment key={index}>
-                                                <ListItem>
-                                                    <ListItemText
-                                                        primary={
-                                                            <Typography
-                                                                variant="subtitle1"
-                                                                sx={{ textAlign: 'left' }} // Ensure name is aligned to the left
-                                                            >
-                                                                {item.product.name} x {cart.products[index].quantity} -> {cart.products[index].quantity*cart.products[index].product.price}
-                                                            </Typography>
-                                                        }
-                                                        secondary={
-                                                            <Typography
-                                                                variant="body2"
-                                                                sx={{ textAlign: 'left' }} // Ensure price is aligned to the left
-                                                            >
-                                                                ₹ {item.product.price}
-                                                            </Typography>
-                                                        }
-                                                    />
-                                                </ListItem>
-                                                {index < CartProductsList.length - 1 && <Divider />}
-                                            </React.Fragment>
-                                        ))}
-                                    </List>
+                            <DialogTitle id="dialog-title">
+                                My Cart
+                            </DialogTitle>
+                            <DialogContent id="dialog-description">
+                                <List>
+                                    {CartProductsList.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary={
+                                                        <Typography
+                                                            variant="subtitle1"
+                                                            sx={{ textAlign: 'left' }}
+                                                        >
+                                                            {item.product.name} x {cart.products.find(e => e.product.name === item.product.name)?.quantity} {"->"} {cart.products[index].quantity * cart.products[index].product.price}
+                                                            <Button className='cartactions' onClick={() => increasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}>+</Button>
+                                                            <Button className='cartactions' onClick={() => decreasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}>-</Button>
+                                                        </Typography>
+                                                    }
+                                                    secondary={
+                                                        <Typography
+                                                            variant="body2"
+                                                            sx={{ textAlign: 'left' }}
+                                                        >
+                                                            ₹ {item.product.price}
+                                                        </Typography>
+                                                    }
+                                                />
+                                            </ListItem>
+                                            {index < CartProductsList.length - 1 && <Divider />}
+                                        </React.Fragment>
+                                    ))}
+                                </List>
 
-                                    <Divider sx={{ my: 2 }} />
-                                    <Typography variant="h6" align="right">
-                                        Total: ₹ {cart.totalAmount}
-                                    </Typography>
+                                <Divider sx={{ my: 2 }} />
+                                <Typography variant="h6" align="right">
+                                    Total: ₹ {cart.totalAmount}
                                 </Typography>
-                            </Box>
-                        </Modal>
+                            </DialogContent>
+                        </Dialog>
 
                     </Box>
                     {token ?
@@ -582,7 +700,7 @@ function NavBar() {
                             <Modal
                                 open={open}
                                 onClose={handleClose}
-                                style={{ overflow: 'scroll', top: '10px' }}
+                                style={{ overflow: 'scroll', height: '700px !important' }}
                             >
                                 <Box sx={style} >
                                     <Box sx={{ width: '100%', height: "100%" }}>
