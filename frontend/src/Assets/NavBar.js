@@ -415,7 +415,7 @@ function NavBar() {
     const handlecartClose = () => setOpencart(false);
 
 
-    const decreasecountof = (index) => {
+    const decreasecountof = (index) => { 
         cart.products.filter(e => e.productId == index)[0].quantity++;
         console.log(cart.products.filter(e => e.productId == index)[0].product)
         var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
