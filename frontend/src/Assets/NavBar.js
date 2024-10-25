@@ -11,6 +11,7 @@ import {
     ListItemText,
     Divider
 } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent} from '@mui/material';
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -21,10 +22,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import CartModal from './CartModal';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-//import CartModal from './CartModal';
-
+import store from '../Store';
+import '../index.css';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -72,6 +71,7 @@ const pages = ['Products', 'Category'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function NavBar() {
+    console.log("loading navbar");
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
     const openNavMenu = Boolean(anchorEl.nav);
     const openUserMenu = Boolean(anchorEl.user);
@@ -85,10 +85,11 @@ function NavBar() {
     const [opensnack, setOpensnack] = React.useState(false);
     const [user, setuser] = React.useState("");
 
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
     const logout = () => {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
+        localStorage.setItem("userId", "");
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
@@ -102,7 +103,6 @@ function NavBar() {
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
-        console.log("token is ", token ? "somevalexists" : "null");
         return () => {
             handleClose();
         }
@@ -171,6 +171,9 @@ function NavBar() {
         ))
     );
 
+
+
+
     const submitLogin = () => {
         if (Username && Password) {
             console.log("vls are not empty");
@@ -180,9 +183,23 @@ function NavBar() {
                 localStorage.setItem('Token', data.jwtToken);
                 setToken(data.jwtToken);
                 localStorage.setItem('username', data.username);
-                console.log("id is =======", data.userId);
                 localStorage.setItem('userId', data.userId);
-                console.log(data.jwtToken);
+                store.getState().userId = data.userId;
+                const user = {// Implement a function to generate a unique user ID
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password, // Implement a function to hash the password
+                    address: {
+                        street: formData.street,
+                        city: formData.city,
+                        state: formData.state,
+                        zipcode: formData.zipcode,
+                    },
+                    phone: formData.phone,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                };
+                user.username = data.username;
                 setsnackMessage("Log in Succesfull!");
                 handleClicksnack();
             }).catch(function (error) {
@@ -206,7 +223,7 @@ function NavBar() {
         }
         setOpensnack(false);
         // };
-        console.log("Opensnackbar is ", opensnack)
+        // console.log("Opensnackbar is ", opensnack)
     }
     const handleClicksnack = () => {
         setOpensnack(true);
@@ -234,7 +251,6 @@ function NavBar() {
     React.useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
             setcategories(res.data);
-            console.log("categories ======== ", res.data)
         }).catch(function (error) {
             console.log(error);
         })
@@ -260,7 +276,6 @@ function NavBar() {
     const [cart, setcart] = React.useState({})
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
-    React.useEffect(() => { console.log("called ", i++) })
     React.useEffect(() => {
         Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
             setcart(res.data[0]);
@@ -270,10 +285,14 @@ function NavBar() {
             products.forEach(element => {
                 CartProductsList.push(element);
             });
+            console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
+
             setCartProductsList(CartProductsList);
-            console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length);
+            console.log("cart is ", cart);
         }).catch(function (error) {
             console.log(error);
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
         })
     }, []);
 
@@ -371,8 +390,144 @@ function NavBar() {
 
     //-----------------------------cart modal-------------------------
     const [opencart, setOpencart] = React.useState(false);
-    const handlecartOpen = () => setOpencart(true);
+    const handlecartOpen = () => {
+        Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            setcart(res.data[0]);
+            console.log("use ris ", store.getState().userId)
+            var products = res.data[0].products;
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
+            products.forEach(element => {
+                CartProductsList.push(element);
+            });
+            setCartProductsList(CartProductsList);
+            console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length, "  ", localStorage.getItem("userId"));
+            setOpencart(true);
+        }).catch(function (error) {
+            console.log(error);
+            while (CartProductsList.length > 0)
+                CartProductsList.pop();
+            setOpencart(false);
+            setsnackMessage("Log In For Adding To Cart");
+            handleClicksnack();
+        });
+    };
     const handlecartClose = () => setOpencart(false);
+
+
+    const decreasecountof = (index) => {
+        cart.products.filter(e => e.productId == index)[0].quantity++;
+        console.log(cart.products.filter(e => e.productId == index)[0].product)
+        var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+        var luserid = localStorage.getItem("userId");
+        if (token) {
+            var qty;
+            qty = cart.products.filter(e => e.productId == index);
+            console.log("qty is ", qty[0].productId);
+            if (qty.length != 0)
+                axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: -1 }).then(res => {
+                    console.log("add qty to prod is -", res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            else
+                axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
+                    console.log(res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            console.log("{productId: prd, userId: luserid, additionalQuantity: qty }", { productId: prd, userId: luserid, additionalQuantity: qty })
+
+        }
+
+    }
+
+    const increasecountof = (index) => {
+        cart.products.filter(e => e.productId == index)[0].quantity++;
+        console.log(cart.products.filter(e => e.productId == index)[0].product)
+        var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+        var luserid = localStorage.getItem("userId");
+        if (token) {
+            var qty;
+            qty = cart.products.filter(e => e.productId == index);
+            console.log("qty is ", qty[0].productId);
+            if (qty.length != 0)
+                axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: 1 }).then(res => {
+                    console.log("add qty to prod is -", res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            else
+                axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
+                    console.log(res.data);
+                    Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                        setcart(res.data[0]);
+                        var products = res.data[0].products;
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                        products.forEach(element => {
+                            CartProductsList.push(element);
+                        });
+                        setCartProductsList(CartProductsList);
+                        console.log("cart is ", cart);
+                    }).catch(function (error) {
+                        console.log(error);
+                        while (CartProductsList.length > 0)
+                            CartProductsList.pop();
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            console.log("{productId: prd, userId: luserid, additionalQuantity: qty }", { productId: prd, userId: luserid, additionalQuantity: qty })
+
+        }
+
+    }
 
 
 
@@ -469,46 +624,62 @@ function NavBar() {
                                 <ShoppingCartIcon />
                             </IconButton>
                         </Tooltip>
-                        <Modal
+                        <Dialog
                             open={opencart}
                             onClose={handlecartClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
+                            aria-labelledby="dialog-title"
+                            aria-describedby="dialog-description"
+                            fullWidth
+                            maxWidth="sm" // Adjust the dialog width as needed
                         >
-                            <Box sx={style}>
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Text in a modal
-                                </Typography>
-                                <Typography id="modal-modal-description">
-                                    
-                                    <List>
-                                        {CartProductsList.map((item, index) => (
-                                            <React.Fragment key={index}>
-                                                <ListItem>
-                                                    <ListItemText
-                                                        primary={<Typography variant="subtitle1">{item.product.name}</Typography>}
-                                                        secondary={<Typography variant="body2">₹ {item.product.price}</Typography>}
-                                                    />
-                                                </ListItem>
-                                                {index < CartProductsList.length - 1 && <Divider />}
-                                            </React.Fragment>
-                                        ))}
-                                    </List>
+                            <DialogTitle id="dialog-title">
+                                My Cart
+                            </DialogTitle>
+                            <DialogContent id="dialog-description">
+                                <List>
+                                    {CartProductsList.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary={
+                                                        <Typography
+                                                            variant="subtitle1"
+                                                            sx={{ textAlign: 'left' }}
+                                                        >
+                                                            {item.product.name} x {cart.products.find(e => e.product.name === item.product.name)?.quantity} {"->"} {cart.products[index].quantity * cart.products[index].product.price}
+                                                            <Button className='cartactions' onClick={() => increasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}>+</Button>
+                                                            <Button className='cartactions' onClick={() => decreasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}>-</Button>
+                                                        </Typography>
+                                                    }
+                                                    secondary={
+                                                        <Typography
+                                                            variant="body2"
+                                                            sx={{ textAlign: 'left' }}
+                                                        >
+                                                            ₹ {item.product.price}
+                                                        </Typography>
+                                                    }
+                                                />
+                                            </ListItem>
+                                            {index < CartProductsList.length - 1 && <Divider />}
+                                        </React.Fragment>
+                                    ))}
+                                </List>
 
-                                    <Divider sx={{ my: 2 }} />
-                                    <Typography variant="h6" align="right">
-                                        Total: ₹ {cart.totalAmount}
-                                    </Typography>
+                                <Divider sx={{ my: 2 }} />
+                                <Typography variant="h6" align="right">
+                                    Total: ₹ {cart.totalAmount}
                                 </Typography>
-                            </Box>
-                        </Modal>
+                            </DialogContent>
+                        </Dialog>
+
                     </Box>
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleMenuClick('user')} sx={{ p: 0 }}>
-                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
-                                
+                                    <Avatar sx={{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
+
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -523,13 +694,13 @@ function NavBar() {
                         <Box>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpen} sx={{ p: 0 }}>
-                                    <Avatar sx= {{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                                    <Avatar sx={{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Modal
                                 open={open}
                                 onClose={handleClose}
-                                style={{ overflow: 'scroll', top: '10px' }}
+                                style={{ overflow: 'scroll', height: '700px !important' }}
                             >
                                 <Box sx={style} >
                                     <Box sx={{ width: '100%', height: "100%" }}>

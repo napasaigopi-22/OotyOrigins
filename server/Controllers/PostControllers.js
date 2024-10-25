@@ -50,6 +50,8 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
     try {
         const { userId, productId, additionalQuantity } = req.body;
 
+        console.log("in adding quantity -- ", req.body);
+
         // Find active cart for the user
         let cart = await models.Cart.findOne({ isActive: 1, userId });
 
@@ -59,9 +61,12 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
 
             if (productInCart) {
                 // Update product quantity
+                console.log("\n\n",(await models.Product.find({productId:productId}))[0].price,productId,"\n\n")
+
                 productInCart.quantity += additionalQuantity;
-                cart.totalAmount += (await models.Product.findById(productId)).price * additionalQuantity;
+                cart.totalAmount += (await models.Product.find({productId:productId}))[0].price * additionalQuantity;
                 cart.updatedAt = Date.now();
+
 
                 const updatedCart = await cart.save();
                 return res.json(updatedCart);
@@ -155,16 +160,15 @@ module.exports.showCart = async (req, res, next) => {
         cart = await models.Cart.find({userId:req.body.userId, isActive:1});
         cart = JSON.stringify(cart);
         cart=JSON.parse(cart);
-        console.log(typeof cart);
-        var prdids=[]
+        var prdids=[];
         cart[0].products.map((prd)=>{
             prdids.push(prd.productId);
         });
         let products = await models.Product.find({productId:prdids});
         for(let i=0;i<cart[0].products.length;i++){
-            cart[0].products[i].product=products[i];
+            var prdct = products.filter(ele=>ele.productId==cart[0].products[i].productId);
+            cart[0].products[i].product=prdct[0];
         };
-        console.log(cart[0]);
 
         
         return res.json(cart);

@@ -11,7 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Product.css';
-
+import { Provider } from 'react-redux'
+import store from '../Store'
 
 
 
@@ -26,7 +27,7 @@ export default function Product(props) {
 
 
     const navigate = useNavigate();
-    console.log("\n\n\n\n\n\n\n\n user is ",localStorage.getItem("userobject"));
+    // console.log("\n\n\n\n\n\n\n\n user is ",localStorage.getItem("userId"));
 
     React.useEffect(() => {
         setPrd(props.prdId);
@@ -69,18 +70,35 @@ export default function Product(props) {
     const addToCart = () => {
         var luserid = localStorage.getItem("userId");
         console.log("added to cart == ", prd,luserid);
-            axios.post('http://localhost:4000/get/users',{"username":username}).then(res => {
+            axios.post('http://localhost:4000/get/users',{"username":luserid}).then(res => {
                 console.log("userdata ======== ", res.data);
             }).catch(function (error) {
                 console.log(error);
             })
         if(token) {
-            axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
-                console.log(res.data);
-                setMsg("Added To Cart Succesfully");
+            var qty;
+            axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                qty=res.data[0].products.filter(ele=>ele.productId==prd);
+                console.log(qty.length>0)
+                if(qty.length!=0)
+                    axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: prd, userId: luserid, additionalQuantity: 1 }).then(res => {
+                        console.log(res.data);
+                        setMsg("Added To Cart Succesfully");
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                else
+                    axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
+                        console.log(res.data);
+                        setMsg("Added To Cart Succesfully");
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                console.log("{productId: prd, userId: luserid, additionalQuantity: qty }",{ productId: prd, userId: luserid, additionalQuantity: qty })
             }).catch(function (error) {
                 console.log(error);
             });
+            
         }
         else setMsg("Please Login to continue")
         handleClick();
@@ -91,8 +109,8 @@ export default function Product(props) {
         navigate('/ProductDetail',{state:prd});
     }
     return (
-        <Box sx={{ width: '100%' }}>
-            <Card>
+        <Box sx={{ width: '100%', height:'50%' }}>
+            <Card >
                 <React.Fragment>
                     <CardContent >
                         <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{props.name}</Typography>
