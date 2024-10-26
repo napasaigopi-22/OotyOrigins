@@ -67,7 +67,6 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
                 cart.totalAmount += (await models.Product.find({productId:productId}))[0].price * additionalQuantity;
                 cart.updatedAt = Date.now();
 
-
                 const updatedCart = await cart.save();
                 return res.json(updatedCart);
             } else {
@@ -158,22 +157,26 @@ module.exports.showCart = async (req, res, next) => {
     try{
         var cart ={};
         cart = await models.Cart.find({userId:req.body.userId, isActive:1});
+        
         cart = JSON.stringify(cart);
         cart=JSON.parse(cart);
         var prdids=[];
+        console.log("cart length is ",cart.length)
+        if(cart.length==0)
+            return res.json([]);
+
         cart[0].products.map((prd)=>{
             prdids.push(prd.productId);
         });
+
         let products = await models.Product.find({productId:prdids});
         for(let i=0;i<cart[0].products.length;i++){
             var prdct = products.filter(ele=>ele.productId==cart[0].products[i].productId);
             cart[0].products[i].product=prdct[0];
         };
-
-        
         return res.json(cart);
     } catch(error)
     {
-        return res.status(500).json({ message: "Error deleting product from cart" });
+        return res.status(500).json({ message: "Error showing product from cart" });
     }
 }

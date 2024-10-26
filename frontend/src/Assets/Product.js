@@ -78,6 +78,7 @@ export default function Product(props) {
         if(token) {
             var qty;
             axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                if(res.data.length>0){
                 qty=res.data[0].products.filter(ele=>ele.productId==prd);
                 console.log(qty.length>0)
                 if(qty.length!=0)
@@ -93,7 +94,17 @@ export default function Product(props) {
                         setMsg("Added To Cart Succesfully");
                     }).catch(function (error) {
                         console.log(error);
-                    });
+                    });}
+                    else
+                    {
+                        console.log("no data");
+                        axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
+                            console.log(res.data);
+                            setMsg("Added To Cart Succesfully");
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    }
                 console.log("{productId: prd, userId: luserid, additionalQuantity: qty }",{ productId: prd, userId: luserid, additionalQuantity: qty })
             }).catch(function (error) {
                 console.log(error);
