@@ -277,8 +277,13 @@ function NavBar() {
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
     React.useEffect(() => {
+        console.log("userid here is ",localStorage.getItem("username"));
+        axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem("username")}).then(res => {
+            localStorage.setItem("userId",res.data.userId)
         Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-            setcart(res.data[0]);
+            console.log("showcart response is ",res.data)
+            if(res.data.length>0)
+            {setcart(res.data[0]);
             var products = res.data[0].products;
             while (CartProductsList.length > 0)
                 CartProductsList.pop();
@@ -288,11 +293,15 @@ function NavBar() {
             console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
 
             setCartProductsList(CartProductsList);
-            console.log("cart is ", cart);
+            console.log("cart is ", cart);}
         }).catch(function (error) {
             console.log(error);
             while (CartProductsList.length > 0)
                 CartProductsList.pop();
+        })
+        console.log("userdata ======== ", res.data);
+        }).catch(function (error) {
+            console.log(error);
         })
     }, []);
 
@@ -392,6 +401,7 @@ function NavBar() {
     const [opencart, setOpencart] = React.useState(false);
     const handlecartOpen = () => {
         Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            if(res.data.length>0){
             setcart(res.data[0]);
             console.log("use ris ", store.getState().userId)
             var products = res.data[0].products;
@@ -402,7 +412,13 @@ function NavBar() {
             });
             setCartProductsList(CartProductsList);
             console.log("Cart Values ======== ", CartProductsList, " ", CartProductsList.length, "  ", localStorage.getItem("userId"));
-            setOpencart(true);
+            setOpencart(true);}
+            else
+            {
+                console.log("no data");
+                setcart([]);
+                setOpencart(true);
+            }
         }).catch(function (error) {
             console.log(error);
             while (CartProductsList.length > 0)
@@ -637,7 +653,7 @@ function NavBar() {
                             </DialogTitle>
                             <DialogContent id="dialog-description">
                                 <List>
-                                    {CartProductsList.map((item, index) => (
+                                    {CartProductsList.length>0 && CartProductsList.map((item, index) => (
                                         <React.Fragment key={index}>
                                             <ListItem>
                                                 <ListItemText
@@ -666,9 +682,11 @@ function NavBar() {
                                     ))}
                                 </List>
 
+                                {CartProductsList.length==0 && "Cart Is Empty"}
+
                                 <Divider sx={{ my: 2 }} />
                                 <Typography variant="h6" align="right">
-                                    Total: ₹ {cart.totalAmount}
+                                    Total: ₹ {cart && cart.totalAmount} {CartProductsList.length==0 && "0"}
                                 </Typography>
                             </DialogContent>
                         </Dialog>
