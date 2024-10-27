@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../Assets/NavBar";
-import { Box, Typography, Button, Container, Divider } from "@mui/material";
+import { Box, Typography,  Container, Divider } from "@mui/material";
 import Axios from "axios";
 import CartProduct from "../../components/CartPage/Cartproducts";
 

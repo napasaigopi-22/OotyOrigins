@@ -1,7 +1,7 @@
 import Axios from "axios";
 import NavBar from "../../Assets/NavBar";
 import React from "react";
-import { Box, Button, Card, Container, Divider } from "@mui/material";
+import { Box, Button, Card, Container, Divider, Typography, Grid } from "@mui/material";
 import CartProduct from "./Cartproducts";
 import { useNavigate } from "react-router-dom";
 
@@ -42,13 +42,23 @@ function CartPage() {
                                 </Box>)
 
                         })}
-                        <h3>Total: </h3> {totalAmount}
-                        <Button onClick={() => { confirmBuy(localStorage.getItem('userId')) }} variant="contained" >Confirm buy</Button>
+                      <Divider sx={{ my: 2 }} />
+                      <Grid container spacing={2}>
+                        <Typography variant="h6" align="left">
+                        <Button variant="contained"  onClick={() => { confirmBuy(localStorage.getItem('userId')) }} >Confirm buy</Button>
+                        </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                        <Typography variant="h6" align="right">
+                            Total: ₹ {totalAmount} 
+                        </Typography>
+                        </Grid>
                     </Card>
                 </Container>
             </div>
         </>
     )
 }
+
 
 export default CartPage;
