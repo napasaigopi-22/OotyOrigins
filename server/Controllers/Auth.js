@@ -22,7 +22,7 @@ module.exports.Signup = async (req, res) => {
     }
 
     // Hash the password
-    const userobj = new User(req.body);
+    const userobj = new User(req.body.isUser=req.body.isUser==1?true:false);
     userobj.password = await bcrypt.hash(password, 12);
 
     
@@ -50,7 +50,7 @@ module.exports.Signup = async (req, res) => {
     });
 
     const jwtToken = jwt.sign(
-      { username: userobj.username, _id: userobj._id },
+      { username: userobj.username, _id: userobj._id, isUser:userobj.IsUser },
       'Ooty Origins',
       { expiresIn: '24h' }
     );

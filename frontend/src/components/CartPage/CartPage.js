@@ -18,6 +18,11 @@ function CartPage() {
             console.log(error);
         });
     }, []);
+
+    const confirmBuy = (userId) => {
+        console.log(userId);
+        navigate('/Orders')
+    }
     return (
         <>
             <NavBar />
@@ -38,7 +43,7 @@ function CartPage() {
 
                         })}
                         <h3>Total: </h3> {totalAmount}
-                        <Button onClick={()=>{navigate('/Orders')}} variant="contained" >Confirm buy</Button>
+                        <Button onClick={() => { confirmBuy(localStorage.getItem('userId')) }} variant="contained" >Confirm buy</Button>
                     </Card>
                 </Container>
             </div>
