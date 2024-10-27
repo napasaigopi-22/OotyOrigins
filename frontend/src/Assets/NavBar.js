@@ -388,7 +388,7 @@ function NavBar() {
                 phone: formData.phone,
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                isUser: formData.isUser,
+                IsUser: formData.isUser=="true"?true:false,
             };
             console.log('Form data submitted:', user);
             axios.post('http://localhost:4000/signup', user).then(res => {
