@@ -89,8 +89,8 @@ function NavBar() {
     const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
     const logout = () => {
-        localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
-        localStorage.setItem("userId", "");
+        localStorage.setItem("Token", null); localStorage.setItem("username", null); setToken(null); setsnackMessage("Log Out Succesfull!");
+        localStorage.setItem("userId", null);
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
