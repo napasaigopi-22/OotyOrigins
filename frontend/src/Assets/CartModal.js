@@ -104,17 +104,27 @@ export default function CartModal(props) {
       qty = cart.products.filter(e => e.productId == index);
       console.log("qty is ", qty[0].productId);
       if (qty.length != 0) {
-        var res = addQtyToPrdct(index, luserid, -1)
-        var products = res.data[0].products;
-        while (CartProductsList.length > 0)
-          CartProductsList.pop();
-        products.forEach(element => {
-          CartProductsList.push(element);
+        axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: -1 }).then(res => {
+          console.log("add qty to prod is -", res.data);
+          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            var products = res.data[0].products;
+            while (CartProductsList.length > 0)
+              CartProductsList.pop();
+            products.forEach(element => {
+              CartProductsList.push(element);
+            });
+            setCartProductsList(CartProductsList);
+            setcart(res.data[0]);
+
+            console.log("cart is ", cart);
+          }).catch(function (error) {
+            console.log(error);
+            while (CartProductsList.length > 0)
+              CartProductsList.pop();
+          });
+        }).catch(function (error) {
+          console.log(error);
         });
-        setCartProductsList(CartProductsList);
-        setcart(res.data[0]);
-        console.log("total amount is == ", res.data[0].totalAmount)
-        console.log("cart is ", cart);
       }
       else
         axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
