@@ -1,0 +1,39 @@
+
+.product-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    display:flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    z-index: -2;
+}
+
+.product-image {
+    object-fit: cover;
+}
+
+.product-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.product-description {
+    color: #666;
+    margin-top: 8px;
+}
+
+.product-price {
+    color: #3f51b5;
+    margin-top: 16px;
+}
+
+.product-rating {
+    color: #ff9800;
+    margin-top: 8px;
+}
+
+.add-to-cart-button {
+    margin-top: 24px;
+    border-radius: 10px;
+}

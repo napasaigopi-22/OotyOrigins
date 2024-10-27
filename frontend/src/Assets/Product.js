@@ -128,7 +128,7 @@ export default function Product(props) {
                         <CardMedia onClick={handleProdClick}
                             component="img"
                             height="194"
-                            image={props.img}
+                            image={props.image}
                             alt="Product Image"
                         />
                     </CardContent>
@@ -150,3 +150,4 @@ export default function Product(props) {
         </Box>
     );
 }
+

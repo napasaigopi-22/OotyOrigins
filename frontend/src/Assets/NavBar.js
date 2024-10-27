@@ -30,7 +30,10 @@ import FormHelperText from '@mui/material/FormHelperText';
 import store from '../Store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import '../index.css';
+import logo from "./images/logo512.png";
+import "./NavBar.css";
 import CartModal from './CartModal';
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -177,9 +180,6 @@ function NavBar() {
             </div>
         ))
     );
-
-
-
 
     const submitLogin = () => {
         if (Username && Password) {
@@ -416,7 +416,11 @@ function NavBar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <nav className="NavBar">
+                <a href="/">
+                    <img src={logo} alt="Company Logo" className="logo" />
+                </a>                   
+                </nav>
                     <Typography
                         variant="h6"
                         noWrap

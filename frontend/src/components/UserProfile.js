@@ -1,8 +1,9 @@
 import React from "react";
 import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
-import { Box, Container, Grid2, Paper, Typography } from "@mui/material";
+import { Box, Container, Grid2, Paper, Typography, CircularProgress, Alert } from "@mui/material";
 import store from '../Store';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 
 function Userprofile()
 {
@@ -44,24 +45,32 @@ function Userprofile()
               </Typography>
               
               <Grid2 container spacing={2}>
-                <Grid2 item xs={6}>
+                <Grid2 item xs={12} sm={6}>
+                  <Paper sx={{ padding: 2}}>
                   <Typography variant="body2" gutterBottom>Street</Typography>
                   <Typography>{user ? user.address.street : ""}</Typography>
+                  </Paper>
                 </Grid2>
     
-                <Grid2 item xs={6}>
+                <Grid2 item xs={12} sm={6}>
+                  <paper sx={{padding: 2}}>
                   <Typography variant="body2" gutterBottom>City</Typography>
                   <Typography>{user ? user.address["city"] : ""}</Typography>
+                  </paper>
                 </Grid2>
     
-                <Grid2 item xs={6}>
+                <Grid2 item xs={12} sm={6}>
+                <paper sx={{padding: 2}}>
                   <Typography variant="body2" gutterBottom>State</Typography>
                   <Typography>{user ? user.address["state"] : ""}</Typography>
+                  </paper>
                 </Grid2>
     
-                <Grid2 item xs={6}>
+                <Grid2 item xs={12} sm={6}>
+                <paper sx={{padding: 2}}>
                   <Typography variant="body2" gutterBottom>Zipcode</Typography>
                   <Typography>{user ? user.address["zipcode"] : ""}</Typography>
+                  </paper>
                 </Grid2>
               </Grid2>
             </Paper>
@@ -69,5 +78,21 @@ function Userprofile()
         </>
       );
 }
+
+
+const styles = {
+  inputBox: {
+      padding: 2,
+      borderRadius: 2,
+      border: "1px solid #e0e0e0",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      backgroundColor: "#fafafa",
+  },
+  sectionTitle: {
+      marginTop: 2,
+      marginBottom: 1,
+      color: "#555",
+  },
+};
 
 export default Userprofile;

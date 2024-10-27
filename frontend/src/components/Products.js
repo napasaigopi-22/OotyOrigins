@@ -33,7 +33,6 @@ function Products() {
     return (
         <>
             <NavBar></NavBar>
-            <Typography sx={{ color: 'red' }} variant='h3'>Top Products </Typography>
             <div className="product-page-container">
                 {/* Filter Section */}
                 <Box className="filter-section">
@@ -98,7 +97,7 @@ function Products() {
                                             item
                                             xs={12} sm={6} md={4}
                                             key={key}
-                                            style={{ height: "100%", display: "flex" }}
+                                            className="product-grid-item"
                                         >
                                             <Product
                                                 prdId={val.productId}
@@ -106,6 +105,7 @@ function Products() {
                                                 cost={val.price}
                                                 stock={val.stock}
                                                 rating={val.rating}
+                                                imageUrl={val.imageUrl}
                                                 style={{ flex: 1 }}
                                             />
                                         </Grid2>

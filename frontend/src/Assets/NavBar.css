@@ -1,0 +1,12 @@
+.NavBar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    width: 60px;
+    height: auto;
+    border-radius: 55px;
+  }
