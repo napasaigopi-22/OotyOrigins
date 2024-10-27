@@ -78,4 +78,20 @@ function Userprofile()
       );
 }
 
+
+const styles = {
+  inputBox: {
+      padding: 2,
+      borderRadius: 2,
+      border: "1px solid #e0e0e0",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      backgroundColor: "#fafafa",
+  },
+  sectionTitle: {
+      marginTop: 2,
+      marginBottom: 1,
+      color: "#555",
+  },
+};
+
 export default Userprofile;

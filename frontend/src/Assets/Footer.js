@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css'; // Ensure yo
+import "./Footer.css";
 import insta from  '../Assets/images/instagram.png';
 import twitter from '../Assets/images/twitter.png';
 import meta from  '../Assets/images/meta.png';

@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
 import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import '../../components/Header.css';
+import '../../Assets/Header.css';
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
 import item_product_1 from '../../Assets/images/item_product_1.png'
 import item_product_2 from '../../Assets/images/item_product_2.png'
@@ -42,9 +42,6 @@ function HomePage() {
         "Toys & Games":item_product_9,
         "Home Decor":item_product_10,
     }
-
-    
-    
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {

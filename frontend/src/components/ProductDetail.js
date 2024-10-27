@@ -7,6 +7,7 @@ import "../components/ProductDetail.css";
 import NavBar from "../Assets/NavBar";
 
 
+
 function ProductDetail() {
     // const { id } = useParams();
     const [product, setProduct] = useState(null);

@@ -10,7 +10,7 @@ import {
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Userprofile from './components/UserProfile';
-import Footer from './components/Footer';
+import Footer from './Assets/Footer';
 import CartPage from './components/CartPage/CartPage';
 import OrdersPage from './components/Orderspage/OrdersPage';
 

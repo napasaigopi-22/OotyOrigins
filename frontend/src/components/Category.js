@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import { Box, Grid2 } from "@mui/material";
 import Product from "../Assets/Product";
+import Tribal_beaded_necklace from "../Assets/images/Tribal_beaded_necklace.png";
 
 function Category() {
     const location = useLocation();
@@ -12,6 +13,12 @@ function Category() {
     const [product, setproduct] = useState([]);
     const [showProd, setshowProd] = useState([]);
     // const [loaded, setloaded] = useState(false);
+
+
+
+    const imageUrl={
+        "Tribal_beaded_necklace":Tribal_beaded_necklace,
+    };
 
     useEffect(() => { 
         Axios.get('http://localhost:4000/get/products').then(res => {
@@ -53,6 +60,7 @@ function Category() {
                     >
                         {
                             showProd.map((val, key) => {
+                                const imageSrc = imageUrl[val.name] || val.imageUrl || "";
                                 return <Grid2 item xs={4} size={4} >
                                     <Product style={{ margin: 'auto' }}
                                             prdId={val.productId} 
@@ -60,7 +68,7 @@ function Category() {
                                             cost={val.price} 
                                             stock={val.stock} 
                                             rating= {val.rating} 
-                                            imageUrl= {val.imageUrl}>
+                                            image= {imageSrc}>
 
                                     </Product>
                                 </Grid2>
