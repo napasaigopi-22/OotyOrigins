@@ -408,11 +408,11 @@ export default function CartModal(props) {
 
             <Divider sx={{ my: 2 }} />
             <Grid container spacing={2}>
-              <Grid item xs={6} md={8}>
+              {CartProductsList.length != 0 && <Grid item xs={6} md={8}>
                 <Typography variant="h6" align="left">
                   <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={() => { goToCartPage(localStorage.getItem("userId")) }}>Proceed To Buy</Button>
                 </Typography>
-              </Grid>
+              </Grid>}
               <Grid item xs={4}>
                 <Typography variant="h6" align="right">
                   Total: ₹ {cart && cart.totalAmount} {!cart && "0"}

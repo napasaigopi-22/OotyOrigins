@@ -22,7 +22,8 @@ module.exports.Signup = async (req, res) => {
     }
 
     // Hash the password
-    const userobj = new User(req.body.isUser=req.body.isUser==1?true:false);
+    console.log("req.body is  ",req.body)
+    const userobj = new User(req.body);
     userobj.password = await bcrypt.hash(password, 12);
 
     
