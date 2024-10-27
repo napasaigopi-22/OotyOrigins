@@ -35,5 +35,7 @@ router.get('/carts', CartController);
 // Route for fetching payments
 router.get('/payments', PaymentController);
 
+router.get('/')
+
 
 module.exports = router;

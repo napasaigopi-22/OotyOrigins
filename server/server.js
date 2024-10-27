@@ -37,4 +37,6 @@ app.use("/", authRoute);
 
 app.use("/get",Rout );
 
-app.use("/post",PostRout)
+app.use("/post",PostRout);
+
+app.use(express.static('Controllers/public'))

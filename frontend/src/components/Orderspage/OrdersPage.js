@@ -12,7 +12,7 @@ function OrdersPage() {
     useEffect(() => {
         // Fetch user profile
         Axios.get('http://localhost:4000/user/profile', { params: { userId: localStorage.getItem("userId") } })
-            .then(response => setProfile(response.data))
+            .then(response => {setProfile(response.data); console.log(response)})
             .catch(error => console.log("Error fetching profile: ", error));
 
         // Fetch order items (cart items)

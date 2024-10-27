@@ -15,6 +15,7 @@ function Products() {
     useEffect(() => {
         axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
+            console.log("get products is ",res.data)
         }).catch(function (error) {
             console.log(error);
         })
@@ -105,7 +106,7 @@ function Products() {
                                                 cost={val.price}
                                                 stock={val.stock}
                                                 rating={val.rating}
-                                                imageUrl={val.imageUrl}
+                                                imageUrl={val.images}
                                                 style={{ flex: 1 }}
                                             />
                                         </Grid2>
