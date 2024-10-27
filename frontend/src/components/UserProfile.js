@@ -3,6 +3,7 @@ import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
 import { Box, Container, Grid2, Paper, Typography, CircularProgress, Alert } from "@mui/material";
 import store from '../Store';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 
 function Userprofile()
 {

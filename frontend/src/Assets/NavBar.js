@@ -9,7 +9,11 @@ import {
     List,
     ListItem,
     ListItemText,
-    Divider
+    Divider,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+    FormControl
 } from '@mui/material';
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +25,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import FormHelperText from '@mui/material/FormHelperText';
+
 import store from '../Store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import '../index.css';
@@ -92,8 +98,8 @@ function NavBar() {
     const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
     const logout = () => {
-        localStorage.setItem("Token", null); localStorage.setItem("username", null); setToken(null); setsnackMessage("Log Out Succesfull!");
-        localStorage.setItem("userId", null);
+        localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
+        localStorage.setItem("userId", "");
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
@@ -278,35 +284,37 @@ function NavBar() {
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
     React.useEffect(() => {
-        console.log("userid here is ",localStorage.getItem("username"));
-        axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem("username")}).then(res => {
-            localStorage.setItem("userId",res.data.userId)
-        Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-            console.log("showcart response is ",res.data)
-            if(res.data.length>0)
-            {setcart(res.data[0]);
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-                CartProductsList.pop();
-            products.forEach(element => {
-                CartProductsList.push(element);
-            });
-            console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
+        console.log("userid here is ", localStorage.getItem("username"));
+        axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
+            localStorage.setItem("userId", res.data.userId)
+            Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+                console.log("showcart response is ", res.data)
+                if (res.data.length > 0) {
+                    setcart(res.data[0]);
+                    var products = res.data[0].products;
+                    while (CartProductsList.length > 0)
+                        CartProductsList.pop();
+                    products.forEach(element => {
+                        CartProductsList.push(element);
+                    });
+                    console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
 
-            setCartProductsList(CartProductsList);
-            console.log("cart is ", cart);}
-        }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-                CartProductsList.pop();
-        })
-        console.log("userdata ======== ", res.data);
+                    setCartProductsList(CartProductsList);
+                    console.log("cart is ", cart);
+                }
+            }).catch(function (error) {
+                console.log(error);
+                while (CartProductsList.length > 0)
+                    CartProductsList.pop();
+            })
+            console.log("userdata ======== ", res.data);
         }).catch(function (error) {
             console.log(error);
         })
     }, []);
 
     const [value, setValue] = React.useState(0);
+    const [isuererror, setIsUserError] = React.useState("");
 
     const handleTabChange = (event, newValue) => {
         setValue(newValue);
@@ -321,12 +329,14 @@ function NavBar() {
         state: '',
         zipcode: '',
         phone: '',
+        isUser: '',
     });
 
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(value, name)
         setFormData({ ...formData, [name]: value });
     };
 
@@ -343,6 +353,7 @@ function NavBar() {
         if (!formData.state) newErrors.state = "State is required.";
         if (!zipPattern.test(formData.zipcode)) newErrors.zipcode = "Zip Code must be 6 digits.";
         if (!phonePattern.test(formData.phone)) newErrors.phone = "Phone must be in the format +91XXXXXXXXXX.";
+        if (!formData.isUser) { setIsUserError("This Field Is Required"); return false; }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Returns true if no errors
@@ -361,6 +372,7 @@ function NavBar() {
                 state: '',
                 zipcode: '',
                 phone: '',
+                isUser: '',
             });
             setErrors({});
             const user = {// Implement a function to generate a unique user ID
@@ -376,6 +388,7 @@ function NavBar() {
                 phone: formData.phone,
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isUser: formData.isUser,
             };
             console.log('Form data submitted:', user);
             axios.post('http://localhost:4000/signup', user).then(res => {
@@ -395,6 +408,7 @@ function NavBar() {
         } else {
             console.log('Validation failed:', errors);
         }
+        setIsUserError("");
 
     };
 
@@ -592,6 +606,33 @@ function NavBar() {
                                                             fullWidth
                                                             margin="normal"
                                                         />
+                                                    </Grid2>
+                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
+                                                        <Typography variant="h6" gutterBottom>
+                                                            Account Type
+                                                        </Typography>
+
+                                                        <RadioGroup
+                                                            id="IsUser"
+                                                            name="isUser"
+                                                            value={formData.isUser} // Ensure this is a string like "true" or "false"
+                                                            onChange={handleChange}
+                                                            row // Aligns radio buttons horizontally
+                                                        >
+                                                            <FormControlLabel
+                                                                value="true" // Value for User
+                                                                control={<Radio />}
+                                                                label="User"
+                                                            />
+                                                            <FormControlLabel
+                                                                value="false" // Value for Seller
+                                                                control={<Radio />}
+                                                                label="Seller"
+                                                            />
+                                                        </RadioGroup>
+
+                                                        {/* Error Handling */}
+                                                        {isuererror && <FormHelperText error>{isuererror}</FormHelperText>}
                                                     </Grid2>
                                                 </Grid2>
                                                 <Typography variant="h6" gutterBottom>Address</Typography>

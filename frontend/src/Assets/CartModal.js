@@ -14,6 +14,7 @@ import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
 import store from '../Store';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
+import { a, addQtyToPrdct } from '../Services/Serve';
 
 
 
@@ -102,35 +103,23 @@ export default function CartModal(props) {
       var qty;
       qty = cart.products.filter(e => e.productId == index);
       console.log("qty is ", qty[0].productId);
-      if (qty.length != 0)
-        axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: -1 }).then(res => {
-          console.log("add qty to prod is -", res.data);
-          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-            products.forEach(element => {
-              CartProductsList.push(element);
-            });
-            setCartProductsList(CartProductsList);
-            setcart(res.data[0]);
-            console.log("total amount is == ", res.data[0].totalAmount)
-
-            console.log("cart is ", cart);
-          }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-          });
-        }).catch(function (error) {
-          console.log(error);
+      if (qty.length != 0) {
+        var res = addQtyToPrdct(index, luserid, -1)
+        var products = res.data[0].products;
+        while (CartProductsList.length > 0)
+          CartProductsList.pop();
+        products.forEach(element => {
+          CartProductsList.push(element);
         });
+        setCartProductsList(CartProductsList);
+        setcart(res.data[0]);
+        console.log("total amount is == ", res.data[0].totalAmount)
+        console.log("cart is ", cart);
+      }
       else
         axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
           console.log(res.data);
           Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-
             var products = res.data[0].products;
             while (CartProductsList.length > 0)
               CartProductsList.pop();
@@ -265,16 +254,16 @@ export default function CartModal(props) {
 
 
 
-  const goToCartPage = (userId) =>{
+  const goToCartPage = (userId) => {
     console.log(userId);
     navigate('/Cart')
-    
+
   }
 
 
   return (
     <>
-      <Box sx={{ flexGrow: 0.2 }}>
+      {<Box sx={{ flexGrow: 0.2 }}>
         <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
           <IconButton onClick={handlecartOpen} sx={{ p: 1, m: 0, bgcolor: deepPurple[300] }}>
             <ShoppingCartIcon />
@@ -421,7 +410,7 @@ export default function CartModal(props) {
             <Grid container spacing={2}>
               <Grid item xs={6} md={8}>
                 <Typography variant="h6" align="left">
-                  <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={()=>{goToCartPage(localStorage.getItem("userId"))}}>Proceed To Buy</Button>
+                  <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={() => { goToCartPage(localStorage.getItem("userId")) }}>Proceed To Buy</Button>
                 </Typography>
               </Grid>
               <Grid item xs={4}>
@@ -433,7 +422,7 @@ export default function CartModal(props) {
           </DialogContent>
         </Dialog>
 
-      </Box>
+      </Box>}
       <Snackbar
         open={opensnack}
         autoHideDuration={6000}

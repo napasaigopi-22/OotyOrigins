@@ -4,7 +4,9 @@ import Axios from 'axios';
 import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../Assets/Header.css';
+
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
+
 import item_product_1 from '../../Assets/images/item_product_1.png'
 import item_product_2 from '../../Assets/images/item_product_2.png'
 import item_product_3 from '../../Assets/images/item_product_3.png'
@@ -15,9 +17,11 @@ import item_product_7 from '../../Assets/images/item_product_7.png'
 import item_product_8 from '../../Assets/images/item_product_8.png'
 import item_product_9 from '../../Assets/images/item_product_9.png'
 import item_product_10 from '../../Assets/images/item_product_10.png'
+
 import { useSelector } from "react-redux";
 import store from '../../Store';
 import './HomePage.css';
+
 
 
 

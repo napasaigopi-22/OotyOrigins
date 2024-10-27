@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     zipcode: { type: String, required: true }
   },
   phone: { type: String, required: true },
+  IsUser:{type: Boolean, required:true},
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
