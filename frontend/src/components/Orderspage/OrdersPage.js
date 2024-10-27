@@ -24,7 +24,7 @@ function OrdersPage() {
     return (
         <>
             <NavBar />
-            <Container maxWidth="md">
+            <Container maxWidth="md" >
                 <Box sx={{ textAlign: 'center', mt: 4 }}>
                     <Typography variant="h4">Buy Success</Typography>
                     <Typography variant="h6">Order ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</Typography>
