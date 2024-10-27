@@ -24,6 +24,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import store from '../Store';
 import '../index.css';
+import logo from "./images/logo512.png";
+import "./NavBar.css";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -170,9 +172,6 @@ function NavBar() {
             </div>
         ))
     );
-
-
-
 
     const submitLogin = () => {
         if (Username && Password) {
@@ -551,7 +550,11 @@ function NavBar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <nav className="NavBar">
+                <a href="/">
+                    <img src={logo} alt="Company Logo" className="logo" />
+                </a>                   
+                </nav>
                     <Typography
                         variant="h6"
                         noWrap

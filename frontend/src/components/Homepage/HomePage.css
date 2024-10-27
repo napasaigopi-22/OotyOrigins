@@ -1,0 +1,110 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+
+.HeroSection {
+    background-size: cover;
+    color: rgb(96, 92, 92);
+    text-align: center;
+    padding: 80px 20px;
+}
+
+
+.HeroSection h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: #f6f2f2;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.HeroSection p {
+    font-size: 1.2rem;
+    color: #0b0a0a;
+    font-weight: 300;
+}
+
+    li {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    padding: 20px;
+    transition: transform 0.3s;
+}
+
+li:hover {
+    transform: translateY(-5px);
+}
+
+.explore-categories {
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.explore-categories:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.categoriesList {
+    display: block;
+    font-size: 1.1rem;
+    color: #e3dddd;
+    font-weight: bold;
+    margin-top: 10px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.categoriesList:hover {
+    color: #0cbced;
+}
+
+.MuiGrid2-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.MuiCard-root {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.MuiCard-root:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.MuiCardContent-root {
+    padding: 20px;
+}
+
+.MuiTypography-h4 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.MuiCardMedia-root {
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+p {
+    font-size: 0.9rem;
+    color: #f5f1f1;
+}
+
+.container {
+    margin-bottom: 50px;
+}

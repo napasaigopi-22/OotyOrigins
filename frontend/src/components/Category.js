@@ -13,7 +13,7 @@ function Category() {
     const [showProd, setshowProd] = useState([]);
     // const [loaded, setloaded] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { 
         Axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
             console.log("product called ",product,"==setted prods==",res.data);
@@ -54,7 +54,15 @@ function Category() {
                         {
                             showProd.map((val, key) => {
                                 return <Grid2 item xs={4} size={4} >
-                                    <Product style={{ margin: 'auto' }} prdId={val.productId} name={val.name} cost={val.price} stock={val.stock} rating= {val.rating} ></Product>
+                                    <Product style={{ margin: 'auto' }}
+                                            prdId={val.productId} 
+                                            name={val.name} 
+                                            cost={val.price} 
+                                            stock={val.stock} 
+                                            rating= {val.rating} 
+                                            imageUrl= {val.imageUrl}>
+
+                                    </Product>
                                 </Grid2>
                             })
                         }

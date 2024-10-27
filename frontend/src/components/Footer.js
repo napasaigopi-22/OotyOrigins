@@ -32,9 +32,8 @@ const Footer = () => {
         <div className="footer-section links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/about">About Us</a></li>
+            <li><a href="/BacktoTop">Back to Top</a></li>
             <li><a href="/products">Products</a></li>
-            <li><a href="/cart">Your Cart</a></li>
             
           </ul>
         </div>
