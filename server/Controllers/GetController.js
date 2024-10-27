@@ -12,9 +12,7 @@ module.exports.UsersController = async (req, res, next) => {
 
 module.exports.UserController = async (req, res, next) => {
     try {
-        console.log("\n\n\n",req.body)
         const listOfUsers = await models.User.find({username:req.body.username});
-        console.log(listOfUsers)
         return res.json(listOfUsers[0]);
     } catch (error) {
         console.log(error);
