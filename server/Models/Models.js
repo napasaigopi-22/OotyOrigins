@@ -27,6 +27,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   images: [{ type: String }], // Array of image URLs
   stock: { type: Number, default: 0 },
+  uploadedBy:{type:String, required:true},
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

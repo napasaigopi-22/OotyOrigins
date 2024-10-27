@@ -1,3 +1,4 @@
+const { model } = require("mongoose");
 const models = require("../Models/Models");
 
 // Add a new product to the cart
@@ -185,3 +186,13 @@ module.exports.showCart = async (req, res, next) => {
         return res.status(500).json({ message: "Error showing product from cart" });
     }
 }
+
+
+
+// model.exports.CreateProduct= async (req,res,next)=>{
+//     try{
+//         console.log(req.body);
+//     } catch(error){
+//         console.log(error)
+//     }
+// }

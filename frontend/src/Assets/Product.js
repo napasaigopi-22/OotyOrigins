@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Product.css';
 import { Provider } from 'react-redux'
-import store from '../Store'
+import store from '../Store';
+// import fs ;
 
 
 
@@ -23,14 +24,16 @@ export default function Product(props) {
     const [msg,setMsg] = React.useState("Added To Cart Succesfully");
     const [token, setToken] = React.useState("");
     const [username,setusername] = React.useState("");
-    
+    const url = "src/Assets/images/";
 
+    const reader = new FileReader();
 
     const navigate = useNavigate();
     // console.log("\n\n\n\n\n\n\n\n user is ",localStorage.getItem("userId"));
 
     React.useEffect(() => {
         setPrd(props.prdId);
+        console.log(props.imageUrl)
     },[props.prdId]);
 
     React.useEffect(() => {
@@ -125,10 +128,11 @@ export default function Product(props) {
                 <React.Fragment>
                     <CardContent >
                         <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{props.name}</Typography>
-                        <CardMedia onClick={handleProdClick}
+                        <img onClick={handleProdClick}
                             component="img"
                             height="194"
-                            image={props.image}
+                            // src={url+props.imageUrl[0]}
+                            src={'http://localhost:4000/images/'+props.imageUrl[0]}
                             alt="Product Image"
                         />
                     </CardContent>
