@@ -15,3 +15,8 @@ code {
   background-color: lightgreen !important;
   margin: 8px !important;
 }
+
+.cartdeleteactions{
+  background-color: rgb(0, 0, 0) !important;
+  margin: 8px !important;
+}

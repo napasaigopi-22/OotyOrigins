@@ -27,7 +27,6 @@ module.exports.addProductToCart = async (req, res, next) => {
             // Create a new cart for the user if no active cart exists
             const product = await models.Product.find({productId:productId});
             const cartlist = await models.Cart.find({});
-            console.log(product[0].price)
 
             const newCart = new models.Cart({
                 cartId:"cart_"+cartlist.length,
@@ -50,7 +49,6 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
     try {
         const { userId, productId, additionalQuantity } = req.body;
 
-        console.log("in adding quantity -- ", req.body);
 
         // Find active cart for the user
         let cart = await models.Cart.findOne({ isActive: 1, userId });
@@ -61,11 +59,13 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
 
             if (productInCart) {
                 // Update product quantity
-                console.log("\n\n",(await models.Product.find({productId:productId}))[0].price,productId,"\n\n")
 
                 productInCart.quantity += additionalQuantity;
+                const PrdIndx = cart.products.findIndex(item => item.productId === productId);
+                if(productInCart.quantity<=0)
+                    cart.products.splice(PrdIndx, 1);
                 cart.totalAmount += (await models.Product.find({productId:productId}))[0].price * additionalQuantity;
-                cart.updatedAt = Date.now();
+                    cart.updatedAt = Date.now();
 
                 const updatedCart = await cart.save();
                 return res.json(updatedCart);
@@ -122,23 +122,29 @@ module.exports.deleteProductFromCart = async (req, res, next) => {
         const { userId, productId } = req.body;
 
         // Find active cart for the user
-        let cart = await models.Cart.findOne({ isActive: 1, userId });
-
+        let cart = await models.Cart.findOne({ isActive: 1, userId:userId });
+        var product ;
         if (cart) {
             // Find the product in the cart
             const productIndex = cart.products.findIndex(item => item.productId === productId);
 
             if (productIndex !== -1) {
                 // Reduce the total amount accordingly
-                const productPrice = (await models.Product.findById(productId)).price;
+                product = (await models.Product.find({productId:productId}))[0];
+                const productPrice = product.price;
                 cart.totalAmount -= cart.products[productIndex].quantity * productPrice;
 
                 // Remove the product from the cart
                 cart.products.splice(productIndex, 1);
                 cart.updatedAt = Date.now();
+                
+                if(cart.products.length==0)
+                    cart.isActive=0;
 
                 const updatedCart = await cart.save();
-                return res.json(updatedCart);
+                
+
+                return res.json({"updatedCart":updatedCart,"deleted":product});
             } else {
                 return res.status(404).json({ message: "Product not found in cart." });
             }
@@ -161,7 +167,6 @@ module.exports.showCart = async (req, res, next) => {
         cart = JSON.stringify(cart);
         cart=JSON.parse(cart);
         var prdids=[];
-        console.log("cart length is ",cart.length)
         if(cart.length==0)
             return res.json([]);
 
