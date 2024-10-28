@@ -1,12 +1,6 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia } from '@mui/material';
 import * as React from 'react';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import Typography from '@mui/material/Typography';
-import { CardMedia, IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -123,26 +117,29 @@ export default function Product(props) {
         navigate('/ProductDetail',{state:prd});
     }
     return (
-        <Box sx={{ width: '100%', height:'50%' }}>
-            <Card >
-                <React.Fragment>
-                    <CardContent >
+        <Box sx={{ width: 300, height:500, margin: '2px' }}>
+            <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+               
+                    <CardContent onClick={handleProdClick} sx={{ flexGrow: 1, cursor: 'pointer' }}>
                         <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{props.name}</Typography>
-                        <img onClick={handleProdClick}
-                            component="img"
-                            height="194"
+                        <img 
                             // src={url+props.imageUrl[0]}
                             src={'http://localhost:4000/images/'+props.imageUrl[0]}
                             alt="Product Image"
+                            style={{ height: '250px',width: '100%', objectFit: 'cover', borderRadius: '2px' }}
                         />
+                        <Typography variant="body2" sx={{ textAlign: 'right', color: 'black', fontWeight: 'bold' }}> ₹ {props.cost}/-</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                            <Typography variant="body2" sx={{ color: 'black', fontWeight: 'bold', mr: 1 }}>
+                            Rating:
+                            </Typography>
+                            <Rating name="product-rating" value={props.rating} precision={0.5} readOnly />
+                        </Box>
                     </CardContent>
-                    <CardContent onClick={handleProdClick}>
-                        <p style={{ textAlign: 'right' }}><b>Rs: </b>{props.cost}/-</p>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} sx={{ width: '45%', margin: 'auto' }} variant="contained" color="success" size="large">Add To Cart</Button>
+                    <CardActions sx={{ justifyContent: 'center' }}>
+                        <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
-                </React.Fragment>
+               
             </Card>
             <Snackbar
                 open={open}

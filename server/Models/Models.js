@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   userId: { type: String, unique: true, required: true },
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }, // hashed password
+  password: { type: String, required: true }, 
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
   description: { type: String },
   price: { type: Number, required: true },
   category: { type: String, required: true },
-  images: [{ type: String }], // Array of image URLs
+  images: [{ type: String }], 
   stock: { type: Number, default: 0 },
   uploadedBy:{type:String, required:true},
   createdAt: { type: Date, default: Date.now },
