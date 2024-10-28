@@ -13,6 +13,7 @@ import Userprofile from './components/UserProfile';
 import CartPage from './components/CartPage/CartPage';
 import OrdersPage from './components/Orderspage/OrdersPage';
 import Footer from './Assets/Footer';
+import Addproduct from './components/Admin/Addproduct';
 
 
 function App() {
@@ -71,6 +72,10 @@ function App() {
                         <Route
                             path="/Orders"
                             element={<OrdersPage />}
+                        />
+                        <Route
+                            path="/AddProduct"
+                            element={<Addproduct />}
                         />
 
                     </Routes>

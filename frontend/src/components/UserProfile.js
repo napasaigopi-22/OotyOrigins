@@ -1,16 +1,29 @@
 import React from "react";
 import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
-import { Box, Container, Grid2, Paper, Typography, CircularProgress, Alert } from "@mui/material";
+import { Box, Container, Paper, Typography, Button } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import store from '../Store';
-import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { useNavigate } from "react-router-dom";
+import MyProducts from "./Admin/MyProducts";
 
 function Userprofile() {
   const [username, setusername] = React.useState("");
   const [user, setuser] = React.useState(null);
+  const [product, setproduct] = React.useState([]);
   const [userload, setuserload] = React.useState("");
   const [adminpproducts, setadminpproducts] = React.useState([]);
+  const navigate = useNavigate();
   // setusername(localStorage.getItem("username"));
+
+  React.useEffect(() => {
+    Axios.get('http://localhost:4000/get/products').then(res => {
+      setproduct(res.data);
+      console.log("get products is ", res.data)
+    }).catch(function (error) {
+      console.log(error);
+    })
+  }, []);
 
   React.useEffect(() => {
     Axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
@@ -20,12 +33,13 @@ function Userprofile() {
       setuserload(res.data)
       store.getState().user = res.data;
       setuser(store.getState().user);
-      Axios.post('http://localhost:4000/get/SellerProducts',{"username":localStorage.getItem("username")}).then(res=>{
-        console.log("res for seller items = ",res);
-        
-      }).catch(error=>{
-        console.log("error is ",error)
-      })
+      if (res.data.IsUser)
+        Axios.post('http://localhost:4000/get/SellerProducts', { "username": localStorage.getItem("username") }).then(res => {
+          console.log("res for seller items = ", res);
+
+        }).catch(error => {
+          console.log("error is ", error)
+        })
     }).catch(function (error) {
       console.log(error);
     });
@@ -53,48 +67,57 @@ function Userprofile() {
                 Address
               </Typography>
 
-              <Grid2 container spacing={2}>
-                <Grid2 item xs={12} sm={6}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
                   <Paper sx={{ padding: 2 }}>
                     <Typography variant="body2" gutterBottom>Street</Typography>
                     <Typography>{user ? user.address.street : ""}</Typography>
                   </Paper>
-                </Grid2>
+                </Grid>
 
-                <Grid2 item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <paper sx={{ padding: 2 }}>
                     <Typography variant="body2" gutterBottom>City</Typography>
                     <Typography>{user ? user.address["city"] : ""}</Typography>
                   </paper>
-                </Grid2>
+                </Grid>
 
-                <Grid2 item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <paper sx={{ padding: 2 }}>
                     <Typography variant="body2" gutterBottom>State</Typography>
                     <Typography>{user ? user.address["state"] : ""}</Typography>
                   </paper>
-                </Grid2>
+                </Grid>
 
-                <Grid2 item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <paper sx={{ padding: 2 }}>
                     <Typography variant="body2" gutterBottom>Zipcode</Typography>
                     <Typography>{user ? user.address["zipcode"] : ""}</Typography>
                   </paper>
-                </Grid2>
-              </Grid2>
+                </Grid>
+              </Grid>
             </Paper>
           </>
         }
-{userload.IsUser && "lala"}
-{!userload.IsUser && <><Paper>
-  <Box>Welcome, {userload.username}</Box>
-  <Typography>Your Products</Typography>
-  <Box>
-
-  </Box>
-  </Paper></>}
+        {userload.IsUser && "lala"}
+        {!userload.IsUser && <><Paper>
+          <Box>Welcome, {userload.username}</Box>
+          <Typography>Your Products</Typography>
+          <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 15 }}>
+            {product.filter((ele) => ele.uploadedBy == localStorage.getItem("userId")).map((index, item) => (
+              <>
+                <Grid size={{ xs: 2, sm: 4, md: 5 }}>
+                  <MyProducts name={index.name} src={index.images[0]} stock={index.stock} />
+                </Grid>
+              </>
+            ))}
+          </Grid>
+          <Box>
+            <Button variant="contained" onClick={() => navigate('/Addproduct')}>Add product</Button>
+          </Box>
+        </Paper></>}
         {!userload.IsUser && <>
-          <p>lavangam</p>
+          <Typography>lavangam</Typography>
         </>
         }
       </Container>
