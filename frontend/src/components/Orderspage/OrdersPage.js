@@ -8,11 +8,12 @@ import CartProduct from "../../components/CartPage/Cartproducts";
 function OrdersPage() {
     const [profile, setProfile] = useState({});
     const [orderItems, setOrderItems] = useState([]);
+    const [orderId, setOrderId] = useState("");
 
     useEffect(() => {
         // Fetch user profile
         Axios.get('http://localhost:4000/user/profile', { params: { userId: localStorage.getItem("userId") } })
-            .then(response => setProfile(response.data))
+            .then(response => {setProfile(response.data); console.log(response)})
             .catch(error => console.log("Error fetching profile: ", error));
 
         // Fetch order items (cart items)
@@ -20,6 +21,25 @@ function OrdersPage() {
             .then(res => setOrderItems(res.data[0].products))
             .catch(error => console.log("Error fetching cart items: ", error));
     }, []);
+
+
+    // Function to save the order in the database
+    const saveOrderToDatabase = (products) => {
+        const orderData = {
+            userId: localStorage.getItem("userId"),
+            products: products,
+            orderId: Math.random().toString(36).substr(2, 9).toUpperCase(), // Generate Order ID
+            // You can add more order details here if needed
+        };
+
+        Axios.post('http://localhost:4000/orders/create', orderData)
+            .then(response => {
+                setOrderId(orderData.orderId); // Set the order ID
+                console.log("Order saved successfully: ", response.data);
+            })
+            .catch(error => console.log("Error saving order: ", error));
+    };
+
 
     return (
         <>

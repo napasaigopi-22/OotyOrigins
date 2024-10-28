@@ -9,12 +9,13 @@ import './Products.css';
 
 function Products() {
     const [product, setproduct] = useState([])
-    const [priceRange, setPriceRange] = useState([0, 1500]);
+    const [priceRange, setPriceRange] = useState([0, 15000]);
     const [rating, setRating] = useState([1, 5]);
 
     useEffect(() => {
         axios.get('http://localhost:4000/get/products').then(res => {
             setproduct(res.data);
+            console.log("get products is ",res.data)
         }).catch(function (error) {
             console.log(error);
         })
@@ -49,7 +50,7 @@ function Products() {
                             onChange={handlePriceChange}
                             valueLabelDisplay="auto"
                             min={0}
-                            max={1500}
+                            max={15000}
                             className="slider"
                         />
                         <Typography>₹{priceRange[0]} - ₹{priceRange[1]}</Typography>
@@ -105,7 +106,7 @@ function Products() {
                                                 cost={val.price}
                                                 stock={val.stock}
                                                 rating={val.rating}
-                                                imageUrl={val.imageUrl}
+                                                imageUrl={val.images}
                                                 style={{ flex: 1 }}
                                             />
                                         </Grid2>

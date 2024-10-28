@@ -120,6 +120,7 @@ function HomePage() {
                                             image={product[0].img}
                                             alt="Product Image"
                                         />
+                                        
                                     </CardContent>
                                     <CardContent>
                                         <p><b>Description</b></p>
