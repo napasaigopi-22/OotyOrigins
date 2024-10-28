@@ -2,25 +2,30 @@ const models = require("../Models/Models");
 
 module.exports.CreateProduct = async (req, res) => {
     try {
-
         const product = {
-            productId: req.body.Product.productId || '', // If productId is coming from frontend, assign it
-            name: req.body.Product.name || '',
-            description: req.body.Product.description || '',
-            price: req.body.Product.price || 0,
-            category: req.body.Product.category || '',
+            name: req.body.productName || '',
+            description: req.body.description || '',
+            price: req.body.price || 0,
+            category: req.body.category || '',
             images: [], // This will be populated below
-            stock: req.body.Product.stock || 0,
-            uploadedBy: '', // Populate this with actual uploader's info
+            stock: req.body.stock || 0,
+            uploadedBy: req.body.uploadedBy, // Populate this with actual uploader's info
             createdAt: new Date(),
             updatedAt: new Date(),
         };
 
         if (req.file) {
+            console.log(req.file.path)
             product.images.push(req.file.path); // Store the path of the uploaded image
         }
 
-        console.log(product);
+
+        var len = await ( models.Product.find({}));
+
+
+        var Prd = new models.Product(product);
+        Prd.productId="p"+(len.length+1);
+        Prd.save();
 
         res.status(201).json({ message: "Product created successfully", product });
     } catch (error) {

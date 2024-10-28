@@ -10,7 +10,7 @@ export default function AddProduct() {
     const [productData, setProductData] = useState({
         productName: '',
         stock: '',
-        cost: '',
+        price: '',
         category: '',
         description: '',
         image: null,
@@ -30,12 +30,15 @@ export default function AddProduct() {
         const formData = new FormData();
         formData.append('productName', productData.productName);
         formData.append('stock', productData.stock);
-        formData.append('cost', productData.cost);
+        formData.append('price', productData.price);
         formData.append('category', productData.category);
         formData.append('description', productData.description);
         formData.append('image', productData.image);
+        formData.append('uploadedBy',localStorage.getItem("userId"));
+        
     
         try {
+            console.log(formData);
           await axios.post('http://localhost:4000/post/AddProduct', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
           });
@@ -71,10 +74,10 @@ export default function AddProduct() {
             required
           />
           <TextField
-            label="Cost"
-            name="cost"
+            label="price"
+            name="price"
             type="number"
-            value={productData.cost}
+            value={productData.price}
             onChange={handleChange}
             fullWidth
             margin="normal"
