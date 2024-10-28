@@ -186,13 +186,3 @@ module.exports.showCart = async (req, res, next) => {
         return res.status(500).json({ message: "Error showing product from cart" });
     }
 }
-
-
-
-// model.exports.CreateProduct= async (req,res,next)=>{
-//     try{
-//         console.log(req.body);
-//     } catch(error){
-//         console.log(error)
-//     }
-// }

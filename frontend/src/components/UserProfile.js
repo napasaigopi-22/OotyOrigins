@@ -1,15 +1,18 @@
 import React from "react";
 import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
-import { Box, Container, Grid2, Paper, Typography, CircularProgress, Alert } from "@mui/material";
+import { Box, Container, Grid2, Paper, Typography, CircularProgress, Alert, Button } from "@mui/material";
 import store from '../Store';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import Addproduct from "./Admin/Addproduct";
+import { useNavigate } from "react-router-dom";
 
 function Userprofile() {
   const [username, setusername] = React.useState("");
   const [user, setuser] = React.useState(null);
   const [userload, setuserload] = React.useState("");
   const [adminpproducts, setadminpproducts] = React.useState([]);
+  const navigate = useNavigate();
   // setusername(localStorage.getItem("username"));
 
   React.useEffect(() => {
@@ -20,12 +23,13 @@ function Userprofile() {
       setuserload(res.data)
       store.getState().user = res.data;
       setuser(store.getState().user);
-      Axios.post('http://localhost:4000/get/SellerProducts',{"username":localStorage.getItem("username")}).then(res=>{
-        console.log("res for seller items = ",res);
-        
-      }).catch(error=>{
-        console.log("error is ",error)
-      })
+      if (res.data.IsUser)
+        Axios.post('http://localhost:4000/get/SellerProducts', { "username": localStorage.getItem("username") }).then(res => {
+          console.log("res for seller items = ", res);
+
+        }).catch(error => {
+          console.log("error is ", error)
+        })
     }).catch(function (error) {
       console.log(error);
     });
@@ -85,16 +89,16 @@ function Userprofile() {
             </Paper>
           </>
         }
-{userload.IsUser && "lala"}
-{!userload.IsUser && <><Paper>
-  <Box>Welcome, {userload.username}</Box>
-  <Typography>Your Products</Typography>
-  <Box>
-
-  </Box>
-  </Paper></>}
+        {userload.IsUser && "lala"}
+        {!userload.IsUser && <><Paper>
+          <Box>Welcome, {userload.username}</Box>
+          <Typography>Your Products</Typography>
+          <Box>
+            <Button variant="contained" onClick={() => navigate('/Addproduct')}>Add product</Button>
+          </Box>
+        </Paper></>}
         {!userload.IsUser && <>
-          <p>lavangam</p>
+          <Typography>lavangam</Typography>
         </>
         }
       </Container>
