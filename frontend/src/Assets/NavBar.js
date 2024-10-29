@@ -100,6 +100,7 @@ function NavBar() {
     const logout = () => {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
         localStorage.setItem("userId", "");
+        window.location.reload();
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }

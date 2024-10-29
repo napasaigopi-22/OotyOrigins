@@ -21,6 +21,11 @@ function CartPage() {
 
     const confirmBuy = (userId) => {
         console.log(userId);
+        //cart is active to be 0
+        //cart should go to order
+        //make order active
+        //send notification to each and every corresponding product seller notification about the order
+        //give option for the user to click on delivered for that specific user, in admin dashboard
         navigate('/Orders')
     }
     return (
@@ -40,7 +45,6 @@ function CartPage() {
                                     </div>
                                     <Divider sx={{ my: 2 }} variant="middle" />
                                 </Box>)
-
                         })}
                       <Divider sx={{ my: 2 }} />
                       <Grid container spacing={2}>
