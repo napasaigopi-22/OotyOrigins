@@ -29,5 +29,7 @@ router.delete('/deleteProductFromCart',deleteProductFromCart)
 
 router.post('/AddProduct', upload.single('image'), CreateProduct);
 
+router.post('/CreateOrder', CreateOrder);
+
 
 module.exports = router;

@@ -70,7 +70,6 @@ export default function AddProduct() {
         formData.append('image', productData.image);
         formData.append('uploadedBy', localStorage.getItem("userId"));
 
-
         try {
             await axios.post('http://localhost:4000/post/AddProduct', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },

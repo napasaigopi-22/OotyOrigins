@@ -17,21 +17,25 @@ export default function Product(props) {
     const [prd, setPrd] = React.useState("");
     const [msg,setMsg] = React.useState("Added To Cart Succesfully");
     const [token, setToken] = React.useState("");
-    const [username,setusername] = React.useState("");
+    const [user,setuser] = React.useState({});
     const url = "src/Assets/images/";
 
     const reader = new FileReader();
 
     const navigate = useNavigate();
-    // console.log("\n\n\n\n\n\n\n\n user is ",localStorage.getItem("userId"));
 
     React.useEffect(() => {
         setPrd(props.prdId);
-        console.log(props.imageUrl)
     },[props.prdId]);
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
+        axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem('username')}).then(res => {
+            console.log("isUser ======== ", res.data);
+            setuser(res.data);
+        }).catch(function (error) {
+            console.log(error);
+        })
     }, [token]);
 
     const [open, setOpen] = React.useState(false);
@@ -66,28 +70,19 @@ export default function Product(props) {
 
     const addToCart = () => {
         var luserid = localStorage.getItem("userId");
-        console.log("added to cart == ", prd,luserid);
-            axios.post('http://localhost:4000/get/users',{"username":luserid}).then(res => {
-                console.log("userdata ======== ", res.data);
-            }).catch(function (error) {
-                console.log(error);
-            })
         if(token) {
             var qty;
             axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
                 if(res.data.length>0){
                 qty=res.data[0].products.filter(ele=>ele.productId==prd);
-                console.log(qty.length>0)
                 if(qty.length!=0)
                     axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: prd, userId: luserid, additionalQuantity: 1 }).then(res => {
-                        console.log(res.data);
                         setMsg("Added To Cart Succesfully");
                     }).catch(function (error) {
                         console.log(error);
                     });
                 else
                     axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
-                        console.log(res.data);
                         setMsg("Added To Cart Succesfully");
                     }).catch(function (error) {
                         console.log(error);
@@ -96,13 +91,11 @@ export default function Product(props) {
                     {
                         console.log("no data");
                         axios.post("http://localhost:4000/post/addToCart",{productId:prd,userId:luserid}).then(res => {
-                            console.log(res.data);
                             setMsg("Added To Cart Succesfully");
                         }).catch(function (error) {
                             console.log(error);
                         });
                     }
-                console.log("{productId: prd, userId: luserid, additionalQuantity: qty }",{ productId: prd, userId: luserid, additionalQuantity: qty })
             }).catch(function (error) {
                 console.log(error);
             });
@@ -113,11 +106,11 @@ export default function Product(props) {
     }
 
     const handleProdClick = () =>{
-        console.log("clicked on ",prd );
         navigate('/ProductDetail',{state:prd});
     }
     return (
         <Box sx={{ width: 300, height:500, margin: '2px' }}>
+            
             <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                
                     <CardContent onClick={handleProdClick} sx={{ flexGrow: 1, cursor: 'pointer' }}>
@@ -136,9 +129,12 @@ export default function Product(props) {
                             <Rating name="product-rating" value={props.rating} precision={0.5} readOnly />
                         </Box>
                     </CardContent>
+                    {(user.IsUser && localStorage.getItem('Token')) && 
                     <CardActions sx={{ justifyContent: 'center' }}>
                         <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
+                    }
+
                
             </Card>
             <Snackbar

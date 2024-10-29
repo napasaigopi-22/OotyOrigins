@@ -20,6 +20,8 @@ function Userprofile() {
     Axios.get('http://localhost:4000/get/products').then(res => {
       setproduct(res.data);
       console.log("get products is ", res.data)
+      console.log(localStorage.getItem('Token'))
+        if(localStorage.getItem('Token')=='')navigate("/")
     }).catch(function (error) {
       console.log(error);
     })
