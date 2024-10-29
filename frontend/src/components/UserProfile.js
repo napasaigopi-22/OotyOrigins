@@ -119,7 +119,6 @@ function Userprofile() {
           </Box>
         </Paper></>}
         {!userload.IsUser && <>
-          <Typography>lavangam</Typography>
         </>
         }
       </Container>

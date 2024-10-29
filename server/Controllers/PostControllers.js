@@ -189,13 +189,13 @@ module.exports.showCart = async (req, res, next) => {
 
 module.exports.CreateOrder = async (req,res,next) =>{
     try{
-        console.log(req.body);
-        const userId=req.body.userId;
-        var prdSeller=[];
-        req.body.products.array.forEach(element => (
-            var obj = {element.products.uploadedby:{productId:element.product.productId,ProduQuantity:element.product.quantity}};
-            prdSeller.push(obj)
-        ));  
+        // console.log(req.body);
+        // const userId=req.body.userId;
+        // var prdSeller=[];
+        // req.body.products.array.forEach(element => (
+        //     var obj = {element.products.uploadedby:{productId:element.product.productId,ProduQuantity:element.product.quantity}};
+        //     prdSeller.push(obj)
+        // ));  
         return JSON({data:"function under construction"})
     } catch(error)
     {

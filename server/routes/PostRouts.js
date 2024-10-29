@@ -1,4 +1,4 @@
-const {addProductToCart, showCart, addQuantityToProduct, deleteProductFromCart} = require('../Controllers/PostControllers');
+const {addProductToCart, showCart, addQuantityToProduct, deleteProductFromCart, CreateOrder} = require('../Controllers/PostControllers');
 const router = require("express").Router();
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');

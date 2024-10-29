@@ -114,7 +114,7 @@ export default function Product(props) {
             <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                
                     <CardContent onClick={handleProdClick} sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{props.name}</Typography>
+                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h5">{props.name}</Typography>
                         <img 
                             // src={url+props.imageUrl[0]}
                             src={'http://localhost:4000/images/'+props.imageUrl[0]}
@@ -127,6 +127,13 @@ export default function Product(props) {
                             Rating:
                             </Typography>
                             <Rating name="product-rating" value={props.rating} precision={0.5} readOnly />
+                            
+                        </Box>
+                        <Box>
+                            
+                        <Typography variant="body2" sx={{ color: 'black', fontWeight: 'bold', mr: 1 }}>
+                             {props.stock} left
+                            </Typography>
                         </Box>
                     </CardContent>
                     {(user.IsUser && localStorage.getItem('Token')) && 
