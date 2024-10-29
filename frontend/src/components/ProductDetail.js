@@ -19,7 +19,7 @@ function ProductDetail() {
     useEffect(()=>{
       axios.post('http://localhost:4000/get/GetproductById',{"id":value}).then(res => {
         setProduct(res.data[0]);
-        console.log("categories ======== ", product)
+        console.log("categories ======== ", product);
     }).catch(function (error) {
         console.log(error);
     })
