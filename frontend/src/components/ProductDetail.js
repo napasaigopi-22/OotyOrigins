@@ -31,7 +31,6 @@ function ProductDetail() {
 
     return (
       <>
-      
       <NavBar></NavBar>
         <Box sx={{ width: '97%', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>

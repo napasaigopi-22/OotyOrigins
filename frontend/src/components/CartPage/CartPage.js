@@ -8,10 +8,12 @@ import { useNavigate } from "react-router-dom";
 function CartPage() {
     const [products, setProducts] = React.useState([]);
     const [totalAmount, setTotalAmount] = React.useState(0);
+    const [ cart, setCart] = React.useState([]);
     const navigate = useNavigate();
     React.useEffect(() => {
         Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
             console.log("in cart page ", res.data[0].products);
+            setCart(res.data[0]);
             setProducts(res.data[0].products);
             setTotalAmount(res.data[0].totalAmount);
         }).catch(function (error) {
@@ -21,6 +23,10 @@ function CartPage() {
 
     const confirmBuy = (userId) => {
         console.log(userId);
+        console.log(cart);
+        Axios.post('http://localhost:4000/post/CreateOrder',cart).then(res=>{
+            console.log("response is =",res.data);
+        });
         //cart is active to be 0
         //cart should go to order
         //make order active

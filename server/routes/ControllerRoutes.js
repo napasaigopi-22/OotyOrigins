@@ -7,7 +7,8 @@ const {
     ReviewController,
     CartController,
     PaymentController,
-    getProductById
+    getProductById,
+    SellerOrders
 } = require('../Controllers/GetController');
 const router = require("express").Router();
 
