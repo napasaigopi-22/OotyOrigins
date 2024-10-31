@@ -221,3 +221,16 @@ module.exports.CreateOrder = async (req, res, next) => {
         console.log(error);
     }
 }
+
+module.exports.DeliverProduct = async (req,res,next) => {
+    try{
+        const order = (await models.Order.find({orderId:req.body.orderId}))[0];
+        console.log("order is =",order);
+        order.status='Delivered';
+        order.save();
+        return res.json(order)
+    } catch(error)
+    {
+        console.log(error);
+    }
+}

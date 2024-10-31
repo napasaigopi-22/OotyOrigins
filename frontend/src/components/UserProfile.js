@@ -12,8 +12,9 @@ function Userprofile() {
   const [user, setuser] = React.useState(null);
   const [product, setproduct] = React.useState([]);
   const [userload, setuserload] = React.useState("");
-  const [adminpproducts, setadminpproducts] = React.useState([]);
+  const [adminpproductsActive, setadminpproductsActive] = React.useState([]);
   const [sellerPrdIds, setsellerPrdIds] = React.useState([]);
+  const [deliveredproducts, setdeliveredproducts] = React.useState([]);
   const navigate = useNavigate();
   // setusername(localStorage.getItem("username"));
 
@@ -44,7 +45,17 @@ function Userprofile() {
   const setAdminProductsList = (products) => {
     if (!userload.IsUser) {
       Axios.post('http://localhost:4000/post/SellerOrders', { "userId": localStorage.getItem("userId") }).then(res => {
-        setadminpproducts(res.data);
+        var prdcts = [];
+        var deliverProducts = []
+        res.data.forEach(ite => {
+          console.log("ite is --", ite.status == "Pending");
+          if (ite.status == "Pending")
+            prdcts.push(ite);
+          else
+            deliverProducts.push(ite);
+        });
+        setdeliveredproducts(deliverProducts);
+        setadminpproductsActive(prdcts);
         var filteredprdts = [];
         products.filter((ele) => ele.uploadedBy == localStorage.getItem("userId")).forEach(element => {
           filteredprdts.push(element)
@@ -59,6 +70,10 @@ function Userprofile() {
         console.log(error)
       })
     }
+  }
+
+  const SellerOrderClicked = (params) => {
+    navigate('/AdminDashboard', { state: params })
   }
 
   return (
@@ -115,52 +130,88 @@ function Userprofile() {
             </Paper>
           </>
         }
-        {userload.IsUser && "lala"}
         {!userload.IsUser && <>
 
           <Grid container columns={4} spacing={4}>
             <Grid size={2}>
               <p style={{ color: 'black' }}>Pending Orders</p>
-              {adminpproducts.map((index, item) => (
+              {adminpproductsActive.length!=0 && adminpproductsActive.map((index, item) => (
                 <>
-                  <Grid size={{ xs: 2, sm: 4, md: 4 }} >
-                    <Card style={{margin:'auto',marginBottom:"15px",marginTop:"15px"}}>
-                      {/* {JSON.stringify(index)} */}
-                      {/* shipping address, product, quantity, price, payment method  */}
-                      {index.username}
-                          {index.products.map((item,index)=>(
-                            <Card sx={3} style={{width:'75%', margin:'auto',marginBottom:"15px",marginTop:"15px"}} >
+                  <div onClick={() => SellerOrderClicked(index)}>
+                    <Grid size={{ xs: 2, sm: 4, md: 4 }}  >
+                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
+                        {index.username}
+                        {index.products.map((item, index) => (
+                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
                             <Grid container columns={4}>
-                              
                               <Grid size={2}>
-                              <p style={{color:'black'}}>{item.name}
+                                <p style={{ color: 'black' }}>{item.name}
                                 </p>
-                                </Grid>
-                                <Grid size={2}>
-                                  <p style={{color:'black'}}>{item.price+" X "+item.quantity +" = "+item.quantity*item.price}</p>
-                                  </Grid>
-                                  
                               </Grid>
-                              </Card>
-                              ))}
-                      <Grid container columns={4} spacing={4}>
-                        <Grid size={2}>
-                          {index.paymentMethod}
+                              <Grid size={2}>
+                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
+                              </Grid>
+                            </Grid>
+                          </Card>
+                        ))}
+                        <Grid container columns={4} spacing={4}>
+                          <Grid size={2}>
+                            {index.paymentMethod}
+                          </Grid>
+                          <Grid size={2}>
+                            {index.totalAmount}
+                          </Grid>
+
                         </Grid>
-                        <Grid size={2}>
-                          {index.totalAmount}
-                        </Grid>
-                        
-                      </Grid>
-                    </Card>
-                  </Grid>
+                      </Card>
+                    </Grid>
+                  </div>
                 </>
               ))}
+              {
+                adminpproductsActive.length==0&&"No Products"
+              }
+              <p style={{ color: 'black' }}>Delivered Products</p>
+              {deliveredproducts.length!=0 && deliveredproducts.map((index, item) => (
+                <>
+                  <div onClick={() => SellerOrderClicked(index)}>
+                    <Grid size={{ xs: 2, sm: 4, md: 4 }}  >
+                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
+                        {index.username}
+                        {index.products.map((item, index) => (
+                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
+                            <Grid container columns={4}>
+                              <Grid size={2}>
+                                <p style={{ color: 'black' }}>{item.name}
+                                </p>
+                              </Grid>
+                              <Grid size={2}>
+                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
+                              </Grid>
+                            </Grid>
+                          </Card>
+                        ))}
+                        <Grid container columns={4} spacing={4}>
+                          <Grid size={2}>
+                            {index.paymentMethod}
+                          </Grid>
+                          <Grid size={2}>
+                            {index.totalAmount}
+                          </Grid>
+                        </Grid>
+                      </Card>
+                    </Grid>
+                  </div>
+                </>
+              ))}
+              {
+                deliveredproducts.length==0&&"No Products"
+              }
             </Grid>
             <Grid size={2}>
+              <Box>Welcome, {userload.username}</Box>
+              <Typography>Your Products</Typography>
               <Paper>
-                <Box>Welcome, {userload.username}</Box>
-                <Typography>Your Products</Typography>
                 <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 15 }}>
                   {product.filter((ele) => ele.uploadedBy == localStorage.getItem("userId")).map((index, item) => (
                     <>
