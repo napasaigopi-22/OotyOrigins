@@ -109,7 +109,7 @@ export default function Product(props) {
         navigate('/ProductDetail',{state:prd});
     }
     return (
-        <Box sx={{ width: 300, height:500, margin: '2px' }}>
+        <Box sx={{ width: 300, height:500, margin: '2px' }} >
             
             <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                
@@ -136,7 +136,7 @@ export default function Product(props) {
                             </Typography>
                         </Box>
                     </CardContent>
-                    {(user.IsUser && localStorage.getItem('Token')) && 
+                    {((user.IsUser && localStorage.getItem('Token') || !localStorage.getItem('Token') )) && 
                     <CardActions sx={{ justifyContent: 'center' }}>
                         <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>

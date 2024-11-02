@@ -93,7 +93,7 @@ function NavBar() {
     const [snackMessage, setsnackMessage] = React.useState("");
     const [open, setOpen] = React.useState(false);
     const [opensnack, setOpensnack] = React.useState(false);
-    const [user, setuser] = React.useState("");
+    const [isUser, setisUser] = React.useState(true);
 
     const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
@@ -101,6 +101,7 @@ function NavBar() {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
         localStorage.setItem("userId", "");
         window.location.reload();
+        setisUser(true);
         handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
@@ -210,6 +211,8 @@ function NavBar() {
                 user.username = data.username;
                 setsnackMessage("Log in Succesfull!");
                 handleClicksnack();
+
+                window.location.reload();
             }).catch(function (error) {
                 console.log(error);
                 setsnackMessage("Login Failed! Try Again");
@@ -288,6 +291,7 @@ function NavBar() {
         console.log("userid here is ", localStorage.getItem("username"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
             localStorage.setItem("userId", res.data.userId)
+            setisUser(res.data.IsUser);
             Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
                 console.log("showcart response is ", res.data)
                 if (res.data.length > 0) {
@@ -504,7 +508,10 @@ function NavBar() {
                             />
                         </Search>
                     </Box>
+                    {/* {localStorage.getItem("userId")} */}
+                    {((localStorage.getItem("userId")=='undefined') || isUser ) &&
                     <CartModal></CartModal>
+                    }
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">

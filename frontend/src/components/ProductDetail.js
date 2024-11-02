@@ -19,7 +19,7 @@ function ProductDetail() {
     useEffect(()=>{
       axios.post('http://localhost:4000/get/GetproductById',{"id":value}).then(res => {
         setProduct(res.data[0]);
-        console.log("categories ======== ", product)
+        console.log("categories ======== ", product);
     }).catch(function (error) {
         console.log(error);
     })
@@ -31,7 +31,6 @@ function ProductDetail() {
 
     return (
       <>
-      
       <NavBar></NavBar>
         <Box sx={{ width: '97%', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>

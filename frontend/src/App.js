@@ -14,6 +14,7 @@ import CartPage from './components/CartPage/CartPage';
 import OrdersPage from './components/Orderspage/OrdersPage';
 import Footer from './Assets/Footer';
 import Addproduct from './components/Admin/Addproduct';
+import AdminDashboard from './components/Admin/AdminDashboard';
 
 
 function App() {
@@ -47,11 +48,7 @@ function App() {
                             path="/products"
                             element={<Products />}
                         />
-
-                        {/* If any route mismatches the upper 
-          route endpoints then, redirect triggers 
-          and redirects app to home component with to="/" */}
-                        {/* <Redirect to="/" /> */}
+                        
                         <Route
                             path="/ProductDetail"
                             element={<ProductDetail />}
@@ -76,6 +73,11 @@ function App() {
                         <Route
                             path="/AddProduct"
                             element={<Addproduct />}
+                        />
+
+                        <Route
+                            path="/AdminDashboard"
+                            element={<AdminDashboard />}
                         />
 
                     </Routes>

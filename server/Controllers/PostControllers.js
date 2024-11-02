@@ -12,13 +12,13 @@ module.exports.addProductToCart = async (req, res, next) => {
         if (cart) {
             // Check if product already exists in the cart
             const existingProduct = cart.products.find(item => item.productId === productId);
-            
+
             if (existingProduct) {
                 return res.status(400).json({ message: "Product already exists in the cart. Use update quantity instead." });
             } else {
-                
+
                 cart.products.push({ productId, quantity });
-                cart.totalAmount += (await models.Product.find({productId:productId}))[0].price * quantity;
+                cart.totalAmount += (await models.Product.find({ productId: productId }))[0].price * quantity;
                 cart.updatedAt = Date.now();
 
                 const updatedCart = await cart.save();
@@ -26,12 +26,12 @@ module.exports.addProductToCart = async (req, res, next) => {
             }
         } else {
             // Create a new cart for the user if no active cart exists
-            const product = await models.Product.find({productId:productId});
+            const product = await models.Product.find({ productId: productId });
             const cartlist = await models.Cart.find({});
 
             const newCart = new models.Cart({
-                cartId:"cart_"+cartlist.length,
-                userId:userId,
+                cartId: "cart_" + cartlist.length,
+                userId: userId,
                 products: [{ productId, quantity }],
                 totalAmount: product[0].price * quantity,
                 isActive: 1
@@ -63,10 +63,10 @@ module.exports.addQuantityToProduct = async (req, res, next) => {
 
                 productInCart.quantity += additionalQuantity;
                 const PrdIndx = cart.products.findIndex(item => item.productId === productId);
-                if(productInCart.quantity<=0)
+                if (productInCart.quantity <= 0)
                     cart.products.splice(PrdIndx, 1);
-                cart.totalAmount += (await models.Product.find({productId:productId}))[0].price * additionalQuantity;
-                    cart.updatedAt = Date.now();
+                cart.totalAmount += (await models.Product.find({ productId: productId }))[0].price * additionalQuantity;
+                cart.updatedAt = Date.now();
 
                 const updatedCart = await cart.save();
                 return res.json(updatedCart);
@@ -123,29 +123,29 @@ module.exports.deleteProductFromCart = async (req, res, next) => {
         const { userId, productId } = req.body;
 
         // Find active cart for the user
-        let cart = await models.Cart.findOne({ isActive: 1, userId:userId });
-        var product ;
+        let cart = await models.Cart.findOne({ isActive: 1, userId: userId });
+        var product;
         if (cart) {
             // Find the product in the cart
             const productIndex = cart.products.findIndex(item => item.productId === productId);
 
             if (productIndex !== -1) {
                 // Reduce the total amount accordingly
-                product = (await models.Product.find({productId:productId}))[0];
+                product = (await models.Product.find({ productId: productId }))[0];
                 const productPrice = product.price;
                 cart.totalAmount -= cart.products[productIndex].quantity * productPrice;
 
                 // Remove the product from the cart
                 cart.products.splice(productIndex, 1);
                 cart.updatedAt = Date.now();
-                
-                if(cart.products.length==0)
-                    cart.isActive=0;
+
+                if (cart.products.length == 0)
+                    cart.isActive = 0;
 
                 const updatedCart = await cart.save();
-                
 
-                return res.json({"updatedCart":updatedCart,"deleted":product});
+
+                return res.json({ "updatedCart": updatedCart, "deleted": product });
             } else {
                 return res.status(404).json({ message: "Product not found in cart." });
             }
@@ -161,42 +161,74 @@ module.exports.deleteProductFromCart = async (req, res, next) => {
 
 // show existing cart
 module.exports.showCart = async (req, res, next) => {
-    try{
-        var cart ={};
-        cart = await models.Cart.find({userId:req.body.userId, isActive:1});
-        
+    try {
+        var cart = {};
+        cart = await models.Cart.find({ userId: req.body.userId, isActive: 1 });
+        const user = await models.User.find({userId:req.body.userId});
+
         cart = JSON.stringify(cart);
-        cart=JSON.parse(cart);
-        var prdids=[];
-        if(cart.length==0)
+        cart = JSON.parse(cart);
+        var prdids = [];
+        if (cart.length == 0)
             return res.json([]);
 
-        cart[0].products.map((prd)=>{
+        cart[0].products.map((prd) => {
             prdids.push(prd.productId);
         });
 
-        let products = await models.Product.find({productId:prdids});
-        for(let i=0;i<cart[0].products.length;i++){
-            var prdct = products.filter(ele=>ele.productId==cart[0].products[i].productId);
-            cart[0].products[i].product=prdct[0];
+        let products = await models.Product.find({ productId: prdids });
+        for (let i = 0; i < cart[0].products.length; i++) {
+            var prdct = products.filter(ele => ele.productId == cart[0].products[i].productId);
+            cart[0].products[i].product = prdct[0];
+            cart[0].products[i].price = prdct[0].price;
         };
+        cart[0].userAddress=user[0].address;
         return res.json(cart);
-    } catch(error)
-    {
+    } catch (error) {
         return res.status(500).json({ message: "Error showing product from cart" });
     }
 }
 
-module.exports.CreateOrder = async (req,res,next) =>{
+module.exports.CreateOrder = async (req, res, next) => {
+    try {
+        const element = req.body;
+        const userId = req.body.userId;
+        const userAddress = req.body.userAddress;
+        var prdSeller = [];
+        for (var i = 0; i < req.body.products.length; i++) {
+            var obj = {};
+            console.log(element.products[i]);
+            obj = { uploadedBy: element.products[i].product.uploadedBy, ProductDetails: { productId: element.products[i].productId, ProduQuantity: element.products[i].quantity } };
+            prdSeller.push(obj);
+        }
+        const ordersExisting = await models.Order.find({});
+        const orderslength=ordersExisting.length;
+        const order = await models.Order({
+            orderId: 'O'+orderslength,
+            userId: userId,
+            products: req.body.products,
+            totalAmount: req.body.totalAmount,
+            status: 'Pending',
+            orderDate: new Date(),
+            deliveryDate: new Date(),
+            paymentMethod: 'Offline',
+            shippingAddress: userAddress
+        });
+        order.save();
+        //send data to uploadedBy
+        return res.json({ data: "function under construction" })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.DeliverProduct = async (req,res,next) => {
     try{
-        // console.log(req.body);
-        // const userId=req.body.userId;
-        // var prdSeller=[];
-        // req.body.products.array.forEach(element => (
-        //     var obj = {element.products.uploadedby:{productId:element.product.productId,ProduQuantity:element.product.quantity}};
-        //     prdSeller.push(obj)
-        // ));  
-        return JSON({data:"function under construction"})
+        const order = (await models.Order.find({orderId:req.body.orderId}))[0];
+        console.log("order is =",order);
+        order.status='Delivered';
+        order.save();
+        return res.json(order)
     } catch(error)
     {
         console.log(error);
