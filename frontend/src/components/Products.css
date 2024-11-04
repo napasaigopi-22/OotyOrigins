@@ -90,9 +90,6 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Product:hover {
-    transform: scale(1.05);
-}
 
 .Product img {
     max-width: 30%;

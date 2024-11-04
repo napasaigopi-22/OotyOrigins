@@ -17,7 +17,6 @@ import item_product_7 from '../../Assets/images/item_product_7.png'
 import item_product_8 from '../../Assets/images/item_product_8.png'
 import item_product_9 from '../../Assets/images/item_product_9.png'
 import item_product_10 from '../../Assets/images/item_product_10.png'
-
 import { useSelector } from "react-redux";
 import store from '../../Store';
 import './HomePage.css';
@@ -45,6 +44,7 @@ function HomePage() {
         "Furniture":item_product_8,
         "Toys & Games":item_product_9,
         "Home Decor":item_product_10,
+       
     }
 
     useEffect(() => {
@@ -110,39 +110,95 @@ function HomePage() {
                 {
                     pageLoaded && (
                         <Grid2 container spacing={2} sx={{width:'100%'}} >
-                            <Card sx={{ width: '48%', height: '450px', margin:'auto' }}>
+                            <Card sx={{ width: '450px', height: '450px', margin:'auto', 
+                                backgroundColor: '#f9f9f9', 
+                                border: '2px solid gold', 
+                                borderRadius: '10px',
+                                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'
+                                }}>
                                 <React.Fragment>
                                     <CardContent>
-                                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{product[0].name}</Typography>
+                                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{product[5].name}</Typography>
                                         <CardMedia
                                             component="img"
-                                            height="194"
-                                            image={product[0].img}
+                                            height="250"
+                                            image={'http://localhost:4000/images/'+product[5].images[0]}
                                             alt="Product Image"
                                         />
                                         
                                     </CardContent>
-                                    <CardContent>
-                                        <p><b>Description</b></p>
+                                    <CardContent >
+                                    <Typography sx={{ color: 'red', fontWeight: 'bold' }}>
+                                    The wooden carved elephant is a symbol of intricate tribal artistry.</Typography>
                                     </CardContent>
                                 </React.Fragment>
                             </Card>
-                            <Card sx={{ width: '48%', height: '450px', margin:'auto'}}>Details of product</Card>
-                            <Card sx={{ width: '48%', height: '450px', margin:'auto'}}>Details of product</Card>
+                        <Card 
+                        sx={{  width: '415px',height: '400px',margin: 'auto',fontWeight: 'bold',padding: '20px',backgroundColor: '#f9f9f9',  
+                            border: '1px solid black', 
+                            borderRadius: '10px',  
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',  
+                            }}>
 
-                            <Card sx={{ width: '48%', height: '450px',  margin:'auto'}}>
+                             <Typography variant="h5" component="h2" sx={{ marginBottom: '35px' }}>
+                                Details of Product:
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Material:</strong> Crafted from high-quality, sustainably sourced wood.
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Craftsmanship:</strong> Each elephant is hand-carved by skilled artisans, using age-old techniques passed down through generations.
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Design:</strong> The intricate patterns often depict tribal motifs that reflect the rich heritage of the artisans' communities.
+                            </Typography>
+                            <Typography variant="body1" component="p">
+                                <strong>Size and Finish:</strong> Available in various sizes, with a smooth, polished finish that enhances the natural beauty of the wood.
+                            </Typography>
+                        </Card>
+
+                        <Card sx={{  width: '415px',height: '400px',margin: 'auto',fontWeight: 'bold',padding: '20px',backgroundColor: '#f9f9f9',  
+                            border: '1px solid black', 
+                            borderRadius: '10px',  
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',  
+                            }}>
+
+                            <Typography variant="h5" component="h2" sx={{ marginBottom: '35px' }}>
+                                Details of Product:
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Material:</strong> Made from natural clay and glazed for durability and aesthetic appeal.
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Craftsmanship:</strong> Each piece is handcrafted by tribal artisans, showcasing traditional techniques and artistry.
+                            </Typography>
+                            <Typography variant="body1" component="p" sx={{ marginBottom: '25px' }}>
+                                <strong>Design:</strong> Features unique patterns and colors that reflect the cultural heritage of the artisans' community.
+                            </Typography>
+                            <Typography variant="body1" component="p">
+                                <strong>Functionality:</strong> Perfect for serving food, displaying decor, or as a collectible art piece.
+                            </Typography>
+                        </Card>
+
+
+                            <Card sx={{  width: '450px', height: '450px', margin:'auto', 
+                                backgroundColor: '#f9f9f9', 
+                                border: '2px solid gold', 
+                                borderRadius: '10px',
+                                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'}}>
                                 <React.Fragment>
                                     <CardContent>
-                                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{product[1].name}</Typography>
+                                        <Typography sx={{ color: 'text.heading', mb: 1.5 }} variant="h4">{product[4].name}</Typography>
                                         <CardMedia
                                             component="img"
-                                            height="194"
-                                            image={product[1].img}
+                                            height="250"
+                                            image={'http://localhost:4000/images/'+product[4].images[0]}
                                             alt="Product Image"
                                         />
                                     </CardContent>
                                     <CardContent>
-                                        <p><b>Description</b></p>
+                                    <Typography sx={{ color: 'red', fontWeight: 'bold' }}>
+                                    The tribal pottery set embodies traditional craftsmanship.</Typography>
                                     </CardContent>
                                 </React.Fragment>
                             </Card>

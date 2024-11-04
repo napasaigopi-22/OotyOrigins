@@ -7,6 +7,7 @@ import store from '../Store';
 import { useNavigate } from "react-router-dom";
 import MyProducts from "./Admin/MyProducts";
 
+
 function Userprofile() {
   const [username, setusername] = React.useState("");
   const [user, setuser] = React.useState(null);
@@ -79,12 +80,12 @@ function Userprofile() {
   return (
     <>
       <NavBar />
-      <Container maxWidth="xl">
+      <Container maxWidth="sm">
         {userload.IsUser &&
           <>
             <Paper elevation={3} sx={{ padding: 3, mt: 5 }}>
               <Typography variant="h4" gutterBottom>
-                User Profile Page
+                User Profile
               </Typography>
               <Typography variant="h5" gutterBottom>
                 Welcome Back, {username}
@@ -99,34 +100,16 @@ function Userprofile() {
               </Typography>
 
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Paper sx={{ padding: 2 }}>
-                    <Typography variant="body2" gutterBottom>Street</Typography>
-                    <Typography>{user ? user.address.street : ""}</Typography>
+              {['Street', 'City', 'State', 'Zipcode'].map((label, index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <Paper className="address-field">
+                    <Typography variant="body2" gutterBottom>{label}</Typography>
+                    <Typography>{user ? user.address[label.toLowerCase()] : ""}</Typography>
                   </Paper>
                 </Grid>
+              ))}
+            </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <paper sx={{ padding: 2 }}>
-                    <Typography variant="body2" gutterBottom>City</Typography>
-                    <Typography>{user ? user.address["city"] : ""}</Typography>
-                  </paper>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <paper sx={{ padding: 2 }}>
-                    <Typography variant="body2" gutterBottom>State</Typography>
-                    <Typography>{user ? user.address["state"] : ""}</Typography>
-                  </paper>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <paper sx={{ padding: 2 }}>
-                    <Typography variant="body2" gutterBottom>Zipcode</Typography>
-                    <Typography>{user ? user.address["zipcode"] : ""}</Typography>
-                  </paper>
-                </Grid>
-              </Grid>
             </Paper>
           </>
         }

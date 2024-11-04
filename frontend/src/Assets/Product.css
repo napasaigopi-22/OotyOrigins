@@ -5,11 +5,6 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.MuiCard-root:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
-}
-
 /* Product Name */
 .MuiTypography-root {
     font-family: 'Roboto', sans-serif;
@@ -43,7 +38,7 @@
 }
 
 .MuiButton-containedSuccess:hover {
-    background-color: #2ecc71;
+    background-color: #045626;
 }
 
 /* Snackbar */

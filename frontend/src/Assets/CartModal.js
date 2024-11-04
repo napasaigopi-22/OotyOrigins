@@ -1,13 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Card, Dialog, DialogContent, DialogTitle, Divider, IconButton, List, ListItem, ListItemText, Snackbar, Tooltip } from '@mui/material';
+import { Box, Button, Typography, Card, Dialog, DialogContent, DialogTitle, Divider, IconButton, List, ListItem, ListItemText, Snackbar, Tooltip } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from '@mui/icons-material/Remove';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import Axios from 'axios';
 import axios from 'axios'
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
@@ -45,6 +43,9 @@ export default function CartModal(props) {
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
   }, [token]);
+
+  const handleCartClose = () => setOpencart(false);
+
 
   const handleCloseSnakbar = (event, reason) => {
     console.log("handling snackbar clicks");
@@ -289,6 +290,9 @@ export default function CartModal(props) {
         >
           <DialogTitle id="dialog-title">
             My Cart
+            <IconButton onClick={handleCartClose} aria-label="close" style={{ position: 'absolute', right: 8, top: 8, color: 'red' }}>
+            <CancelRoundedIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent id="dialog-description">
 

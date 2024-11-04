@@ -124,15 +124,15 @@ export default function Product(props) {
                         <Typography variant="body2" sx={{ textAlign: 'right', color: 'black', fontWeight: 'bold' }}> ₹ {props.cost}/-</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                             <Typography variant="body2" sx={{ color: 'black', fontWeight: 'bold', mr: 1 }}>
-                            Rating:
+                            Rating :
                             </Typography>
                             <Rating name="product-rating" value={props.rating} precision={0.5} readOnly />
                             
                         </Box>
-                        <Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                             
                         <Typography variant="body2" sx={{ color: 'black', fontWeight: 'bold', mr: 1 }}>
-                             {props.stock} left
+                            Stock : {props.stock} left
                             </Typography>
                         </Box>
                     </CardContent>

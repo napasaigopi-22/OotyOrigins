@@ -43,6 +43,7 @@ function CartPage() {
 
                     <Card maxWidth="md">
                         <h2>Shopping Cart</h2>
+                        <Divider sx={{ my: 1 }}/>
                         {products.map((ele, i) => {
                             return (
                                 <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }}>
@@ -52,17 +53,18 @@ function CartPage() {
                                     <Divider sx={{ my: 2 }} variant="middle" />
                                 </Box>)
                         })}
-                      <Divider sx={{ my: 2 }} />
-                      <Grid container spacing={2}>
-                        <Typography variant="h6" align="left">
-                        <Button variant="contained"  onClick={() => { confirmBuy(localStorage.getItem('userId')) }} >Confirm buy</Button>
-                        </Typography>
+                         <Divider sx={{ my: 2 }}/>
+                      <Grid container spacing={2} alignItems="left">
+                        <Grid item xs={4} md={6}>
+                        <Button variant="contained" sx={{ backgroundColor: 'red' ,fontWeight: 'bold',  padding: '10px 20px',}} onClick={() => { confirmBuy(localStorage.getItem('userId')) }} >Confirm buy</Button>
                         </Grid>
-                        <Grid item xs={4}>
-                        <Typography variant="h6" align="right">
+                        <Grid item xs={6} >
+                        <Typography variant="h6" sx={{fontWeight: 'bold'}} >
                             Total: ₹ {totalAmount} 
                         </Typography>
                         </Grid>
+                        </Grid>
+                        <Divider sx={{ my: 1 }}/>
                     </Card>
                 </Container>
             </div>
