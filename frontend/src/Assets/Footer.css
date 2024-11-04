@@ -1,113 +1,116 @@
-
 .footer {
-    background-color: #0a0a0a;
-    color: #fff;
-    padding: 40px 20px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  .footer-top-strip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1.25cm; 
-    background-color: #3e3c3b; 
-  }
+  background-color: #0a0a0a; /* Main footer background */
+  color: #fff;
+  padding: 0; /* Remove padding for better control */
+  width: 100%;
+  box-sizing: border-box; /* Include padding in total width */
+  font-family: 'Arial', sans-serif; /* Use a clean font */
+}
 
-  .footer-bottom-strip {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1.5cm; 
-    background-color: #060243; 
-  }
-  
-  .footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  
-  .footer-section {
-    flex: 1;
-    padding: 20px;
-    min-width: 250px;
-  }
-  
-  .footer-section h2, .footer-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-  }
-  
-  .footer-section p {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin-bottom: 10px;
-  }
-  
-  .footer-section ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .footer-section ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  .social-icons {
-    display: flex;
-    gap: 10px;
-  }
+.footer-top-strip {
+  height: 60px; /* Set a consistent height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem; /* Font size for better visibility */
+  text-align: center; /* Center text in the strip */
+  width: 100%; /* Full width */
+}
 
-  .social-icons img{
-    border-radius: 25px;
-    border: 3px solid white;
-    
-  }
-  
-  .social-icons a {
-    color: #060606;
-    font-size: 1.5rem;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #0b0a0a;
-    transition: background-color 0.3s;
-  }
-  
-  .social-icons {
-    width: 24px;
-    height: 24px;
-    margin: 0 10px;
-    transition: transform 0.3s ease;
-  }
-  
+.footer-middle {
+  background-color: #302e2e; /* Middle footer section color */
+  padding: 40px 20px; /* Padding for middle section */
+  width: 100%; /* Full width */
 
-  .social-icons a:hover {
-    background-color: #080808;
-  }
-  
-  .footer-bottom {
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #0b0b0b;
-    margin-top: 20px;
-  }
-  
-  .footer-bottom p {
-    font-size: 0.9rem;
-  }
-  
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;/* Set a maximum width */
+  margin: 0 auto; /* Center the content */
+  max-width: 1200px;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 20px;
+  min-width: 250px; /* Minimum width for each section */
+}
+
+.footer-section h2, .footer-section h3 {
+  font-size: 1.5rem; /* Section headings */
+  margin-bottom: 15px; /* Spacing below headings */
+  color: #f9c74f; /* Heading color */
+}
+
+.footer-section p {
+  font-size: 1rem; /* Normal text */
+  line-height: 1.6; /* Line height for readability */
+}
+
+.footer-section ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+}
+
+.footer-section ul li {
+  margin-bottom: 10px; /* Space between links */
+}
+
+.footer-section ul li a {
+  color: #f9c74f; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline; /* Underline on hover */
+  color: #ffffff; /* Change color on hover */
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px; /* Space between icons */
+}
+
+.social-icons a {
+  color: #060606;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.social-icons {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons img {
+  width: 30px; /* Set a fixed width */
+  height: 30px; /* Set a fixed height */
+  border-radius: 50%; /* Circular icons */
+  border: 2px solid #f9c74f; /* Border color */
+}
+
+.social-icons img:hover {
+  transform: scale(1.1); /* Scale effect on hover */
+  border-color: #ffffff; /* Change border color on hover */
+}
+
+.footer-bottom-strip {
+  height: 80px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem; 
+  text-align: center;
+  width: 100%;
+}
+
+.footer-bottom-strip p {
+  margin: 0; /* Remove default margin */
+  color: #f9c74f; /* Footer text color */
+}

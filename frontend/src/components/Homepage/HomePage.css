@@ -34,9 +34,8 @@ body {
     flex-direction: row; 
     align-items: center; 
     padding: 20px;
-    transition: transform 0.3s;
+    transition: transform 0.1s;
 }
-
 
 
 .explore-categories {
@@ -45,10 +44,6 @@ body {
     cursor: pointer;
 }
 
-.explore-categories:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
 
 .categoriesList {
     display: block;
@@ -57,11 +52,9 @@ body {
     font-weight: bold;
     margin-top: 10px;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.1s;
 }
-.categoriesList:hover {
-    color: #0cbced;
-}
+
 
 .MuiGrid2-container {
     max-width: 1200px;
@@ -73,8 +66,6 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
 }
 
 .MuiCard-root {

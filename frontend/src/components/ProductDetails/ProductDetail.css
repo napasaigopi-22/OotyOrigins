@@ -4,7 +4,6 @@
     border-radius: 15px;
     overflow: hidden;
     display:flex;
-    flex-wrap: wrap;
     margin-top: 2rem;
     z-index: -2;
 }
