@@ -8,13 +8,13 @@ import {
     Navigate,
 } from "react-router-dom";
 import Products from './components/Products';
-import ProductDetail from './components/ProductDetail';
 import Userprofile from './components/UserProfile';
 import CartPage from './components/CartPage/CartPage';
 import OrdersPage from './components/Orderspage/OrdersPage';
 import Footer from './Assets/Footer';
 import Addproduct from './components/Admin/Addproduct';
 import AdminDashboard from './components/Admin/AdminDashboard';
+import ProductDetail from './components/ProductDetails/ProductDetail';
 
 
 function App() {

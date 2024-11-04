@@ -191,10 +191,15 @@ module.exports.showCart = async (req, res, next) => {
 
 module.exports.CreateOrder = async (req, res, next) => {
     try {
+        console.log(req.body);
         const element = req.body;
         const userId = req.body.userId;
         const userAddress = req.body.userAddress;
         var prdSeller = [];
+        const filter = { cartId:req.body.cartId};
+        const update = { isActive:0 };
+        const car = await models.Cart.findOneAndUpdate(filter,update);
+        console.log("cart after updating is ",await models.Cart.find({cartId:req.body.cartId}),"  ",car);
         for (var i = 0; i < req.body.products.length; i++) {
             var obj = {};
             console.log(element.products[i]);
@@ -216,7 +221,7 @@ module.exports.CreateOrder = async (req, res, next) => {
         });
         order.save();
         //send data to uploadedBy
-        return res.json({ data: "function under construction" })
+        return res.json(order)
     } catch (error) {
         console.log(error);
     }
@@ -228,9 +233,59 @@ module.exports.DeliverProduct = async (req,res,next) => {
         console.log("order is =",order);
         order.status='Delivered';
         order.save();
-        return res.json(order)
+        return res.json(order);
     } catch(error)
     {
         console.log(error);
     }
 }
+
+module.exports.orderProduct = async(req,res) => {
+    try {
+        const instance = new Razorpay({
+            key_id: process.env.KEY_ID,
+            key_secret: process.env.KEY_SECRET,
+        });
+
+        const options = {
+            amount: req.body.amount * 100,
+            currency:"INR",
+            receipt:crypto.randomBytes(10).toString("hex"),
+        }
+        instance.orders.create(options,(error,order) => {
+            if(error) {
+                console.log(error);
+                return res.status(500).json({message:"Something Went Wrong!"});
+            }
+            res.status(200).json({data:order});
+        });
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({message:"Internal Server Error!"});
+    }
+
+});
+
+//Verifying the payment
+module.exports.verify = async(req,res) => {
+    try {
+        const {
+            razorpay_orderID,
+            razorpay_paymentID,
+            razorpay_signature } = req.body;
+        const sign = razorpay_orderID + "|" + razorpay_paymentID;
+        const resultSign = crypto
+        .createHmac("sha256",process.env.KEY_SECRET)
+        .update(sign.toString())
+        .digest("hex");
+
+        if (razorpay_signature == resultSign){
+            return res.status(200).json({message:"Payment verified successfully"});
+        }
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({message:"Internal Server Error!"});
+    }
+});

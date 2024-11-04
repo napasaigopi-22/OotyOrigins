@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../Assets/NavBar";
 import { Button, Card, Paper } from "@mui/material";
 import Grid from '@mui/material/Grid2';
@@ -10,6 +10,8 @@ function AdminDashboard() {
     const [totalAmount, settotalAmount] = React.useState(0);
     const [value,setvalue] = React.useState({});
     const location = useLocation();
+
+    const navigate = useNavigate();
     
     const prdcts = location.state.products;
     React.useEffect(() => {
@@ -83,7 +85,9 @@ function AdminDashboard() {
                             })
                         }} >Deliver Product</Button>}
                         {value!={} && value.status!="Pending" && "Delivered Succesfully"}
+                        <Button onClick={()=>{navigate('/UserProfile')}}>Back</Button>
                     </Paper>
+                    
                 </Grid>
             </div>
         </>
