@@ -69,7 +69,7 @@ function CartPage() {
                                     <Divider sx={{ my: 2 }} variant="middle" />
                                 </Box>)
                         })}
-<<<<<<< HEAD
+
                          <Divider sx={{ my: 2 }}/>
                       <Grid container spacing={2} alignItems="left">
                         <Grid item xs={4} md={6}>
@@ -78,19 +78,7 @@ function CartPage() {
                         <Grid item xs={6} >
                         <Typography variant="h6" sx={{fontWeight: 'bold'}} >
                             Total: ₹ {totalAmount} 
-                        </Typography>
-=======
-                        <Divider sx={{ my: 2 }} />
-                        <Grid container spacing={2}>
-                            <Typography variant="h6" align="left">
-                                {products.length>0 && <Button variant="contained" onClick={() => { handleClickOpen() }} >Confirm buy</Button> }
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Typography variant="h6" align="right">
-                                Total: ₹ {totalAmount}
-                            </Typography>
->>>>>>> aa46ac67d2877acdc15de5ee6b4a1fcb4a4bd0a4
+                        </Typography>   
                         </Grid>
                         </Grid>
                         <Divider sx={{ my: 1 }}/>
