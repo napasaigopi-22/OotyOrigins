@@ -106,7 +106,7 @@ export default function Product(props) {
     }
 
     const handleProdClick = () =>{
-        navigate('/ProductDetail',{state:prd});
+        navigate('/ProductDetail',{state:props});
     }
     return (
         <Box sx={{ width: 300, height:500, margin: '2px' }} >
