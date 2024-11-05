@@ -52,6 +52,7 @@ export default function AddProduct() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        // console.log(e.target.value);
         setProductData({ ...productData, [name]: value });
     };
 
@@ -65,7 +66,7 @@ export default function AddProduct() {
         formData.append('productName', productData.productName);
         formData.append('stock', productData.stock);
         formData.append('price', productData.price);
-        formData.append('category', productData.category);
+        formData.append('category', productData.category.name);
         formData.append('description', productData.description);
         formData.append('image', productData.image);
         formData.append('uploadedBy', localStorage.getItem("userId"));
