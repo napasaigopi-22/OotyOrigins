@@ -34,7 +34,7 @@ function CartPage() {
     }, []);
 
     const confirmBuy = (userId) => {
-        console.log(handleClickOpen());
+        // console.log(handleClickOpen());
         console.log(userId);
         console.log(cart);
         Axios.post('http://localhost:4000/post/CreateOrder', cart).then(res => {

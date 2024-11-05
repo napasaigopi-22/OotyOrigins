@@ -28,6 +28,8 @@ function ProductDetail() {
         setOpen(false);
     };
 
+    
+
     const action = (
       <React.Fragment>
           <Button color="secondary" size="small" onClick={handleClose}>
