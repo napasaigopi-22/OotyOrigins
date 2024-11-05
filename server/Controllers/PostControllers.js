@@ -265,7 +265,7 @@ module.exports.orderProduct = async(req,res) => {
         res.status(500).json({message:"Internal Server Error!"});
     }
 
-});
+};
 
 //Verifying the payment
 module.exports.verify = async(req,res) => {
@@ -288,4 +288,4 @@ module.exports.verify = async(req,res) => {
         console.log(error);
         res.status(500).json({message:"Internal Server Error!"});
     }
-});
+};
