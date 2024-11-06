@@ -1,12 +1,15 @@
 import NavBar from "../../Assets/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Grid2, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../Assets/Header.css';
 
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
-
+import dev1 from '../../Assets/images/dev1.png';
+import dev2 from '../../Assets/images/dev2.png';
+import dev3 from '../../Assets/images/dev3.png';
+import dev4 from '../../Assets/images/dev4.png';
 import item_product_1 from '../../Assets/images/item_product_1.png'
 import item_product_2 from '../../Assets/images/item_product_2.png'
 import item_product_3 from '../../Assets/images/item_product_3.png'
@@ -46,6 +49,13 @@ function HomePage() {
         "Home Decor":item_product_10,
        
     }
+
+    const developers = [
+        { name: "Dr. T. Senthil Kumar", role: "Principal Investigator", image: dev4 },
+        { name: "N Mahesh", role: " Developer", image: dev1 },
+        { name: "N Sai Gopi", role: " Developer", image: dev2 },
+        { name: "B Lokesh", role: "Developer", image: dev3 },
+    ];
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -88,11 +98,10 @@ function HomePage() {
                 </div>
                 </div>
             </div>
+           
+           
             <div>
-
-            
-
-                <ul >
+             <ul >
                     {
                         categories.map((val, key) => {
                             return <>
@@ -207,6 +216,31 @@ function HomePage() {
                     )
                 }
 
+            </div>
+
+            <div className="developers-section">
+                <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
+                
+                <Grid container spacing={0.1}>
+                    {developers.map((dev, index) => (
+                        <Grid item xs={12} sm={6} md={3} key={index}>
+                            <Card className="developer-card">
+                                <CardMedia
+                                    component="img"
+                                    className="developer-photo"
+                                    image={dev.image}
+                                    alt={`${dev.name}'s photo`}
+                                />
+                                <CardContent>
+                                    <Typography variant="h6" component="div" sx={{ color: 'green', fontWeight: 'bold' }}>{dev.name}</Typography>
+                                    <Typography variant="body2" color="text.secondary" sx={{ color: 'voilet', fontWeight: 'bold' }}>
+                                        {dev.role}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
             </div>
         
         </>

@@ -9,7 +9,7 @@ import './Products.css';
 
 function Products() {
     const [product, setproduct] = useState([])
-    const [priceRange, setPriceRange] = useState([0, 15000]);
+    const [priceRange, setPriceRange] = useState([0, 1500]);
     const [rating, setRating] = useState([1, 5]);
 
     useEffect(() => {
@@ -50,7 +50,7 @@ function Products() {
                             onChange={handlePriceChange}
                             valueLabelDisplay="auto"
                             min={0}
-                            max={15000}
+                            max={1500}
                             className="slider"
                         />
                         <Typography>₹{priceRange[0]} - ₹{priceRange[1]}</Typography>

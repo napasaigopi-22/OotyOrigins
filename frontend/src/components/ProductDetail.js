@@ -63,7 +63,7 @@ function ProductDetail() {
             <Card className= "product-card">
             <CardMedia
               component="img"
-              height="400"
+              height="300"
               image={`http://localhost:4000/images/${product.image || 'imageUrl.jpg'}`}
               alt="product image"
               sx={{ objectFit: 'cover' }}
