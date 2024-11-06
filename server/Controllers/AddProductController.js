@@ -2,6 +2,7 @@ const models = require("../Models/Models");
 
 module.exports.CreateProduct = async (req, res) => {
     try {
+        console.log(req.body.category[0]);
         const product = {
             name: req.body.productName || '',
             description: req.body.description || '',
@@ -16,7 +17,7 @@ module.exports.CreateProduct = async (req, res) => {
         };
 
         if (req.file) {
-            console.log(req.file.filename)
+            // console.log(req.file.filename);
             product.images.push(req.file.filename); // Store the path of the uploaded image
         }
         var len = await ( models.Product.find({}));
