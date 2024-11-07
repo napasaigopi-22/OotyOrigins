@@ -95,3 +95,49 @@ p {
 .container {
     margin-bottom: 50px;
 }
+
+
+.developers-section {
+    padding: 40px;
+    background: linear-gradient(135deg, #89479c 25%, #56914a 75%);
+    text-align: center;
+    border-radius: 140px;
+}
+
+.section-title {
+    margin-bottom: 40px;
+    color: #f0e9e9;
+    font-weight: bolder;
+    font-size: 2rem;
+}
+
+.developer-card {
+    max-width: 240px;
+    max-height: 250px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid #e6f208;
+    
+}
+
+
+.developer-photo {
+    max-width: 170px;
+    max-height: 190px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 1px auto 1px;
+    display: block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e6f208;
+}
+
+.developer-name {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.developer-role {
+   font-size: 1rem;
+}

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../Assets/NavBar";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import { Box, Grid2 } from "@mui/material";
+import { Box, Grid2} from "@mui/material";
 import Product from "../Assets/Product";
 
 function Category() {

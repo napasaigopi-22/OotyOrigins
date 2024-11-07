@@ -105,12 +105,12 @@ function ProductDetail() {
     return (
       <>
       <NavBar></NavBar>
-        <Box sx={{ width: '97%', padding: '20px' }}>
+        <Box sx={{ width: '95%', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
             <card className= "product-card">
             <CardMedia 
               component="img"
-              height="400"
+              height="500"
               src={'http://localhost:4000/images/'+value.imageUrl[0]}
               alt={product.name}
               sx={{ objectFit: 'cover' }}

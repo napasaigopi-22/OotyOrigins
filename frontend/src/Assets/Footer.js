@@ -1,11 +1,7 @@
 import React from 'react';
 import "./Footer.css";
-import insta from '../Assets/images/instagram.png';
-import twitter from '../Assets/images/twitter.png';
-import meta from '../Assets/images/meta.png';
-import google from '../Assets/images/google.png';
-import Asserts from '../Assets/Asserts';
-import { Box, Typography } from '@mui/material';
+import { IconButton, Box } from '@mui/material';
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
 const Footer = () => {
   return (
@@ -29,27 +25,28 @@ const Footer = () => {
             <div className="footer-section links">
               <h3>Quick Links</h3>
               <ul>
-                <li><a href="/BacktoTop">Back to Top</a></li>
+                <li><a href="/BacktoTop">Intro Page</a></li>
                 <li><a href="/products">Products</a></li>
               </ul>
             </div>
 
             <div className="footer-section social">
               <h3>Follow Us</h3>
-              <div className="social-icons">
-                <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                  <img src={Asserts.meta} alt="Meta" className="social-icon" />
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noreferrer">
-                  <img src={twitter} alt="Twitter" className="social-icon" />
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                  <img src={insta} alt="Instagram" className="social-icon" />
-                </a>
-                <a href="https://www.google.com/" target="_blank" rel="noreferrer">
-                  <img src={google} alt="Google" className="social-icon" />
-                </a>
-              </div>
+
+              <Box sx={{ display: 'flex', gap: 2, mt: 4, justifyContent: 'center' }}>
+                    <IconButton href="https://www.facebook.com" target="_blank" sx={{ color: '#fff', '&:hover': { color: '#3b5998' } }}>
+                        <Facebook />
+                    </IconButton>
+                    <IconButton href="https://www.twitter.com" target="_blank" sx={{ color: '#fff', '&:hover': { color: '#00acee' } }}>
+                        <Twitter />
+                    </IconButton>
+                    <IconButton href="https://www.instagram.com" target="_blank" sx={{ color: '#fff', '&:hover': { color: '#e4405f' } }}>
+                        <Instagram />
+                    </IconButton>
+                    <IconButton href="https://www.linkedin.com" target="_blank" sx={{ color: '#fff', '&:hover': { color: '#0077b5' } }}>
+                        <LinkedIn />
+                    </IconButton>
+                </Box>
             </div>
 
             <div className='footer-section contact'>
