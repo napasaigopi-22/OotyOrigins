@@ -65,6 +65,7 @@ module.exports.getProductById = async (req, res) => {
 
 // Order Controller
 module.exports.OrderController = async (req, res, next) => {
+    console.log("in orders controlelr")
     try {
         const listOfOrders = await models.Order.find({});
         return res.json(listOfOrders);

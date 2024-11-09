@@ -1,6 +1,59 @@
 const { model } = require("mongoose");
 const models = require("../Models/Models");
 
+// Add a review for a product
+module.exports.addReview = async (req, res, next) => {
+    try {
+        
+        const { userId, productId, rating, feedback } = req.body;
+        console.log(req.body);
+
+        // Check if the user has already reviewed this product
+        const existingReview = await models.Review.findOne({ userId:userId, productId:productId });
+        if (existingReview) {
+            return res.status(400).json({ message: "You have already reviewed this product." });
+        }
+
+        const reviews = await models.Review.find({});
+        
+
+        // Create a new review
+        const newReview = new models.Review({
+            userId,
+            productId,
+            rating,
+            feedback,
+            reviewId :"R"+reviews.length 
+        });
+
+        await newReview.save();
+        return res.status(201).json({ message: "Review added successfully." });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error adding review." });
+    }
+};
+
+
+module.exports.getReviews = async (req, res, next) => {
+    try {
+        const { productId } = req.params; // Retrieve productId from URL parameters
+
+        // Fetch reviews for the specified product
+        const reviews = await reviews.find({ productId }).populate('userId', 'name'); // Populate userName to display reviewer's name
+
+        if (reviews.length === 0) {
+            return res.status(404).json({ message: "No reviews found for this product." });
+        }
+
+        return res.json(reviews); // Send the reviews as the response
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error fetching reviews." });
+    }
+};
+
+
 // Add a new product to the cart
 module.exports.addProductToCart = async (req, res, next) => {
     try {
