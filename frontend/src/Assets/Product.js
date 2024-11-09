@@ -70,6 +70,7 @@ export default function Product(props) {
 
     const addToCart = () => {
         var luserid = localStorage.getItem("userId");
+        console.log("luserid is  =====-----~~~~~~",luserid)
         if(token) {
             var qty;
             axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {

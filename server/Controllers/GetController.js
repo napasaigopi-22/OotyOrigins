@@ -66,24 +66,29 @@ module.exports.getProductById = async (req, res) => {
 // Order Controller
 module.exports.OrderController = async (req, res, next) => {
     try {
-        const listOfOrders = await models.Order.find({});
+        const listOfOrders = await models.Order.find({userId:req.body.userId});
 
         var sellerPrdtsPID = [];
         const sellerProducts = await models.Product.find({});
         sellerProducts.forEach(ele=>{
             sellerPrdtsPID.push(ele.productId);
-        })
+        });
         var sellersOrders = [];
         for (var j = 0; j < listOfOrders.length; j++) {
             for (var i = 0; i < listOfOrders[j].products.length; i++) {
                 if (sellerPrdtsPID.indexOf(listOfOrders[j].products[i].productId) != -1) {
+                    for(var k=0;k<sellerProducts.length;k++)
+                    {
+                        temp = listOfOrders[j].toJSON();
+                        if(listOfOrders[j].products[i].productId==sellerProducts[k].productId)
+                        {
+                            temp.products[i]=sellerProducts[k];
+                            break;
+                        }
+                    }
                     
                     var user = await models.User.find({ userId: listOfOrders[j].userId });
                     var temp;
-                    console.log("user is =============",user)
-                    temp = listOfOrders[j].toJSON();
-                    temp.username = user[0].username;
-                    console.log("temp is ",temp);
                     sellersOrders.push(temp);
                     break;
                 }
@@ -93,25 +98,29 @@ module.exports.OrderController = async (req, res, next) => {
         var products = [];
         for (var i = 0; i < sellersOrders.length; i++) {
             var tempprdct = [];
-
-            sellersOrders[i].products.forEach((i) => {
+            console.log(listOfOrders[i].products)
+            listOfOrders[i].products.forEach((it) => {
                 sellerProducts.forEach(element => {
                     var e = element.toObject();
-                    e.quantity = i.quantity;
-                    if (element.productId == i.productId) tempprdct.push(e);
+                    e.quantity = it.quantity;
+                        // console.log("e",e,"it",it)
+                    if (element.productId == it.productId) {
+                        if(i==0)
+
+                        console.log("same")
+                        tempprdct.push(e);
+                }
                 });
             });
             products.push(tempprdct);
         }
-        products.filter(re => {
-            console.log("re is ", re);
-            return re.status != ""
-        });
-        proudctJSON = listOfOrders;
+        proudctJSON = sellersOrders;
         for (var i = 0; i < proudctJSON.length; i++) {
+
             proudctJSON[i]['products'] = products[i];
         };
-        // console.log("sending this to user============================================================",proudctJSON);
+        console.log(products[0]);
+        // console.log("sending this to user============================================================",proudctJSON[0]);
         return res.json(proudctJSON);
     } catch (error) {
         console.log(error);

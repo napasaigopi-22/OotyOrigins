@@ -46,7 +46,7 @@ function Userprofile() {
   }, []);
 
   const setUserProductList = (userdetails) => {
-    Axios.post('http://localhost:4000/post/userOrders', { "username": localStorage.getItem("username") }).then(res => {
+    Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r=>r.userId==userdetails.userId);
       console.log("tempvar is ", tempvar)
       setUserPrdIds(tempvar);
@@ -97,9 +97,38 @@ function Userprofile() {
           <>
             <Grid>
             <Grid size="grow">
-              <p style={{ color: 'black' }}>Pending Orders</p>
+              <p style={{ color: 'black' }}>Recieve Orders</p>
               {UserPrdIds.length}
-              {UserPrdIds.length != 0 && UserPrdIds.map((index, item) => (
+              {/* {JSON.stringify(UserPrdIds)} */}
+              { UserPrdIds.map((index, item) => (<Grid>
+                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
+                        {index.username}
+                        {/* {JSON.stringify(index.products)} */}
+                        {index.products.map((item, index) => (
+                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
+                            <Grid container columns={4}>
+                              <Grid size={2}>
+                                <p style={{ color: 'black' }}>{item.name}</p>
+                              </Grid>
+                              <Grid size={2}>
+                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
+                              </Grid>
+                            </Grid>
+                            <h5>Here{index.username}</h5>
+                          </Card>
+                        ))}
+                        <Grid container columns={4} spacing={4}>
+                          <Grid size={2}>
+                            {index.paymentMethod}
+                          </Grid>
+                          <Grid size={2}>
+                            {index.totalAmount}
+                          </Grid>
+
+                        </Grid>
+                      </Card>
+                    </Grid>))}
+              {/* {UserPrdIds.length != 0 && UserPrdIds.map((index, item) => (
                 <>
                   <div>
                     <Grid>
@@ -130,7 +159,7 @@ function Userprofile() {
                     </Grid>
                   </div>
                 </>
-              ))}
+              ))}  */}
               {
                 adminpproductsActive.length == 0 && "No Products"
               }

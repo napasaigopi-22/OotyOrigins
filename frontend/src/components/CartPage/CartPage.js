@@ -82,20 +82,17 @@ function CartPage() {
 
     const confirmBuy = (userId) => {
         handleClickOpen();
+    }
 
-        // Axios.post('http://localhost:4000/post/CreateOrder', cart).then(res => {
-        //     Axios.post('http://localhost:4000/post/orderproducct',{amount:res.data.totalAmount}).then(res=>{
-        //     })
-        //     navigate('/Orders', { state: res.data });
-        // }).catch(error=>{
-        //     console.log(error)
-        // });
-        //cart is active to be 0
-        //cart should go to order
-        //make order active
-        //send notification to each and every corresponding product seller notification about the order
-        //give option for the user to click on delivered for that specific user, in admin dashboard
-
+    const clickedPlaceOrder=(user)=>{
+        cart.paymentMethod = "Offline";
+        Axios.post('http://localhost:4000/post/CreateOrder', cart).then(res => {
+            Axios.post('http://localhost:4000/post/orderproducct',{amount:res.data.totalAmount}).then(res=>{
+            })
+            navigate('/Orders', { state: res.data });
+        }).catch(error=>{
+            console.log(error);
+        });
     }
     return (
         <>
@@ -160,7 +157,7 @@ function CartPage() {
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
                             <Button onClick={() => {
-                                confirmBuy(localStorage.getItem('userId'))
+                                clickedPlaceOrder(localStorage.getItem('userId'))
                             }} >Place Order</Button>
                         </CustomTabPanel>
                         {/* <CustomTabPanel value={value} index={2}>

@@ -6,6 +6,7 @@ const crypto = require('crypto'); // Also ensure crypto is required for generati
 
 // Add a new product to the cart
 module.exports.addProductToCart = async (req, res, next) => {
+    console.log("add to cart is ===111```",req)
     try {
         const { userId, productId } = req.body;
 
@@ -164,22 +165,29 @@ module.exports.deleteProductFromCart = async (req, res, next) => {
 
 // show existing cart
 module.exports.showCart = async (req, res, next) => {
+    console.log("req.body is ",req.body)
     try {
         var cart = {};
         cart = await models.Cart.find({ userId: req.body.userId, isActive: 1 });
+        console.log("cart got",cart);
         const user = await models.User.find({userId:req.body.userId});
+        
 
         cart = JSON.stringify(cart);
         cart = JSON.parse(cart);
         var prdids = [];
         if (cart.length == 0)
             return res.json([]);
+        
 
         cart[0].products.map((prd) => {
             prdids.push(prd.productId);
+            
         });
-
+        
         let products = await models.Product.find({ productId: prdids });
+        console.log("got cart[0].products ",prdids);
+        
         for (let i = 0; i < cart[0].products.length; i++) {
             var prdct = products.filter(ele => ele.productId == cart[0].products[i].productId);
             cart[0].products[i].product = prdct[0];
@@ -222,6 +230,7 @@ module.exports.CreateOrder = async (req, res, next) => {
             paymentMethod: req.body.paymentMethod,
             shippingAddress: userAddress
         });
+        console.log("orders=",req.body);
         order.save();
         //send data to uploadedBy
         return res.json(order)

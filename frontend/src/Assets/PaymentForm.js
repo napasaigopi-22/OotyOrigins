@@ -8,11 +8,13 @@ function PaymentForm(props) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [cardNumber, setcardNumber] = useState('');
+    const [cvv,setcvv] = useState('');
     const navigate = useNavigate();
 
     React.useEffect(()=>{
         props.cart.paymentMethod = "Offline"
-    })
+    });
 
     const handlePayment = async (e) => {
         console.log("cart in payment form is ==",props.cart);
@@ -23,7 +25,7 @@ function PaymentForm(props) {
             Axios.post('http://localhost:4000/post/orderproducct',{amount:props.cart.totalAmount}).then(res=>{
                 e.preventDefault();
                 navigate('/Orders', { state: reso.data });
-            })
+            });
             
         }).catch(error=>{
             console.log(error)
@@ -52,7 +54,7 @@ function PaymentForm(props) {
                     label="Card Number"
                     type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(e) => setcardNumber(e.target.value)}
                     required
                     fullWidth
                 />
@@ -61,7 +63,7 @@ function PaymentForm(props) {
                     label="CVV"
                     type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(e) => setcvv(e.target.value)}
                     required
                     fullWidth
                 />
