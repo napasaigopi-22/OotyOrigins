@@ -4,7 +4,7 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 const { CreateProduct } = require('../Controllers/AddProductController');
-const { SellerOrders } = require('../Controllers/GetController');
+const { SellerOrders, OrderController } = require('../Controllers/GetController');
 
 const storageobj = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -39,5 +39,7 @@ router.post('/DeliverProducts', DeliverProduct);
 router.post('/orderproducct', orderProduct);
 
 router.post('/verify', verify);
+
+router.post('/userOrders', OrderController);
 
 module.exports = router; 

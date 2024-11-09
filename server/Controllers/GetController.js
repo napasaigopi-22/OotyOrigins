@@ -67,7 +67,52 @@ module.exports.getProductById = async (req, res) => {
 module.exports.OrderController = async (req, res, next) => {
     try {
         const listOfOrders = await models.Order.find({});
-        return res.json(listOfOrders);
+
+        var sellerPrdtsPID = [];
+        const sellerProducts = await models.Product.find({});
+        sellerProducts.forEach(ele=>{
+            sellerPrdtsPID.push(ele.productId);
+        })
+        var sellersOrders = [];
+        for (var j = 0; j < listOfOrders.length; j++) {
+            for (var i = 0; i < listOfOrders[j].products.length; i++) {
+                if (sellerPrdtsPID.indexOf(listOfOrders[j].products[i].productId) != -1) {
+                    
+                    var user = await models.User.find({ userId: listOfOrders[j].userId });
+                    var temp;
+                    console.log("user is =============",user)
+                    temp = listOfOrders[j].toJSON();
+                    temp.username = user[0].username;
+                    console.log("temp is ",temp);
+                    sellersOrders.push(temp);
+                    break;
+                }
+            }
+        };
+        var proudctJSON = {};
+        var products = [];
+        for (var i = 0; i < sellersOrders.length; i++) {
+            var tempprdct = [];
+
+            sellersOrders[i].products.forEach((i) => {
+                sellerProducts.forEach(element => {
+                    var e = element.toObject();
+                    e.quantity = i.quantity;
+                    if (element.productId == i.productId) tempprdct.push(e);
+                });
+            });
+            products.push(tempprdct);
+        }
+        products.filter(re => {
+            console.log("re is ", re);
+            return re.status != ""
+        });
+        proudctJSON = listOfOrders;
+        for (var i = 0; i < proudctJSON.length; i++) {
+            proudctJSON[i]['products'] = products[i];
+        };
+        // console.log("sending this to user============================================================",proudctJSON);
+        return res.json(proudctJSON);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error fetching orders" });
@@ -117,40 +162,37 @@ module.exports.SellerOrders = async (req, res, next) => {
             sellerPrdtsPID.push(ele.productId)
         });
         var sellersOrders = [];
-        for(var j=0;j<values.length;j++){
-            for(var i=0;i<values[j].products.length;i++)
-            {
+        for (var j = 0; j < values.length; j++) {
+            for (var i = 0; i < values[j].products.length; i++) {
                 if (sellerPrdtsPID.indexOf(values[j].products[i].productId) != -1) {
-                    var user = await models.User.find({userId:values[j].userId});
+                    var user = await models.User.find({ userId: values[j].userId });
                     var temp;
                     temp = values[j].toJSON();
-                    temp.username=user[0].username;
+                    temp.username = user[0].username;
                     sellersOrders.push(temp);
                     break;
                 }
             }
         };
         var proudctJSON = {};
-        var products=[];
-        for(var i=0;i<sellersOrders.length;i++)
-        {
+        var products = [];
+        for (var i = 0; i < sellersOrders.length; i++) {
             var tempprdct = [];
-            
-            sellersOrders[i].products.forEach((i)=>{
+
+            sellersOrders[i].products.forEach((i) => {
                 sellerProducts.forEach(element => {
                     var e = element.toObject();
-                    e.quantity=i.quantity;
-                    if(element.productId==i.productId)tempprdct.push(e);
+                    e.quantity = i.quantity;
+                    if (element.productId == i.productId) tempprdct.push(e);
                 });
             });
             products.push(tempprdct);
         }
-        proudctJSON=sellersOrders;
-        for(var i=0;i<proudctJSON.length;i++)
-        {
-            proudctJSON[i]['products']=products[i];
+        proudctJSON = sellersOrders;
+        for (var i = 0; i < proudctJSON.length; i++) {
+            proudctJSON[i]['products'] = products[i];
         }
-        
+
         return res.json(proudctJSON);
     } catch (error) {
         console.log(error)
