@@ -80,7 +80,7 @@ function Userprofile() {
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm">
+      <Container maxWidth="xl">
         {userload.IsUser &&
           <>
             <Paper elevation={3} sx={{ padding: 3, mt: 5 }}>
@@ -100,36 +100,34 @@ function Userprofile() {
               </Typography>
 
               <Grid container spacing={2}>
-              {['Street', 'City', 'State', 'Zipcode'].map((label, index) => (
-                <Grid item xs={12} sm={6} key={index}>
-                  <Paper className="address-field">
-                    <Typography variant="body2" gutterBottom>{label}</Typography>
-                    <Typography>{user ? user.address[label.toLowerCase()] : ""}</Typography>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
+                {['Street', 'City', 'State', 'Zipcode'].map((label, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    <Paper className="address-field">
+                      <Typography variant="body2" gutterBottom>{label}</Typography>
+                      <Typography>{user ? user.address[label.toLowerCase()] : ""}</Typography>
+                    </Paper>
+                  </Grid>
+                ))}
+              </Grid>
 
             </Paper>
           </>
         }
         {!userload.IsUser && <>
-
-          <Grid container columns={4} spacing={4}>
-            <Grid size={2}>
+          <Grid container maxWidth="xl" spacing={2}>
+            <Grid size="grow">
               <p style={{ color: 'black' }}>Pending Orders</p>
-              {adminpproductsActive.length!=0 && adminpproductsActive.map((index, item) => (
+              {adminpproductsActive.length != 0 && adminpproductsActive.map((index, item) => (
                 <>
                   <div onClick={() => SellerOrderClicked(index)}>
-                    <Grid size={{ xs: 2, sm: 4, md: 4 }}  >
+                    <Grid>
                       <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
                         {index.username}
                         {index.products.map((item, index) => (
                           <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
                             <Grid container columns={4}>
                               <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.name}
-                                </p>
+                                <p style={{ color: 'black' }}>{item.name}</p>
                               </Grid>
                               <Grid size={2}>
                                 <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
@@ -152,13 +150,13 @@ function Userprofile() {
                 </>
               ))}
               {
-                adminpproductsActive.length==0&&"No Products"
+                adminpproductsActive.length == 0 && "No Products"
               }
               <p style={{ color: 'black' }}>Delivered Products</p>
-              {deliveredproducts.length!=0 && deliveredproducts.map((index, item) => (
+              {deliveredproducts.length != 0 && deliveredproducts.map((index, item) => (
                 <>
                   <div onClick={() => SellerOrderClicked(index)}>
-                    <Grid size={{ xs: 2, sm: 4, md: 4 }}  >
+                    <Grid size="grow" >
                       <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
                         {index.username}
                         {index.products.map((item, index) => (
@@ -188,17 +186,17 @@ function Userprofile() {
                 </>
               ))}
               {
-                deliveredproducts.length==0&&"No Products"
+                deliveredproducts.length == 0 && "No Products"
               }
             </Grid>
-            <Grid size={2}>
+            <Grid size={6}>
               <Box>Welcome, {userload.username}</Box>
               <Typography>Your Products</Typography>
               <Paper>
-                <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 15 }}>
+                <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 2, sm: 4, md: 5 }}>
                   {product.filter((ele) => ele.uploadedBy == localStorage.getItem("userId")).map((index, item) => (
                     <>
-                      <Grid size={{ xs: 2, sm: 4, md: 5 }}>
+                      <Grid size={{ xs: 1, sm: 2, md:2}}>
                         <MyProducts name={index.name} src={index.images[0]} stock={index.stock} />
                       </Grid>
                     </>

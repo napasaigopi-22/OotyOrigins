@@ -17,7 +17,7 @@ function OrdersPage() {
         // Fetch user profile
 
         Axios.get('http://localhost:4000/user/profile', { params: { userId: localStorage.getItem("userId") } })
-            .then(response => {setProfile(response.data); console.log(response);
+            .then(response => {setProfile(response.data); console.log("response is ",response);
                 if(response.data[0].IsUser!=0)navigate('/');
             }).catch(error => console.log("Error fetching profile: ", error));
 
