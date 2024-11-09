@@ -67,8 +67,62 @@ module.exports.getProductById = async (req, res) => {
 module.exports.OrderController = async (req, res, next) => {
     console.log("in orders controlelr")
     try {
-        const listOfOrders = await models.Order.find({});
-        return res.json(listOfOrders);
+        const listOfOrders = await models.Order.find({userId:req.body.userId});
+
+        var sellerPrdtsPID = [];
+        const sellerProducts = await models.Product.find({});
+        sellerProducts.forEach(ele=>{
+            sellerPrdtsPID.push(ele.productId);
+        });
+        var sellersOrders = [];
+        for (var j = 0; j < listOfOrders.length; j++) {
+            for (var i = 0; i < listOfOrders[j].products.length; i++) {
+                if (sellerPrdtsPID.indexOf(listOfOrders[j].products[i].productId) != -1) {
+                    for(var k=0;k<sellerProducts.length;k++)
+                    {
+                        temp = listOfOrders[j].toJSON();
+                        if(listOfOrders[j].products[i].productId==sellerProducts[k].productId)
+                        {
+                            temp.products[i]=sellerProducts[k];
+                            break;
+                        }
+                    }
+                    
+                    var user = await models.User.find({ userId: listOfOrders[j].userId });
+                    var temp;
+                    sellersOrders.push(temp);
+                    break;
+                }
+            }
+        };
+        var proudctJSON = {};
+        var products = [];
+        for (var i = 0; i < sellersOrders.length; i++) {
+            var tempprdct = [];
+            console.log(listOfOrders[i].products)
+            listOfOrders[i].products.forEach((it) => {
+                sellerProducts.forEach(element => {
+                    var e = element.toObject();
+                    e.quantity = it.quantity;
+                        // console.log("e",e,"it",it)
+                    if (element.productId == it.productId) {
+                        if(i==0)
+
+                        console.log("same")
+                        tempprdct.push(e);
+                }
+                });
+            });
+            products.push(tempprdct);
+        }
+        proudctJSON = sellersOrders;
+        for (var i = 0; i < proudctJSON.length; i++) {
+
+            proudctJSON[i]['products'] = products[i];
+        };
+        console.log(products[0]);
+        // console.log("sending this to user============================================================",proudctJSON[0]);
+        return res.json(proudctJSON);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error fetching orders" });
@@ -118,40 +172,37 @@ module.exports.SellerOrders = async (req, res, next) => {
             sellerPrdtsPID.push(ele.productId)
         });
         var sellersOrders = [];
-        for(var j=0;j<values.length;j++){
-            for(var i=0;i<values[j].products.length;i++)
-            {
+        for (var j = 0; j < values.length; j++) {
+            for (var i = 0; i < values[j].products.length; i++) {
                 if (sellerPrdtsPID.indexOf(values[j].products[i].productId) != -1) {
-                    var user = await models.User.find({userId:values[j].userId});
+                    var user = await models.User.find({ userId: values[j].userId });
                     var temp;
                     temp = values[j].toJSON();
-                    temp.username=user[0].username;
+                    temp.username = user[0].username;
                     sellersOrders.push(temp);
                     break;
                 }
             }
         };
         var proudctJSON = {};
-        var products=[];
-        for(var i=0;i<sellersOrders.length;i++)
-        {
+        var products = [];
+        for (var i = 0; i < sellersOrders.length; i++) {
             var tempprdct = [];
-            
-            sellersOrders[i].products.forEach((i)=>{
+
+            sellersOrders[i].products.forEach((i) => {
                 sellerProducts.forEach(element => {
                     var e = element.toObject();
-                    e.quantity=i.quantity;
-                    if(element.productId==i.productId)tempprdct.push(e);
+                    e.quantity = i.quantity;
+                    if (element.productId == i.productId) tempprdct.push(e);
                 });
             });
             products.push(tempprdct);
         }
-        proudctJSON=sellersOrders;
-        for(var i=0;i<proudctJSON.length;i++)
-        {
-            proudctJSON[i]['products']=products[i];
+        proudctJSON = sellersOrders;
+        for (var i = 0; i < proudctJSON.length; i++) {
+            proudctJSON[i]['products'] = products[i];
         }
-        
+
         return res.json(proudctJSON);
     } catch (error) {
         console.log(error)
