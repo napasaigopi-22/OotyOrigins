@@ -292,6 +292,7 @@ function NavBar() {
     React.useEffect(() => {
         console.log("userid here is ", localStorage.getItem("username"), localStorage.getItem("userId"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
+
             localStorage.setItem("userId", res.data[0].userId);
             // localStorage.setItem("userId",localStorage.getItem("userId"));
             console.log('res.data.userId is -----------',res.data[0].userId);

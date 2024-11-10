@@ -134,6 +134,8 @@ function EditProfile() {
         Save Changes
       </Button>
 
+      <Button onClick={()=>navigate('/UserProfile')} >Back</Button>
+
       <Snackbar
         open={openSnack}
         autoHideDuration={3000}
