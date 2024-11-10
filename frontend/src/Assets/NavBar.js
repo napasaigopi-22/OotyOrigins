@@ -292,6 +292,7 @@ function NavBar() {
         console.log("userid here is ", localStorage.getItem("username"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
             localStorage.setItem("userId", res.data.userId);
+            console.log('isuser is -----------',res.data.IsUser);
             setisUser(res.data.IsUser);
             Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
                 console.log("showcart response is ", res.data);
@@ -510,6 +511,7 @@ function NavBar() {
                         </Search>
                     </Box>
                     {/* {localStorage.getItem("userId")} */}
+                    <p style={{backgroundColor:'black'}}>{isUser?"yes":"no"}</p>
                     {((localStorage.getItem("userId") == 'undefined') || isUser) &&
                         <CartModal></CartModal>
                     }
