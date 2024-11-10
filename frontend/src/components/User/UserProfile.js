@@ -114,7 +114,6 @@ function Userprofile() {
                     </Grid>
                   </Grid>
 
-                  {/* JSON.stringify(index.products) */}
                   {index.products.map((item) => (
                     <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
                       <Grid container columns={4}>
@@ -342,7 +341,13 @@ function Userprofile() {
                     .filter((ele) => ele.uploadedBy === localStorage.getItem("userId"))
                     .map((index) => (
                       <Grid size={{ xs: 1, sm: 2, md: 2 }} key={index.name}>
-                        <MyProducts name={index.name} src={index.images[0]} stock={index.stock} />
+                        <div onClick={()=>{
+                          console.log("clicked",index);
+                          index.prdId=index.productId;
+                          navigate('/productDetail',{state:index})
+                        }}>
+                        <MyProducts  name={index.name} src={index.images[0]} stock={index.stock} />
+                        </div>
                       </Grid>
                     ))
                 }

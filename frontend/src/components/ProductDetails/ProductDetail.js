@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "../../Assets/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
+import EditProductForm from "./ProductEdit";
 
 
 function ProductDetail() {
@@ -18,19 +19,27 @@ function ProductDetail() {
     const [comment, setComment] = useState(""); // For user comment
     const [alreadyReviwed, setAlreadyReviwed] = useState(false);
     const [reviews, setReviews] = useState([]);
+    const [user,setuser] = useState([]);
+
+    useEffect(()=>{
+      console.log("getting username",localStorage.getItem("username"));
+      axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).
+      then(res => { setuser(res.data[0]);
+        console.log("user ======== ", product);
+    }).catch(function (error) {
+        console.log(error);
+    })
+
+    },[])
     
 
   
 
     const location = useLocation();
     var value = location.state;
-    console.log(value);
+    console.log("value is ===",value);
     const userId = localStorage.getItem("userId");
     const userRole = localStorage.getItem("role");
-
-    const handleClick = () => {
-        setOpen(true);
-    };
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -55,7 +64,7 @@ function ProductDetail() {
     useEffect(()=>{
       axios.post('http://localhost:4000/get/GetproductById',{"id":value.prdId}).
       then(res => { setProduct(res.data[0]);
-        console.log("categories ======== ", product);
+        console.log("productbyid is  ======== ", res.data[0]);
     }).catch(function (error) {
         console.log(error);
     })
@@ -151,6 +160,15 @@ function ProductDetail() {
       
 };
 
+const submitProductEdit = (form) =>{
+console.log(form);
+axios.post('http://localhost:4000/post/UpdateProduct',form).then(res=>{
+  console.log(res);
+  window.location.reload();
+})
+
+}
+
 if (!product) {
   return <div><h1>Loading....</h1></div>;
 }
@@ -159,6 +177,8 @@ if (!product) {
     return (
       <>
       <NavBar/>
+      {(user.IsUser && 
+      <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
             <Card className= "product-card">
@@ -247,6 +267,12 @@ if (!product) {
             </IconButton>
             }
             />
+        </div>
+        )}
+              {(!user.IsUser && 
+
+            <EditProductForm product={product} onSubmit={submitProductEdit}/>
+              )}
        
         </>
       );

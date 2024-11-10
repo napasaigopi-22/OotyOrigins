@@ -57,11 +57,14 @@ function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await Axios.put(`http://localhost:4000/api/user/${userDetails._id}`, userDetails);
+      console.log("userDetails is ==================================",userDetails)
+      const response = await Axios.post(`http://localhost:4000/post/UpdateUser`, userDetails);
       console.log('Profile updated:', response.data);
       setSnackMessage("Profile updated successfully!");
+      console.log("setting userDetails.username ",userDetails.username)
+      localStorage.setItem("username",userDetails.username)
       setOpenSnack(true);
-      navigate('/profile');
+      // navigate('/UserProfile');
     } catch (error) {
       console.error('Error saving profile details:', error);
       setSnackMessage("Failed to update profile. Please try again.");
@@ -71,6 +74,8 @@ function EditProfile() {
 
   const handleCloseSnack = () => {
     setOpenSnack(false);
+    if(snackMessage=="Profile updated successfully!")
+      navigate('/UserProfile');
   };
 
   return (

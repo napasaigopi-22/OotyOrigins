@@ -26,20 +26,6 @@ module.exports.getUser= async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
-  
-  // PUT Route to Update User Details
-  module.exports.updateUser= async (req, res) => {
-    try {
-      console.log('Updating user with ID:', req.params.id);
-      const updatedUser = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!updatedUser) return res.status(404).json({ message: 'User not found' });
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      console.error('Error updating user:', error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
-
 
 // Category Controller
 module.exports.CategoryController = async (req, res, next) => {
@@ -66,8 +52,8 @@ module.exports.ProductController = async (req, res, next) => {
 module.exports.getProductById = async (req, res) => {
     try {
         const productId = req.body.id;
-        const product = await models.Product.find({ "productId": productId });
-        console.log(productId, product)
+        const product = await models.Product.find({ productId: productId });
+        console.log(productId, product[0])
 
         if (!product) {
             return res.status(404).json({ message: "Product not found" });

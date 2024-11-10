@@ -30,6 +30,7 @@ export default function Product(props) {
 
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
+        console.log("localStorage.getItem('username') ===",localStorage.getItem('username'))
         axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem('username')}).then(res => {
             console.log("isUser ======== ", res.data, "stuff");
             setuser(res.data[0]);
@@ -137,7 +138,7 @@ export default function Product(props) {
                             </Typography>
                         </Box>
                     </CardContent>
-                    {((user.IsUser && localStorage.getItem('Token') || !localStorage.getItem('Token') )) && 
+                    {((user && user.IsUser) && localStorage.getItem('Token') || !localStorage.getItem('Token') ) && 
                     <CardActions sx={{ justifyContent: 'center' }}>
                         <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
