@@ -1,94 +1,92 @@
-import React, { useState, useEffect } from 'react';
-import { Button, TextField, Container, Grid } from '@mui/material';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { TextField, Button } from '@mui/material';
+import  Axios  from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const EditProfile = ({ userId, isAdmin }) => {
-  // Define state variables for profile data
-  const [profileData, setProfileData] = useState({
-    name: '',
-    phoneNumber: '',
-    address: ''
+function EditProfile() {
+  const [userDetails, setUserDetails] = useState({
+    username: '',
+    Phone: '',
+    Address: '',
+    handleChange: '',
+
   });
-  
-  const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
+  // Fetch user details from the backend when the component mounts
   useEffect(() => {
-    // Fetch the user's current profile data on component mount
-    axios.get(`http://localhost:4000/api/users/${userId}`).then((response) => {
-      setProfileData({
-        name: response.data.name,
-        phoneNumber: response.data.phoneNumber,
-        address: response.data.address
-      });
-      setLoading(false);
-    });
-  }, [userId]);
+    const fetchUserDetails = async () => {
+      try {
+        const response = await Axios.get('http://localhost:4000/api/user/:id'); 
+        console.log('Fetched user details:', response.data);
+        setUserDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userDetails]);
+
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData({
-      ...profileData,
-      [name]: value
-    });
+    const { username, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [username]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Update the user's profile in the backend
-    axios.put(`http://localhost:4000/api/users/${userId}`, profileData)
-      .then((response) => {
-        alert('Profile updated successfully!');
-      })
-      .catch((error) => {
-        alert('There was an error updating the profile.');
-      });
+    try {
+      // Call backend API to save updated details
+      const response = await Axios.put('http://localhost:4000/api/user/:id', userDetails); // Replace with actual API endpoint
+      console.log('Profile updated:', response.data);
+      navigate('/profile'); // Redirect to the Profile page after saving changes
+    } catch (error) {
+      console.error('Error saving profile details:', error);
+    }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <Container>
+    <form onSubmit={handleSubmit}>
       <h2>Edit Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Name"
-              name="name"
-              value={profileData.name}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Phone Number"
-              name="phoneNumber"
-              value={profileData.phoneNumber}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Address"
-              name="address"
-              value={profileData.address}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Save Changes
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+      <TextField
+        label="username"
+        name="username"
+        value={userDetails.username}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <TextField 
+        label="Phone"
+        name="Phone"
+        value={userDetails.Phone}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+       <TextField
+        label="Address"
+        name="Address"
+        value={userDetails.Address}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      {/* Add other form fields for additional details */}
+      
+      <Button variant="contained"
+      sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
+      //onClick={handleEditClick}
+      >
+        Save Changes
+      </Button>
+    </form>
   );
-};
+}
 
 export default EditProfile;

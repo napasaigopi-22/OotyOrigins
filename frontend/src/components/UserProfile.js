@@ -6,9 +6,9 @@ import Grid from '@mui/material/Grid2';
 import store from '../Store';
 import { useNavigate } from "react-router-dom";
 import MyProducts from "./Admin/MyProducts";
+import EditProfile from "../components/EditProfile";
 
-
-function Userprofile() {
+function Userprofile({}) {
   const [username, setusername] = React.useState("");
   const [user, setuser] = React.useState(null);
   const [product, setproduct] = React.useState([]);
@@ -21,10 +21,11 @@ function Userprofile() {
 
 
   // setusername(localStorage.getItem("username"));
-  useEffect(() => {
-    const token = localStorage.getItem('Token');
-    if(!token) navigate("/edit-profile/:userId");
-  });
+  const handleEditClick = () => {
+    // Navigate to EditProfile page with user data
+    navigate('/editprofile');
+  };
+
 
   React.useEffect(() => {
     Axios.get('http://localhost:4000/get/products').then(res => {
@@ -217,10 +218,10 @@ function Userprofile() {
                   </Grid>
                   <Button variant="contained"
                   sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
-                  onClick={handleEdit}>
+                   onClick={handleEditClick}
+                  >
                    Edit Profile
                   </Button>
-
                 </Paper>
               </Grid>
             </Grid>

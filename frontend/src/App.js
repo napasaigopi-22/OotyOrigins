@@ -71,8 +71,8 @@ function App() {
                         />
 
                         <Route 
-                            path="/edit-profile/:userId"
-                            element={<EditProfile />} /*userId={user._id} isAdmin={user.isAdmin} */ 
+                            path="/editprofile"
+                            element={<EditProfile />}
                         />
 
                         <Route

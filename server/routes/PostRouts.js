@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 const { CreateProduct } = require('../Controllers/AddProductController');
 const { SellerOrders, OrderController } = require('../Controllers/GetController');
-const { userController } = require('../Controllers/GetController');
+
 
 const storageobj = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -47,9 +47,9 @@ router.get('/reviews/:productId', getReviews);
 
 router.post('/userOrders', OrderController);
 
-router.post('/productReviews', productReviews);
+//router.post('/productReviews', productReviews);
 
-router.put('/user/edit/:userId', userController.editUserProfile);
+
 
 
 module.exports = router; 
