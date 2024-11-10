@@ -1,27 +1,31 @@
 import { useState, useEffect } from 'react';
-import { TextField, Button } from '@mui/material';
-import  Axios  from 'axios';
+import { TextField, Button, Snackbar } from '@mui/material';
+import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function EditProfile() {
   const [userDetails, setUserDetails] = useState({
     username: '',
-    Phone: '',
-    Address: '',
-    handleChange: '',
-
+    phone: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    },
   });
+  const [snackMessage, setSnackMessage] = useState('');
+  const [openSnack, setOpenSnack] = useState(false);
 
   const navigate = useNavigate();
 
-  // Fetch user details from the backend when the component mounts
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await Axios.post('http://localhost:4000/get/users/',{"username":localStorage.getItem('username')}); 
+        const response = await Axios.post('http://localhost:4000/get/users/', { username: localStorage.getItem('username') });
         console.log('Fetched user details:', response.data);
-        setUserDetails(response.data);
-        console.log(response.data);
+        setUserDetails(response.data[0]);
+
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -30,32 +34,50 @@ function EditProfile() {
     fetchUserDetails();
   }, []);
 
-
   const handleChange = (e) => {
-    const { username, value } = e.target;
-    setUserDetails((prevDetails) => ({
-      ...prevDetails,
-      [username]: value,
-    }));
+    const { name, value } = e.target;
+
+    // Update nested address fields
+    if (['street', 'city', 'state', 'zipcode'].includes(name)) {
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        address: {
+          ...prevDetails.address,
+          [name]: value,
+        },
+      }));
+    } else {
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Call backend API to save updated details
-      const response = await Axios.put('http://localhost:4000/api/user/:id', userDetails); // Replace with actual API endpoint
+      const response = await Axios.put(`http://localhost:4000/api/user/${userDetails._id}`, userDetails);
       console.log('Profile updated:', response.data);
-      navigate('/profile'); // Redirect to the Profile page after saving changes
+      setSnackMessage("Profile updated successfully!");
+      setOpenSnack(true);
+      navigate('/profile');
     } catch (error) {
       console.error('Error saving profile details:', error);
+      setSnackMessage("Failed to update profile. Please try again.");
+      setOpenSnack(true);
     }
+  };
+
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Edit Profile</h2>
       <TextField
-        label="username"
+        label="Username"
         name="username"
         value={userDetails.username}
         onChange={handleChange}
@@ -64,28 +86,60 @@ function EditProfile() {
       />
       <TextField 
         label="Phone"
-        name="Phone"
+        name="phone"
         value={userDetails.phone}
         onChange={handleChange}
         fullWidth
         margin="normal"
       />
-       <TextField
-        label="Address"
-        name="Address"
-        value={userDetails.Address}
+      
+      <TextField 
+        label="Street"
+        name="street"
+        value={userDetails.address.street}
         onChange={handleChange}
         fullWidth
         margin="normal"
       />
-      {/* Add other form fields for additional details */}
-      
-      <Button variant="contained"
-      sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
-      //onClick={handleEditClick}
+      <TextField 
+        label="City"
+        name="city"
+        value={userDetails.address.city}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <TextField 
+        label="State"
+        name="state"
+        value={userDetails.address.state}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+      <TextField 
+        label="Zipcode"
+        name="zipcode"
+        value={userDetails.address.zipcode}
+        onChange={handleChange}
+        fullWidth
+        margin="normal"
+      />
+
+      <Button 
+        type="submit"
+        variant="contained"
+        sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
       >
         Save Changes
       </Button>
+
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={3000}
+        onClose={handleCloseSnack}
+        message={snackMessage}
+      />
     </form>
   );
 }
