@@ -182,7 +182,7 @@ function NavBar() {
         ))
     );
 
-    
+
 
     const submitLogin = () => {
         if (Username && Password) {
@@ -394,7 +394,7 @@ function NavBar() {
                 phone: formData.phone,
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                IsUser: formData.isUser=="true"?true:false,
+                IsUser: formData.isUser == "true" ? true : false,
             };
             console.log('Form data submitted:', user);
             axios.post('http://localhost:4000/signup', user).then(res => {
@@ -422,11 +422,11 @@ function NavBar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                <nav className="NavBar">
-                <a href="/">
-                    <img src={logo} alt="Company Logo" className="logo" />
-                </a>                   
-                </nav>
+                    <nav className="NavBar">
+                        <a href="/">
+                            <img src={logo} alt="Company Logo" className="logo" />
+                        </a>
+                    </nav>
                     <Typography
                         variant="h6"
                         noWrap
@@ -510,15 +510,14 @@ function NavBar() {
                         </Search>
                     </Box>
                     {/* {localStorage.getItem("userId")} */}
-                    {((localStorage.getItem("userId")=='undefined') || isUser ) &&
-                    <CartModal></CartModal>
+                    {((localStorage.getItem("userId") == 'undefined') || isUser) &&
+                        <CartModal></CartModal>
                     }
                     {token ?
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleMenuClick('user')} sx={{ p: 0 }}>
                                     <Avatar sx={{ bgcolor: deepOrange[500] }} alt="User Avatar" src="/static/images/avatar/2.jpg" />
-
                                 </IconButton>
                             </Tooltip>
                             <Menu
