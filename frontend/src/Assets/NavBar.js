@@ -293,6 +293,7 @@ function NavBar() {
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
             localStorage.setItem("userId", res.data.userId);
             setisUser(res.data.IsUser);
+            console.log("isuser is 0--=-=-==-==",res.data.IsUser)
             Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
                 console.log("showcart response is ", res.data);
                 if (res.data.length > 0) {

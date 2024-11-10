@@ -43,18 +43,17 @@ function Userprofile() {
   React.useEffect(() => {
     Axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
       setusername(localStorage.getItem("username"));
-      setuserload(res.data);
+      setuserload(res.data[0]);
+      console.log("res.data[0] is ----====,res.data[0] ",res.data[0].IsUser)
       setUserProductList(res.data);
       store.getState().user = res.data;
-      setuser(store.getState().user);
+      setuser(res.data[0]);
     }).catch(function (error) { console.log(error); });
   }, []);
 
   const setUserProductList = (userdetails) => {
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r => r.userId === userdetails.userId);
-      console.log("tempvar is ", tempvar);
-      console.log(tempvar.filter(i => i.status !== "Delivered"));
       setUserPrdIds(tempvar);
     }).catch(function (error) { console.log(error); });
   };
