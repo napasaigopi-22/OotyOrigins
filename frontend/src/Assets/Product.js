@@ -31,7 +31,7 @@ export default function Product(props) {
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
         axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem('username')}).then(res => {
-            console.log("isUser ======== ", res.data);
+            console.log("isUser ======== ", res.data, "stuff");
             setuser(res.data[0]);
         }).catch(function (error) {
             console.log(error);
