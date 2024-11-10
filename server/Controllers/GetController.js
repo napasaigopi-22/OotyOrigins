@@ -67,61 +67,95 @@ module.exports.getProductById = async (req, res) => {
 module.exports.OrderController = async (req, res, next) => {
     try {
         const listOfOrders = await models.Order.find({userId:req.body.userId});
-
-        var sellerPrdtsPID = [];
-        const sellerProducts = await models.Product.find({});
-        sellerProducts.forEach(ele=>{
-            sellerPrdtsPID.push(ele.productId);
-        });
-        var sellersOrders = [];
-        for (var j = 0; j < listOfOrders.length; j++) {
-            for (var i = 0; i < listOfOrders[j].products.length; i++) {
-                if (sellerPrdtsPID.indexOf(listOfOrders[j].products[i].productId) != -1) {
-                    for(var k=0;k<sellerProducts.length;k++)
-                    {
-                        temp = listOfOrders[j].toJSON();
-                        if(listOfOrders[j].products[i].productId==sellerProducts[k].productId)
+        const orders = await models.Order.aggregate([
+            { $match: { userId: req.body.userId } }, // Filter orders by userId
+            {
+              $lookup: {
+                from: 'products', // Collection name of Product
+                localField: 'products.productId', // Field in Order to match
+                foreignField: 'productId', // Field in Product to match
+                as: 'productDetails' // Name for the output array
+              }
+            },
+            {
+              $lookup: {
+                from: 'users', // Collection name of User
+                localField: 'productDetails.uploadedBy', // Field in Product to match
+                foreignField: 'userId', // Field in User to match
+                as: 'uploaderDetails' // Name for the output array
+              }
+            },
+            {
+              $lookup: {
+                from: 'users', // Collection name of User
+                localField: 'userId', // Field in Order to match
+                foreignField: 'userId', // Field in User to match
+                as: 'userDetails' // Name for the user who placed the order
+              }
+            },
+            {
+              $addFields: {
+                username: { $arrayElemAt: ['$userDetails.username', 0] }, // Add username of the ordering user
+                products: {
+                  $map: {
+                    input: '$products',
+                    as: 'orderProduct',
+                    in: {
+                      $mergeObjects: [
+                        '$$orderProduct',
                         {
-                            temp.products[i]=sellerProducts[k];
-                            break;
+                          $arrayElemAt: [
+                            {
+                              $map: {
+                                input: {
+                                  $filter: {
+                                    input: '$productDetails',
+                                    as: 'productDetail',
+                                    cond: { $eq: ['$$productDetail.productId', '$$orderProduct.productId'] }
+                                  }
+                                },
+                                as: 'productWithUploader',
+                                in: {
+                                  $mergeObjects: [
+                                    '$$productWithUploader',
+                                    {
+                                      uploaderAddress: {
+                                        $arrayElemAt: [
+                                          {
+                                            $map: {
+                                              input: {
+                                                $filter: {
+                                                  input: '$uploaderDetails',
+                                                  as: 'uploader',
+                                                  cond: { $eq: ['$$uploader.userId', '$$productWithUploader.uploadedBy'] }
+                                                }
+                                              },
+                                              as: 'uploaderData',
+                                              in: '$$uploaderData.address'
+                                            }
+                                          },
+                                          0
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            0
+                          ]
                         }
+                      ]
                     }
-                    
-                    var user = await models.User.find({ userId: listOfOrders[j].userId });
-                    var temp;
-                    sellersOrders.push(temp);
-                    break;
+                  }
                 }
-            }
-        };
-        var proudctJSON = {};
-        var products = [];
-        for (var i = 0; i < sellersOrders.length; i++) {
-            var tempprdct = [];
-            console.log(listOfOrders[i].products)
-            listOfOrders[i].products.forEach((it) => {
-                sellerProducts.forEach(element => {
-                    var e = element.toObject();
-                    e.quantity = it.quantity;
-                        // console.log("e",e,"it",it)
-                    if (element.productId == it.productId) {
-                        if(i==0)
-
-                        console.log("same")
-                        tempprdct.push(e);
-                }
-                });
-            });
-            products.push(tempprdct);
-        }
-        proudctJSON = sellersOrders;
-        for (var i = 0; i < proudctJSON.length; i++) {
-
-            proudctJSON[i]['products'] = products[i];
-        };
-        console.log(products[0]);
-        // console.log("sending this to user============================================================",proudctJSON[0]);
-        return res.json(proudctJSON);
+              }
+            },
+            { $project: { productDetails: 0, uploaderDetails: 0, userDetails: 0 } } // Remove intermediate arrays
+          ]);
+          
+          console.log(JSON.stringify(orders, null, 2));
+        return res.json(orders);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error fetching orders" });
