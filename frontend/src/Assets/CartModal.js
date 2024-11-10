@@ -61,7 +61,8 @@ export default function CartModal(props) {
     setOpensnack(true);
   };
   const handlecartOpen = () => {
-    if (localStorage.getItem("userId") != "undefined")
+    console.log("localStorage.getItem('userId')  ",localStorage.getItem("userId"))
+    if (localStorage.getItem("userId") != "undefined" && localStorage.getItem("userId"))
       Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
         if (res.data.length > 0) {
 
