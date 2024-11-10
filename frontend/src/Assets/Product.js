@@ -31,8 +31,8 @@ export default function Product(props) {
     React.useEffect(() => {
         setToken(localStorage.getItem('Token'));
         axios.post('http://localhost:4000/get/users',{"username":localStorage.getItem('username')}).then(res => {
-            console.log("isUser ======== ", res.data);
-            setuser(res.data);
+            console.log("isUser ======== ", res.data, "stuff");
+            setuser(res.data[0]);
         }).catch(function (error) {
             console.log(error);
         })
@@ -142,7 +142,6 @@ export default function Product(props) {
                         <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
                     </CardActions>
                     }
-
                
             </Card>
             <Snackbar

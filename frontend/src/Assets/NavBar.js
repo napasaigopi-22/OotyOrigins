@@ -113,6 +113,7 @@ function NavBar() {
     }
 
     React.useEffect(() => {
+        console.log("localstorage userId is ---",localStorage.getItem("userId"),isUser)
         setToken(localStorage.getItem('Token'));
         return () => {
             handleClose();
@@ -193,7 +194,7 @@ function NavBar() {
                 localStorage.setItem('Token', data.jwtToken);
                 setToken(data.jwtToken);
                 localStorage.setItem('username', data.username);
-                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('userId', res.data.userId);
                 store.getState().userId = data.userId;
                 const user = {// Implement a function to generate a unique user ID
                     username: formData.username,
@@ -289,11 +290,13 @@ function NavBar() {
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
     React.useEffect(() => {
-        console.log("userid here is ", localStorage.getItem("username"));
+        console.log("userid here is ", localStorage.getItem("username"), localStorage.getItem("userId"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
-            localStorage.setItem("userId", res.data.userId);
-            setisUser(res.data.IsUser);
-            console.log("isuser is 0--=-=-==-==",res.data.IsUser)
+
+            localStorage.setItem("userId", res.data[0].userId);
+            // localStorage.setItem("userId",localStorage.getItem("userId"));
+            console.log('res.data.userId is -----------',res.data[0].userId);
+            setisUser(res.data[0].IsUser);
             Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
                 console.log("showcart response is ", res.data);
                 if (res.data.length > 0) {
@@ -511,6 +514,7 @@ function NavBar() {
                         </Search>
                     </Box>
                     {/* {localStorage.getItem("userId")} */}
+                    <p style={{backgroundColor:'black'}}>{isUser?"yes":"no"}</p>
                     {((localStorage.getItem("userId") == 'undefined') || isUser) &&
                         <CartModal></CartModal>
                     }
