@@ -18,16 +18,17 @@ function EditProfile() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await Axios.get('http://localhost:4000/api/user/:id'); 
+        const response = await Axios.post('http://localhost:4000/get/users/',{"username":localStorage.getItem('username')}); 
         console.log('Fetched user details:', response.data);
-        setUserDetails(response.data);
+        setUserDetails(response.data[0]);
+        console.log(response.data[0]);
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
     };
 
     fetchUserDetails();
-  }, [userDetails]);
+  }, []);
 
 
   const handleChange = (e) => {
@@ -64,7 +65,7 @@ function EditProfile() {
       <TextField 
         label="Phone"
         name="Phone"
-        value={userDetails.Phone}
+        value={userDetails.phone}
         onChange={handleChange}
         fullWidth
         margin="normal"

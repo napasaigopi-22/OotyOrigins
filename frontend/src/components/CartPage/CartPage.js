@@ -83,9 +83,8 @@ function CartPage() {
 
     const clickedPlaceOrder=(user)=>{
         cart.paymentMethod = "Offline";
+        console.log("cartcart is is ===================== ",cart)
         Axios.post('http://localhost:4000/post/CreateOrder', cart).then(res => {
-            Axios.post('http://localhost:4000/post/orderproducct',{amount:res.data.totalAmount}).then(res=>{
-            })
             navigate('/Orders', { state: res.data });
         }).catch(error=>{
             console.log(error);

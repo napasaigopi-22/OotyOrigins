@@ -53,7 +53,7 @@ function PaymentForm(props) {
                 <TextField
                     label="Card Number"
                     type="number"
-                    value={amount}
+                    value={cardNumber}
                     onChange={(e) => setcardNumber(e.target.value)}
                     required
                     fullWidth
@@ -62,7 +62,7 @@ function PaymentForm(props) {
                 <TextField
                     label="CVV"
                     type="number"
-                    value={amount}
+                    value={cvv}
                     onChange={(e) => setcvv(e.target.value)}
                     required
                     fullWidth

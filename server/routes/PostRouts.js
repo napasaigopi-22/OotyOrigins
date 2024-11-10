@@ -47,9 +47,7 @@ router.get('/reviews/:productId', getReviews);
 
 router.post('/userOrders', OrderController);
 
-//router.post('/productReviews', productReviews);
-
-
+// router.put('/user/edit/:userId', userController.editUserProfile);
 
 
 module.exports = router; 

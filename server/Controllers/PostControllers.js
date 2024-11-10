@@ -1,33 +1,43 @@
 const { model } = require("mongoose");
 const models = require("../Models/Models");
 const Razorpay = require('razorpay');
-const crypto = require('crypto'); // Also ensure crypto is required for generating the receipt ID
+const crypto = require('crypto');
 
+// Controller to handle editing user profile
+exports.editUserProfile = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const updatedData = req.body;
 
+        const user = await User.findByIdAndUpdate(userId, updatedData, { new: true, runValidators: true });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: "Error updating profile" });
+    }
+};
 
 // Add a review for a product
-module.exports.addReview = async (req, res, next) => {
+module.exports.addReview = async (req, res) => {
     try {
-        
         const { userId, productId, rating, feedback } = req.body;
-        console.log(req.body);
 
-        // Check if the user has already reviewed this product
-        const existingReview = await models.Review.findOne({ userId:userId, productId:productId });
+        const existingReview = await models.Review.findOne({ userId, productId });
         if (existingReview) {
             return res.status(400).json({ message: "You have already reviewed this product." });
         }
 
-        const reviews = await models.Review.find({});
-        
-
-        // Create a new review
+        const reviewsCount = await models.Review.countDocuments({});
         const newReview = new models.Review({
             userId,
             productId,
             rating,
             feedback,
-            reviewId :"R"+reviews.length 
+            reviewId: `R${reviewsCount}`
         });
 
         await newReview.save();
@@ -38,62 +48,53 @@ module.exports.addReview = async (req, res, next) => {
     }
 };
 
-
-module.exports.getReviews = async (req, res, next) => {
+// Fetch reviews for a specified product
+module.exports.getReviews = async (req, res) => {
     try {
-        const { productId } = req.params; // Retrieve productId from URL parameters
+        const { productId } = req.params;
 
-        // Fetch reviews for the specified product
-        const reviews = await reviews.find({ productId }).populate('userId', 'name'); // Populate userName to display reviewer's name
-
-        if (reviews.length === 0) {
+        const reviews = await models.Review.find({ productId }).populate('userId', 'name');
+        
+        if (!reviews.length) {
             return res.status(404).json({ message: "No reviews found for this product." });
         }
-
-        return res.json(reviews); // Send the reviews as the response
+        return res.json(reviews);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Error fetching reviews." });
     }
 };
 
-
-// Add a new product to the cart
-module.exports.addProductToCart = async (req, res, next) => {
-    console.log("add to cart is ===111```",req)
+// Add product to cart
+module.exports.addProductToCart = async (req, res) => {
     try {
         const { userId, productId } = req.body;
-
-        // Find active cart for the user
+        
         let cart = await models.Cart.findOne({ isActive: 1, userId });
-        const quantity = 1;
-        if (cart) {
-            // Check if product already exists in the cart
-            const existingProduct = cart.products.find(item => item.productId === productId);
 
+        if (cart) {
+            const existingProduct = cart.products.find(item => item.productId === productId);
             if (existingProduct) {
                 return res.status(400).json({ message: "Product already exists in the cart. Use update quantity instead." });
-            } else {
-
-                cart.products.push({ productId, quantity });
-                cart.totalAmount += (await models.Product.find({ productId: productId }))[0].price * quantity;
-                cart.updatedAt = Date.now();
-
-                const updatedCart = await cart.save();
-                return res.json(updatedCart);
             }
-        } else {
-            // Create a new cart for the user if no active cart exists
-            const product = await models.Product.find({ productId: productId });
-            const cartlist = await models.Cart.find({});
 
+            const productPrice = (await models.Product.findById(productId)).price;
+            cart.products.push({ productId, quantity: 1 });
+            cart.totalAmount += productPrice;
+            cart.updatedAt = Date.now();
+            
+            const updatedCart = await cart.save();
+            return res.json(updatedCart);
+        } else {
+            const productPrice = (await models.Product.findById(productId)).price;
             const newCart = new models.Cart({
-                cartId: "cart_" + cartlist.length,
-                userId: userId,
-                products: [{ productId, quantity }],
-                totalAmount: product[0].price * quantity,
+                cartId: `cart_${await models.Cart.countDocuments({})}`,
+                userId,
+                products: [{ productId, quantity: 1 }],
+                totalAmount: productPrice,
                 isActive: 1
             });
+
             const savedCart = await newCart.save();
             return res.json(savedCart);
         }
@@ -104,122 +105,115 @@ module.exports.addProductToCart = async (req, res, next) => {
 };
 
 // Add quantity to an existing product in the cart
-module.exports.addQuantityToProduct = async (req, res, next) => {
+module.exports.addQuantityToProduct = async (req, res) => {
     try {
         const { userId, productId, additionalQuantity } = req.body;
 
-
-        // Find active cart for the user
         let cart = await models.Cart.findOne({ isActive: 1, userId });
 
-        if (cart) {
-            // Find product in the cart
-            const productInCart = cart.products.find(item => item.productId === productId);
-
-            if (productInCart) {
-                // Update product quantity
-
-                productInCart.quantity += additionalQuantity;
-                const PrdIndx = cart.products.findIndex(item => item.productId === productId);
-                if (productInCart.quantity <= 0)
-                    cart.products.splice(PrdIndx, 1);
-                cart.totalAmount += (await models.Product.find({ productId: productId }))[0].price * additionalQuantity;
-                cart.updatedAt = Date.now();
-
-                const updatedCart = await cart.save();
-                return res.json(updatedCart);
-            } else {
-                return res.status(404).json({ message: "Product not found in cart." });
-            }
-        } else {
+        if (!cart) {
             return res.status(404).json({ message: "No active cart found for the user." });
         }
+
+        const productInCart = cart.products.find(item => item.productId === productId);
+
+        if (!productInCart) {
+            return res.status(404).json({ message: "Product not found in cart." });
+        }
+
+        productInCart.quantity += additionalQuantity;
+        
+        if (productInCart.quantity <= 0) {
+            cart.products.splice(cart.products.indexOf(productInCart), 1);
+        }
+
+        const productPrice = (await models.Product.findById(productId)).price;
+        
+        cart.totalAmount += productPrice * additionalQuantity;
+        
+        cart.updatedAt = Date.now();
+        
+        const updatedCart = await cart.save();
+        
+        return res.json(updatedCart);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error updating product quantity in cart" });
-    }
+         console.error(error);
+         return res.status(500).json({ message: "Error updating product quantity in cart" });
+     }
 };
 
 // Update product quantity in the cart
-module.exports.updateProductQuantity = async (req, res, next) => {
+module.exports.updateProductQuantity = async (req, res) => {
     try {
-        const { userId, productId, newQuantity } = req.body;
+         const { userId, productId, newQuantity } = req.body;
 
-        // Find active cart for the user
-        let cart = await models.Cart.findOne({ isActive: 1, userId });
+         let cart = await models.Cart.findOne({ isActive: 1, userId });
 
-        if (cart) {
-            // Find product in the cart
-            const productInCart = cart.products.find(item => item.productId === productId);
+         if (!cart) {
+             return res.status(404).json({ message: "No active cart found for the user." });
+         }
 
-            if (productInCart) {
-                // Calculate the price difference
-                const productPrice = (await models.Product.findById(productId)).price;
-                cart.totalAmount += (newQuantity - productInCart.quantity) * productPrice;
+         const productInCart = cart.products.find(item => item.productId === productId);
 
-                // Update product quantity
-                productInCart.quantity = newQuantity;
-                cart.updatedAt = Date.now();
+         if (!productInCart) {
+             return res.status(404).json({ message: "Product not found in cart." });
+         }
 
-                const updatedCart = await cart.save();
-                return res.json(updatedCart);
-            } else {
-                return res.status(404).json({ message: "Product not found in cart." });
-            }
-        } else {
-            return res.status(404).json({ message: "No active cart found for the user." });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error updating product quantity in cart" });
-    }
+         const productPrice = (await models.Product.findById(productId)).price;
+         cart.totalAmount += (newQuantity - productInCart.quantity) * productPrice;
+
+         productInCart.quantity = newQuantity;
+         cart.updatedAt = Date.now();
+
+         const updatedCart = await cart.save();
+         
+         return res.json(updatedCart);
+     } catch (error) {
+         console.error(error);
+         return res.status(500).json({ message: "Error updating product quantity in cart" });
+     }
 };
 
 // Delete a product from the cart
-module.exports.deleteProductFromCart = async (req, res, next) => {
+module.exports.deleteProductFromCart = async (req, res) => {
     try {
-        const { userId, productId } = req.body;
+         const { userId, productId } = req.body;
 
-        // Find active cart for the user
-        let cart = await models.Cart.findOne({ isActive: 1, userId: userId });
-        var product;
-        if (cart) {
-            // Find the product in the cart
-            const productIndex = cart.products.findIndex(item => item.productId === productId);
+         let cart = await models.Cart.findOne({ isActive: 1, userId });
 
-            if (productIndex !== -1) {
-                // Reduce the total amount accordingly
-                product = (await models.Product.find({ productId: productId }))[0];
-                const productPrice = product.price;
-                cart.totalAmount -= cart.products[productIndex].quantity * productPrice;
+         if (!cart) {
+             return res.status(404).json({ message: "No active cart found for the user." });
+         }
 
-                // Remove the product from the cart
-                cart.products.splice(productIndex, 1);
-                cart.updatedAt = Date.now();
+         const productIndex = cart.products.findIndex(item => item.productId === productId);
 
-                if (cart.products.length == 0)
-                    cart.isActive = 0;
+         if (productIndex === -1) {
+             return res.status(404).json({ message: "Product not found in cart." });
+         }
 
-                const updatedCart = await cart.save();
+         const productPrice = (await models.Product.findById(productId)).price;
+         
+         cart.totalAmount -= cart.products[productIndex].quantity * productPrice;
 
+         cart.products.splice(productIndex, 1);
+         
+         if (!cart.products.length) {
+             cart.isActive = 0; // Deactivate the cart if empty
+         }
 
-                return res.json({ "updatedCart": updatedCart, "deleted": product });
-            } else {
-                return res.status(404).json({ message: "Product not found in cart." });
-            }
-        } else {
-            return res.status(404).json({ message: "No active cart found for the user." });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error deleting product from cart" });
-    }
+         const updatedCart = await cart.save();
+         
+         return res.json(updatedCart);
+     } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: "Error deleting product from cart" });
+     }
 };
 
-
+// Show existing cart
 // show existing cart
 module.exports.showCart = async (req, res, next) => {
-    console.log("req.body is ",req.body)
+    console.log("req.body is ",req.body);
     try {
         var cart = {};
         cart = await models.Cart.find({ userId: req.body.userId, isActive: 1 });
@@ -242,7 +236,16 @@ module.exports.showCart = async (req, res, next) => {
               }
             },
             {
+              $lookup: {
+                from: 'users', // Collection name of User to get user's address
+                localField: 'userId', // Field in Cart to match userId
+                foreignField: 'userId', // Field in User collection to match
+                as: 'userAddressDetails' // Name for the user's address array
+              }
+            },
+            {
               $addFields: {
+                userAddress: { $arrayElemAt: ['$userAddressDetails.address', 0] }, // Add user address directly
                 products: {
                   $map: {
                     input: '$products',
@@ -298,8 +301,9 @@ module.exports.showCart = async (req, res, next) => {
                 }
               }
             },
-            { $project: { productDetails: 0, sellerDetails: 0 } } // Remove intermediate arrays
+            { $project: { productDetails: 0, sellerDetails: 0, userAddressDetails: 0 } } // Remove intermediate arrays
           ]);
+          
           
           console.log(JSON.stringify(cartWithSellerAddress, null, 2));
         return res.json(cartWithSellerAddress);
@@ -308,105 +312,110 @@ module.exports.showCart = async (req, res, next) => {
     }
 }
 
-module.exports.CreateOrder = async (req, res, next) => {
-    try {
-        console.log(req.body);
-        const element = req.body;
-        const userId = req.body.userId;
-        const userAddress = req.body.userAddress;
-        var prdSeller = [];
-        const filter = { cartId:req.body.cartId};
-        const update = { isActive:0 };
-        const car = await models.Cart.findOneAndUpdate(filter,update);
-        console.log("cart after updating is ",await models.Cart.find({cartId:req.body.cartId}),"  ",car);
-        for (var i = 0; i < req.body.products.length; i++) {
-            var obj = {};
-            console.log(element.products[i]);
-            obj = { uploadedBy: element.products[i].product.uploadedBy, ProductDetails: { productId: element.products[i].productId, ProduQuantity: element.products[i].quantity } };
-            prdSeller.push(obj);
-        }
-        const ordersExisting = await models.Order.find({});
-        const orderslength=ordersExisting.length;
-        const order = await models.Order({
-            orderId: 'O'+orderslength,
-            userId: userId,
-            products: req.body.products,
-            totalAmount: req.body.totalAmount,
-            status: 'Pending',
-            orderDate: new Date(),
-            deliveryDate: new Date(),
-            paymentMethod: req.body.paymentMethod,
-            shippingAddress: userAddress
-        });
-        console.log("orders=",req.body);
-        order.save();
-        //send data to uploadedBy
-        return res.json(order)
-    } catch (error) {
-        console.log(error);
-    }
-}
 
-module.exports.DeliverProduct = async (req,res,next) => {
-    try{
-        const order = (await models.Order.find({orderId:req.body.orderId}))[0];
-        console.log("order is =",order);
-        order.status='Delivered';
-        order.save();
-        return res.json(order);
-    } catch(error)
-    {
-        console.log(error);
-    }
-}
+// Create order
+module.exports.CreateOrder = async (req, res) => {
+     try {
+          const { userId, userAddress, products, totalAmount, paymentMethod }= req.body;
 
-module.exports.orderProduct = async(req,res) => {
-    try {
-        console.log(req.body);
-        const instance = new Razorpay({
-            key_id: "rzp_test_iXe4dbs084fBfw",
-            key_secret: "mi71dTQlL2UdN3KqM5dAYYKy",
-        });
+          console.log("User Address:", userAddress);
 
-        const options = {
-            amount: req.body.amount,
-            currency:"INR",
-            receipt:crypto.randomBytes(10).toString("hex"),
-        }
-        instance.orders.create(options,(error,order) => {
-            if(error) {
-                console.log(error);
-                return res.status(500).json({message:"Something Went Wrong!"});
-            }
-            res.status(200).json({data:order});
-        });
+          // Update active status of the user's current active cart
+          await models.Cart.updateOne({ userId },{ isActive : 0 });
 
-    } catch(error) {
-        console.log(error);
-        res.status(500).json({message:"Internal Server Error!"});
-    }
+          // Create a new order
+          const ordersCount= await models.Order.countDocuments({});
+          const newOrder= new models.Order({
+              orderId:`O${ordersCount}`,
+              userId,
+              products,
+              totalAmount,
+              status:'Pending',
+              orderDate:new Date(),
+              deliveryDate:new Date(),
+              paymentMethod,
+              shippingAddress:userAddress
+          });
 
+          await newOrder.save();
+
+          // Respond with the created order
+          return res.json(newOrder);
+
+      } catch(error){
+          console.error("Error creating order:", error);
+          return res.status(500).json({ error:"Internal server error" });
+      }
 };
 
-//Verifying the payment
-module.exports.verify = async(req,res) => {
-    try {
-        const {
-            razorpay_orderID,
-            razorpay_paymentID,
-            razorpay_signature } = req.body;
-        const sign = razorpay_orderID + "|" + razorpay_paymentID;
-        const resultSign = crypto
-        .createHmac("sha256",process.env.KEY_SECRET)
-        .update(sign.toString())
-        .digest("hex");
+// Deliver Product
+module.exports.DeliverProduct= async(req,res)=>{ 
+     try{
+          const order= await models.Order.findOne({orderId:req.body.orderId});
+          
+          if(order){
+               order.status='Delivered';
+               await order.save();
+               return res.json(order);
+           } else{
+               return res.status(404).json({message:"Order not found"});
+           }
+      } catch(error){
+           console.error(error); 
+           return res.status(500).json({message:"Internal Server Error!"});
+      }
+};
 
-        if (razorpay_signature == resultSign){
-            return res.status(200).json({message:"Payment verified successfully"});
-        }
+// Order Product
+module.exports.orderProduct= async(req,res)=>{ 
+     try{
+          console.log(req.body); 
 
-    } catch(error) {
-        console.log(error);
-        res.status(500).json({message:"Internal Server Error!"});
-    }
+          const instance= new Razorpay({
+               key_id:"rzp_test_iXe4dbs084fBfw",
+               key_secret:"mi71dTQlL2UdN3KqM5dAYYKy",
+           });
+
+           const options={
+               amount:req.body.amount,
+               currency:"INR",
+               receipt:crypto.randomBytes(10).toString("hex"),
+           };
+
+           instance.orders.create(options,(error,order)=>{
+               if(error){
+                   console.log(error); 
+                   return res.status(500).json({message:"Something Went Wrong!"});
+               }
+               res.status(200).json({data:order});
+           });
+
+      } catch(error){
+           console.error(error); 
+           return res.status(500).json({message:"Internal Server Error!"});
+      }
+};
+
+// Verifying the payment
+module.exports.verify= async(req,res)=>{ 
+     try{
+          const{razorpay_orderID,razorpay_paymentID,razorpay_signature}= req.body;
+
+          // Generate signature for verification
+          const sign= `${razorpay_orderID}|${razorpay_paymentID}`;
+          
+          // Verify signature using HMAC SHA256
+          const resultSign= crypto.createHmac("sha256",process.env.KEY_SECRET)
+                                   .update(sign)
+                                   .digest("hex");
+          
+          if(razorpay_signature === resultSign){
+               return res.status(200).json({message:"Payment verified successfully"});
+           }
+
+           return res.status(400).json({message:"Payment verification failed"});
+      } catch(error){
+           console.error(error); 
+           return res.status(500).json({message:"Internal Server Error!"});
+      }
 };
