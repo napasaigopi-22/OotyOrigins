@@ -28,7 +28,7 @@ router.post('/GetproductById', getProductById);
 router.get('/orders', OrderController);
 
 // Route for fetching reviews
-router.get('/reviews', ReviewController);
+router.get('/addReview', ReviewController);
 
 // Route for fetching carts
 router.get('/carts', CartController);

@@ -17,11 +17,13 @@ import Footer from './Assets/Footer';
 import Addproduct from './components/Admin/Addproduct';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ProductDetail from './components/ProductDetails/ProductDetail';
+import EditProfile from './components/EditProfile';
+
 
 
 function App() {
     const location = useLocation();
-
+    
     return (
         <div className="App">
             <>
@@ -66,6 +68,11 @@ function App() {
                         <Route
                             path="/UserProfile"
                             element={<Userprofile />}
+                        />
+
+                        <Route 
+                            path="/edit-profile/:userId"
+                            element={<EditProfile />} /*userId={user._id} isAdmin={user.isAdmin} */ 
                         />
 
                         <Route

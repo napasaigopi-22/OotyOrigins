@@ -30,7 +30,7 @@ function IntroPage() {
                     className="sub-heading"
                     sx={{ textAlign: 'center', marginBottom: '20px' }}
                 >
-                    Launching Soon
+                    Where traditional meets Modernity
                 </Typography>
 
                 <Typography 

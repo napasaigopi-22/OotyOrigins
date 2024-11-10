@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-// import {useParams} from "react-router-dom"''
 import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
@@ -10,58 +9,87 @@ import '../ProductDetails/ProductDetail.css';
 
 
 function ProductDetail() {
-    // const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [msg,setMsg] = React.useState("Added To Cart Succesfully");
-
     const [open, setOpen] = React.useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false); // For the review dialog
+    const [rating, setRating] = useState(0); // For user rating
+    const [comment, setComment] = useState(""); // For user comment
+    const [alreadyReviwed, setAlreadyReviwed] = useState(false);
+    const [reviews, setReviews] = useState([]);
+    
+
+  
+
+    const location = useLocation();
+    var value = location.state;
+    console.log(value);
+    const userId = localStorage.getItem("userId");
+    const userRole = localStorage.getItem("role");
 
     const handleClick = () => {
         setOpen(true);
     };
 
-    const handleClose = (event, reason) => {
+    const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setOpen(false);
+        setOpenSnackbar(false);
     };
 
-    
+   
+    const handleDialogClose = () => setOpenDialog(false);
 
     const action = (
       <React.Fragment>
-          <Button color="secondary" size="small" onClick={handleClose}>
-              UNDO
-          </Button>
-          <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={handleClose}
-          >
-              <CloseIcon fontSize="small" />
+          <IconButton aria-label= "close" color="inherit" size="small" onClick={handleSnackbarClose}>
+            <CloseIcon fontSize="small"/>
           </IconButton>
       </React.Fragment>
   );
     
-    const location = useLocation();
-    var value = location.state;
-    console.log(value)
+   
 
     useEffect(()=>{
-      axios.post('http://localhost:4000/get/GetproductById',{"id":value.prdId}).then(res => {
-        setProduct(res.data[0]);
+      axios.post('http://localhost:4000/get/GetproductById',{"id":value.prdId}).
+      then(res => { setProduct(res.data[0]);
         console.log("categories ======== ", product);
     }).catch(function (error) {
         console.log(error);
     })
-    },[]);
-  
-    if (!product) {
-      return <div><h1>Loading....</h1></div>;
-    }
+    },[value.prdId]);
+
+
+    const getReviews = () => {
+      axios.post('http://localhost:4000/get/getReviewsByProductId', { productId: value.prdId })
+          .then(res => setReviews(res.data.reviews)) // Fetch reviews from backend
+          .catch(error => console.log(error));
+  };
+
+
+    useEffect(() => {
+      // Check if the user has already reviewed this product
+      axios.post('http://localhost:4000/get/userReviewForProduct', { productId: value.prdId, userId })
+        .then(res => {
+          if (res.data.alreadyReviewed) {
+            setAlreadyReviwed(true);
+            setRating(res.data.review.rating); // Set existing rating and comment if reviewed
+            setComment(res.data.review.comment);
+          }
+        })
+        .catch(error => console.log(error));
+        getReviews();
+    }, [value.prdId, userId]);
+
+
+    useEffect(() => {
+      axios.post('http://localhost:4000/get/productReviews', { productId: value.prdId })
+          .then(res => setReviews(res.data.reviews))
+          .catch(error => console.log(error));
+  }, [value.prdId]);
+
 
     const addToCart = () => {
       var luserid = localStorage.getItem("userId");
@@ -98,43 +126,126 @@ function ProductDetail() {
           });
           
       }
-      else setMsg("Please Login to continue")
-      handleClick();
-  }
+      else{ setMsg("Please Login to continue");
+      }
+      setOpenSnackbar(true);
+  };
+
+  const submitReview = () => {
+    axios.post('http://localhost:4000/post/addReview', {
+      productId: product._id,
+      userId: localStorage.getItem("userId"),
+      rating,
+      comment,
+    })
+    .then(() => {
+      setMsg("Your review is valuable to us. Visit Again!");
+      setOpenDialog(false);
+      setOpenSnackbar(true);
+      setAlreadyReviwed(true);
+      setReviews();
+    })
+
+    .catch(error => 
+      console.error("Error submitting review:", error));
+      
+};
+
+if (!product) {
+  return <div><h1>Loading....</h1></div>;
+}
+
 
     return (
       <>
-      <NavBar></NavBar>
-        <Box sx={{ width: '95%', padding: '20px' }}>
+      <NavBar/>
+        <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
-            <card className= "product-card">
+            <Card className= "product-card">
             <CardMedia 
               component="img"
               height="500"
-              src={'http://localhost:4000/images/'+value.imageUrl[0]}
+              src={`http://localhost:4000/images/${value.imageUrl[0]}`}
               alt={product.name}
-              sx={{ objectFit: 'cover' }}
+              sx={{  width: 400, height: 'auto', objectFit: 'cover'  }}
             />
             <CardContent style={{margin:'auto'}}>
-              <Typography variant="h4" className="product-name" sx={{ fontWeight: 'bold', color: '#333' }} >{product.name}</Typography>
-              <Typography variant="body1" className="product-description" sx={{ color: '#666', mt: 1 }}>{product.description}</Typography>
-              <Typography variant="h5"className="product-price" sx={{ mt: 2, color: '#3f51b5'}}>
+              <Typography variant="h4" className="product-name" sx={{ fontWeight: 'bold', color: '#333', mb:1 }} >{product.name}</Typography>
+              <Typography variant="body1" className="product-description" sx={{ color: '#666', mb: 2 }}>{product.description}</Typography>
+              <Typography variant="h5"className="product-price" sx={{ mb: 2, color: '#3f51b5'}}>
                 Price: Rs {product.price}/-
                 </Typography>
-              <Typography variant="h5" className="product-rating" sx={{ mt: 1,color: '#ff9800' }}>
+              <Typography variant="h5" className="product-rating" sx={{ mb: 2,color: '#ff9800' }}>
                 Rating: {product.rating}
               </Typography>
-              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
+              <Box sx= {{display: 'flex', gap: 2, mt:2, flexDirection: 'column', alignItems: 'center'}}>
+              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large" sx={{width: 'fit-content'}}>Add To Cart</Button>
+              {userRole !== 'admin' && (
+              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large" sx={{width: 'fit-content'}} >Review</Button>
+              )}
+              </Box>
               </CardContent>
-            </card>
+            </Card>
           </Card>
         </Box>
+        
+        
+        <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>Customer Reviews</Typography>
+        {reviews && reviews.length > 0 ? reviews.map((review, index) => (
+        <Card key={index} sx={{ mb: 2 }}>
+            <CardContent>
+                <Typography variant="subtitle1">Rating: {review.rating} / 5</Typography>
+                <Typography variant="body2">{review.comment}</Typography>
+            </CardContent>
+        </Card>
+            )):  ("Not yet, your are the first one to review")}
+          </Box>
+
+
+
+        <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Write a Review for {product.name}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Share your experience with this product by rating it and leaving a comment below.
+          </DialogContentText>
+          <Rating
+            name="product-rating"
+            value={rating}
+            onChange={(event, newValue) => setRating(newValue)}
+            sx={{ my: 2 }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Comment"
+            fullWidth
+            variant="outlined"
+            multiline
+            rows={4}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="secondary">Cancel</Button>
+          <Button onClick={submitReview} color="primary">Submit</Button>
+        </DialogActions>
+      </Dialog>
+
+
         <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
                 message={msg}
-                action={action}
+                action={ 
+                <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackbarClose}>
+                <CloseIcon fontSize="small" />
+            </IconButton>
+            }
             />
        
         </>
@@ -143,4 +254,7 @@ function ProductDetail() {
     
 
 
-export default ProductDetail;
+export default ProductDetail; 
+
+
+
