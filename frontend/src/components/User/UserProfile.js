@@ -331,38 +331,35 @@ function Userprofile() {
               /* No Delivered Products Message */
               deliveredproducts.length === 0 && ("No Products")
             }
-          </Grid></Grid></>
+          </Grid>
+          <Grid size="grow">
+            <Box>Welcome, {userload.username}</Box>
+            <Typography>Your Products</Typography>
+            <Paper>
+              <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 2, sm: 4, md: 5 }}>
+                {
+                  /* Filtering User's Uploaded Products */
+                  product
+                    .filter((ele) => ele.uploadedBy === localStorage.getItem("userId"))
+                    .map((index) => (
+                      <Grid size={{ xs: 1, sm: 2, md: 2 }} key={index.name}>
+                        <MyProducts name={index.name} src={index.images[0]} stock={index.stock} />
+                      </Grid>
+                    ))
+                }
+              </Grid>
+
+              <Box>
+                <Button variant="contained" onClick={() => navigate('/Addproduct')}>
+                  Add product
+                </Button>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </>
       }
 
-      {/* User's Own Products Section */}
-      {
-        (!userload.IsUser && <>
-          {/* Welcome Message and User's Products Header */}
-          (<Box >Welcome,{userload.username}</ Box >)
-          (< Typography>Your Products</ Typography>)
-          (< Paper >)
-            (< Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 2, sm: 4, md: 5 }} >)
-              {
-                /* Filtering User's Uploaded Products */
-                product.filter((ele) => ele.uploadedBy === localStorage.getItem("userId")).map((index) => (
-                  <>
-                    (< Grid size={{ xs: 1, sm: 2, md: 2 }} >)
-                      (< MyProducts name={index.name} src={index.images[0]} stock={index.stock} />)
-                    </Grid>
-                  </>
-                ))
-              }
-            </Grid>
-
-            (< Box >)
-              (< Button variant="contained" onClick={() => navigate('/Addproduct')}>Add product</ Button >)
-            </Box>
-
-            (</Paper>)
-
-
-        </>)
-      }
     </Container>
 
 
