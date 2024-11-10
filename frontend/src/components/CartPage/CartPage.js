@@ -2,7 +2,8 @@ import Axios from "axios";
 import NavBar from "../../Assets/NavBar";
 import PropTypes from 'prop-types';
 import React, { useState } from "react";
-import { Box, Container, Divider, Typography, Grid, FormLabel, RadioGroup, FormControlLabel, Radio, FormControl, Tab, Tabs, TextField } from "@mui/material";
+import { Box, Container, Divider, Typography, FormLabel, RadioGroup, FormControlLabel, Radio, FormControl, Tab, Tabs, TextField } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import { Card, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import CartProduct from "./Cartproducts";
@@ -51,11 +52,6 @@ function CartPage() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
-    const handlePayment=()=>{
-        console.log("handlepayment")
-
-    }
-
     const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -75,6 +71,7 @@ function CartPage() {
             setCart(res.data[0]);
             setProducts(res.data[0].products);
             setTotalAmount(res.data[0].totalAmount);
+            console.log("show cart resp is ", res.data[0])
         }).catch(function (error) {
             console.log(error);
         });
@@ -106,18 +103,21 @@ function CartPage() {
                             return (
                                 <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '5px 0', justifyContent: 'center' }}>
-                                        <CartProduct name={ele.product.name} price={ele.product.price} quantity={ele.quantity} />
+                                        <Grid container >
+                                            <Grid size="grow" ><CartProduct name={ele.name} price={ele.price} quantity={ele.quantity} /></Grid>
+                                            <Grid size="grow" ><p>collect at {ele.sellerAddress && ele.sellerAddress.street}</p></Grid>
+                                        </Grid>
                                     </div>
                                     <Divider sx={{ my: 2 }} variant="middle" />
                                 </Box>)
                         })}
 
                         <Divider sx={{ my: 2 }} />
-                        <Grid container spacing={2} alignItems="left">
-                            <Grid item xs={4} md={6}>
+                        <Grid container >
+                            <Grid size="grow">
                                 <Button variant="contained" sx={{ backgroundColor: 'red', fontWeight: 'bold', padding: '10px 20px', }} onClick={() => { confirmBuy(localStorage.getItem('userId')) }} >Confirm buy</Button>
                             </Grid>
-                            <Grid item xs={6} >
+                            <Grid size="grow" >
                                 <Typography variant="h6" sx={{ fontWeight: 'bold' }} >
                                     Total: ₹ {totalAmount}
                                 </Typography>
@@ -138,7 +138,6 @@ function CartPage() {
                             const formData = new FormData(event.currentTarget);
                             const formJson = Object.fromEntries(formData.entries());
                             const email = formJson.email;
-                            console.log(email);
                             handleClose();
                         },
                     }}
@@ -149,7 +148,6 @@ function CartPage() {
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                                 <Tab label="Online" {...a11yProps(0)} />
                                 <Tab label="Offline" {...a11yProps(1)} />
-                                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>

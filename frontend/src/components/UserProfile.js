@@ -48,7 +48,8 @@ function Userprofile() {
   const setUserProductList = (userdetails) => {
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r => r.userId == userdetails.userId);
-      console.log("tempvar is ", tempvar)
+      console.log("tempvar is ", tempvar);
+      console.log(tempvar.filter(i=>i.status!="Delivered"))
       setUserPrdIds(tempvar);
     }).catch(function (error) {
       console.log(error);
@@ -99,7 +100,7 @@ function Userprofile() {
               <Grid size="grow">
                 <p style={{ color: 'black' }}>Recieve Orders</p>
                 {/* {JSON.stringify(UserPrdIds)} */}
-                {UserPrdIds.map((index, item) => (<Grid>
+                {UserPrdIds.filter(i=>i.status!="Delivered").map((index, item) => (<Grid>
                   <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
                     <Grid container maxWidth="xl">
                       <Grid size="grow">
@@ -141,12 +142,12 @@ function Userprofile() {
                   </Card>
                 </Grid>))}
                 {
-                  adminpproductsActive.length == 0 && "No Products"
+                  UserPrdIds.filter(i=>i.status!="Delivered").length == 0 && "No Products"
                 }
                 <p style={{ color: 'black' }}>Delivered Products</p>
-                {deliveredproducts.length != 0 && deliveredproducts.map((index, item) => (
+                {UserPrdIds.filter(i=>i.status=="Delivered").length != 0 && UserPrdIds.filter(i=>i.status=="Delivered").map((index, item) => (
                   <>
-                    <div onClick={() => SellerOrderClicked(index)}>
+                    <div>
                       <Grid size="grow" >
                         <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
                           {index.username}
@@ -177,7 +178,7 @@ function Userprofile() {
                   </>
                 ))}
                 {
-                  deliveredproducts.length == 0 && "No Products"
+                  UserPrdIds.filter(i=>i.status=="Delivered").length == 0 && "No Products"
                 }
               </Grid>
               <Grid size="grow">
