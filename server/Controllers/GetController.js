@@ -52,8 +52,8 @@ module.exports.ProductController = async (req, res, next) => {
 module.exports.getProductById = async (req, res) => {
     try {
         const productId = req.body.id;
-        const product = await models.Product.find({ "productId": productId });
-        console.log(productId, product)
+        const product = await models.Product.find({ productId: productId });
+        console.log(productId, product[0])
 
         if (!product) {
             return res.status(404).json({ message: "Product not found" });

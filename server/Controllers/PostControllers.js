@@ -79,7 +79,7 @@ module.exports.addProductToCart = async (req, res) => {
         return res.status(400).json({ message: "Product already exists in the cart. Use update quantity instead." });
       }
 
-      const productPrice = (await models.Product.findById(productId)).price;
+      const productPrice = (await models.Product.find({productId:productId}))[0].price;
       cart.products.push({ productId, quantity: 1 });
       cart.totalAmount += productPrice;
       cart.updatedAt = Date.now();
@@ -87,7 +87,7 @@ module.exports.addProductToCart = async (req, res) => {
       const updatedCart = await cart.save();
       return res.json(updatedCart);
     } else {
-      const productPrice = (await models.Product.findById(productId)).price;
+      const productPrice = (await models.Product.find({productId:productId}))[0].price;
       const newCart = new models.Cart({
         cartId: `cart_${await models.Cart.countDocuments({})}`,
         userId,
@@ -160,7 +160,7 @@ module.exports.updateProductQuantity = async (req, res) => {
       return res.status(404).json({ message: "Product not found in cart." });
     }
 
-    const productPrice = (await models.Product.findById(productId)).price;
+    const productPrice = (await models.Product.find({productId:productId}))[0].price;
     cart.totalAmount += (newQuantity - productInCart.quantity) * productPrice;
 
     productInCart.quantity = newQuantity;
@@ -192,7 +192,7 @@ module.exports.deleteProductFromCart = async (req, res) => {
       return res.status(404).json({ message: "Product not found in cart." });
     }
 
-    const productPrice = (await models.Product.findById(productId)).price;
+    const productPrice = (await models.Product.find({productId:productId}))[0].price;
 
     cart.totalAmount -= cart.products[productIndex].quantity * productPrice;
 
@@ -306,7 +306,6 @@ module.exports.showCart = async (req, res, next) => {
     ]);
 
 
-    // console.log(JSON.stringify(cartWithSellerAddress, null, 2));
     return res.json(cartWithSellerAddress);
   } catch (error) {
     return res.status(500).json({ message: "Error showing product from cart" });
@@ -319,10 +318,9 @@ module.exports.CreateOrder = async (req, res) => {
   try {
     const { userId, userAddress, products, totalAmount, paymentMethod } = req.body;
 
-    console.log("User Address:", userAddress);
 
     // Update active status of the user's current active cart
-    await models.Cart.updateOne({ userId:userId }, { isActive: 0 });
+    await models.Cart.updateOne({ userId:userId,isActive:1 }, { isActive: 0 });
 
     // Create a new order
     const ordersCount = await models.Order.countDocuments({});
@@ -370,7 +368,6 @@ module.exports.DeliverProduct = async (req, res) => {
 // Order Product
 module.exports.orderProduct = async (req, res) => {
   try {
-    console.log(req.body);
 
     const instance = new Razorpay({
       key_id: "rzp_test_iXe4dbs084fBfw",
@@ -432,11 +429,36 @@ module.exports.UpdateUser = async (req, res) => {
 
     // Save the updated user object
     const updateduser = await models.User.updateOne({userId:body.userId},{$set: body});
-    console.log("userobj is ", updateduser)
 
 
     return res.json({ message: "lvangam" })
   } catch (Error) {
     console.log(Error)
   }
-}
+};
+
+module.exports.UpdateProduct = async (req, res, next) => {
+  try {
+    console.log(req.body)
+    const { productId } = req.body; // Extract productId from request parameters
+    console.log(productId);
+    const updateData = req.body; // Data to update, assumed to be in the request body
+
+    // Find the product by productId and update with the provided data
+    const updatedProduct = await models.Product.findOneAndUpdate(
+      { productId: productId }, // Filter by productId
+      { $set: updateData }, // Update with data from the request body
+      { new: true } // Option to return the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Send the updated product data as response
+    res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    // Pass any errors to the error handling middleware
+    next(error);
+  }
+};

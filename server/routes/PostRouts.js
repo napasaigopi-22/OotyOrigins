@@ -1,4 +1,4 @@
-const {addProductToCart, showCart, addQuantityToProduct, deleteProductFromCart, CreateOrder, DeliverProduct, orderProduct, verify, addReview, getReviews, UpdateUser} = require('../Controllers/PostControllers');
+const {addProductToCart, showCart, addQuantityToProduct, deleteProductFromCart, CreateOrder, DeliverProduct, orderProduct, verify, addReview, getReviews, UpdateUser, UpdateProduct} = require('../Controllers/PostControllers');
 const router = require("express").Router();
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
@@ -47,7 +47,9 @@ router.get('/reviews/:productId', getReviews);
 
 router.post('/userOrders', OrderController);
 
-router.post('/UpdateUser',UpdateUser)
+router.post('/UpdateUser',UpdateUser);
+
+router.post("/UpdateProduct", UpdateProduct);
 
 // router.put('/user/edit/:userId', userController.editUserProfile);
 
