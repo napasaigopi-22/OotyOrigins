@@ -1,6 +1,6 @@
 const { Signup } = require('../Controllers/Auth');
 const {
-    UserController,
+    UsersController,
     CategoryController,
     ProductController,
     OrderController,
@@ -13,7 +13,7 @@ const {
 const router = require("express").Router();
 
 // Route for fetching users
-router.post('/users', UserController);
+router.post('/users', UsersController);
 
 // Route for fetching categories
 router.get('/categories', CategoryController);
@@ -28,13 +28,15 @@ router.post('/GetproductById', getProductById);
 router.get('/orders', OrderController);
 
 // Route for fetching reviews
-router.get('/addReview', ReviewController);
+router.post('/reviews', ReviewController);
 
 // Route for fetching carts
 router.get('/carts', CartController);
 
 // Route for fetching payments
 router.get('/payments', PaymentController);
+
+// router.get('/api/user/:id', UserController.getUser);
 
 router.get('/')
 

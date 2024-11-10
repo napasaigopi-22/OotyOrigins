@@ -13,15 +13,32 @@ module.exports.UsersController = async (req, res, next) => {
     }
 };
 
-module.exports.UserController = async (req, res, next) => {
+// GET Route to Fetch User Details
+module.exports.getUser= async (req, res) => {
     try {
-        const listOfUsers = await models.User.find({ username: req.body.username });
-        return res.json(listOfUsers[0]);
+      console.log('Fetching user with ID:', req.params.id);
+      const user = await userModel.findById(req.params.id);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+      res.status(200).json(user);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Error fetching users" });
+      console.error('Error fetching user:', error);
+      res.status(500).json({ message: 'Server error' });
     }
-};
+  };
+  
+  // PUT Route to Update User Details
+  module.exports.updateUser= async (req, res) => {
+    try {
+      console.log('Updating user with ID:', req.params.id);
+      const updatedUser = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedUser) return res.status(404).json({ message: 'User not found' });
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+
 
 // Category Controller
 module.exports.CategoryController = async (req, res, next) => {

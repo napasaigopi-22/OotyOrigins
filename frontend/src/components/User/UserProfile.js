@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import NavBar from "../Assets/NavBar";
+import NavBar from "../../Assets/NavBar";
 import Axios from 'axios';
 import { Box, Container, Paper, Typography, Button, Card } from "@mui/material";
 import Grid from '@mui/material/Grid2';
-import store from '../Store';
+import store from '../../Store';
 import { useNavigate } from "react-router-dom";
-import MyProducts from "./Admin/MyProducts";
+import MyProducts from "../Admin/MyProducts";
+import EditProfile from "./EditProfile";
 
 function Userprofile() {
   const [username, setusername] = React.useState("");
@@ -17,6 +18,12 @@ function Userprofile() {
   const [deliveredproducts, setdeliveredproducts] = React.useState([]);
   const [UserPrdIds, setUserPrdIds] = React.useState([]);
   const navigate = useNavigate();
+
+  // setusername(localStorage.getItem("username"));
+  const handleEditClick = () => {
+    // Navigate to EditProfile page with user data
+    navigate('/editprofile');
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('Token');
@@ -183,7 +190,7 @@ function Userprofile() {
               </ Grid >
 
               {/* Edit Profile Button */}
-              < Button variant="contained" sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}>
+              < Button variant="contained" sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }} onClick={handleEditClick}>
                 Edit Profile
               </ Button >
             </ Paper >

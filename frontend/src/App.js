@@ -10,14 +10,14 @@ import {
     useLocation
 } from "react-router-dom";
 import Products from './components/Products';
-import Userprofile from './components/UserProfile';
+import Userprofile from './components/User/UserProfile';
 import CartPage from './components/CartPage/CartPage';
 import OrdersPage from './components/Orderspage/OrdersPage';
 import Footer from './Assets/Footer';
 import Addproduct from './components/Admin/Addproduct';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ProductDetail from './components/ProductDetails/ProductDetail';
-import EditProfile from './components/EditProfile';
+import EditProfile from './components/User/EditProfile';
 
 
 
@@ -71,8 +71,8 @@ function App() {
                         />
 
                         <Route 
-                            path="/edit-profile/:userId"
-                            element={<EditProfile />} /*userId={user._id} isAdmin={user.isAdmin} */ 
+                            path="/editprofile"
+                            element={<EditProfile />}
                         />
 
                         <Route
