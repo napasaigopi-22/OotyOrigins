@@ -25,6 +25,7 @@ function EditProfile() {
         const response = await Axios.post('http://localhost:4000/get/users/', { username: localStorage.getItem('username') });
         console.log('Fetched user details:', response.data);
         setUserDetails(response.data[0]);
+
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
