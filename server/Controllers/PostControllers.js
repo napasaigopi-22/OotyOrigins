@@ -4,6 +4,32 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto'); // Also ensure crypto is required for generating the receipt ID
 
 
+// Controller to handle editing user profile
+exports.editUserProfile = async (req, res) => {
+    try {
+        const { userId } = req.params;  // Capture user ID from request params
+        const updatedData = req.body;   // Get updated profile data from request body
+
+        // Find user by ID and update with new data
+        const user = await User.findByIdAndUpdate(userId, updatedData, {
+            new: true,  // Return the updated document
+            runValidators: true  // Enforce schema validations on update
+        });
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: "Error updating profile" });
+    }
+};
+
+
+
 // Add a review for a product
 module.exports.addReview = async (req, res, next) => {
     try {

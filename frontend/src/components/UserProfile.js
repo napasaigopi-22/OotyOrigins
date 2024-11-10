@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../Assets/NavBar";
 import Axios from 'axios';
 import { Box, Container, Paper, Typography, Button, Card } from "@mui/material";
@@ -18,7 +18,13 @@ function Userprofile() {
   const [deliveredproducts, setdeliveredproducts] = React.useState([]);
   const [UserPrdIds, setUserPrdIds] = React.useState([]);
   const navigate = useNavigate();
+
+
   // setusername(localStorage.getItem("username"));
+  useEffect(() => {
+    const token = localStorage.getItem('Token');
+    if(!token) navigate("/edit-profile/:userId");
+  });
 
   React.useEffect(() => {
     Axios.get('http://localhost:4000/get/products').then(res => {
@@ -225,15 +231,21 @@ function Userprofile() {
                           <Typography>{user ? user.address[label.toLowerCase()] : ""}</Typography>
                         </Paper>
                       </Grid>
+                      
                     ))}
                   </Grid>
-
+                  <Button variant="contained"
+                  sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
+                  onClick={handleEdit}>
+                   Edit Profile
+                  </Button>
 
                 </Paper>
               </Grid>
             </Grid>
           </>
         }
+        
         {!userload.IsUser && <>
           <Grid container maxWidth="xl" spacing={2}>
             <Grid size="grow">

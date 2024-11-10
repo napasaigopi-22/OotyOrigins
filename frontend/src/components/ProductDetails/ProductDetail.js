@@ -61,6 +61,7 @@ function ProductDetail() {
     })
     },[value.prdId]);
 
+
     const getReviews = () => {
       axios.post('http://localhost:4000/get/getReviewsByProductId', { productId: value.prdId })
           .then(res => setReviews(res.data.reviews)) // Fetch reviews from backend
@@ -198,7 +199,7 @@ if (!product) {
                 <Typography variant="body2">{review.comment}</Typography>
             </CardContent>
         </Card>
-            )): (" ")}
+            )):  ("Not yet, your are the first one to review")}
           </Box>
 
 
