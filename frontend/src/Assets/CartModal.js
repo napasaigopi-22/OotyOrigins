@@ -98,7 +98,7 @@ export default function CartModal(props) {
   const decreasecountof = (index) => {
     cart.products.filter(e => e.productId == index)[0].quantity++;
     console.log(cart.products.filter(e => e.productId == index)[0].product)
-    var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+    var prd = cart.products.filter(e => e.productId == index)[0].productId;
     var luserid = localStorage.getItem("userId");
     if (token) {
       var qty;
@@ -157,7 +157,7 @@ export default function CartModal(props) {
   const increasecountof = (index) => {
     cart.products.filter(e => e.productId == index)[0].quantity++;
     console.log(cart.products.filter(e => e.productId == index)[0].product)
-    var prd = cart.products.filter(e => e.productId == index)[0].product.productId;
+    var prd = cart.products.filter(e => e.productId == index)[0].productId;
     var luserid = localStorage.getItem("userId");
     if (token) {
       var qty;
@@ -297,7 +297,8 @@ export default function CartModal(props) {
           <DialogContent id="dialog-description">
 
             <List sx={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
-              {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
+              {CartProductsList.length > 0 && CartProductsList.map((item, index) => (<p>{item.stock}</p>))}
+               {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
                 <React.Fragment key={index}>
                   <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 3 }}>
                     <ListItem sx={{ alignItems: 'center' }}>
@@ -305,26 +306,27 @@ export default function CartModal(props) {
                         primary={
                           <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                              {item.product.name}
+                              {item.name}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                              x {cart.products.find(e => e.product.name === item.product.name)?.quantity}
+                              x {cart.products.find(e => e.name === item.name)?.quantity}
                             </Typography>
                             <Typography variant="body1" color="secondary" sx={{ ml: 2 }}>
-                              ₹{cart.products[index].quantity * cart.products[index].product.price}
+                              ₹{cart.products[index].quantity * cart.products[index].price}
                             </Typography>
                           </Box>
                         }
+                        
                         secondary={
                           <Box display="flex" alignItems="center" mt={1}>
                             <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
-                              ₹ {item.product.price}
+                              ₹ {item.price}
                             </Typography>
                             <Tooltip title="Add Item">
                               <Button
                                 className="cartactions"
                                 endIcon={<AddIcon />}
-                                onClick={() => increasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}
+                                onClick={() => increasecountof(cart.products.find(e => e.name === item.name)?cart.products.find(e => e.name === item.name).productId:"")}
                                 // sx={{ color: 'success.main', ml: 1 }}
                                 sx={{
                                   background: 'linear-gradient(45deg, #00c6ff, #0072ff)',
@@ -353,7 +355,7 @@ export default function CartModal(props) {
                               <Button
                                 className="cartactions"
                                 endIcon={<RemoveIcon />}
-                                onClick={() => decreasecountof(cart.products.find(e => e.product.name === item.product.name)?.productId)}
+                                onClick={() => decreasecountof(cart.products.find(e => e.name === item.name)?.productId)}
                                 // sx={{ color: 'warning.main', ml: 1 }}
                                 variant="contained"
                                 sx={{
@@ -415,7 +417,7 @@ export default function CartModal(props) {
                   </Card>
                   {index < CartProductsList.length - 1 && <Divider />}
                 </React.Fragment>
-              ))}
+              ))} 
             </List>
 
             {CartProductsList.length == 0 && "Cart Is Empty"}

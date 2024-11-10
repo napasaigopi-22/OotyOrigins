@@ -291,10 +291,10 @@ function NavBar() {
     React.useEffect(() => {
         console.log("userid here is ", localStorage.getItem("username"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
-            localStorage.setItem("userId", res.data.userId)
+            localStorage.setItem("userId", res.data.userId);
             setisUser(res.data.IsUser);
             Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-                console.log("showcart response is ", res.data)
+                console.log("showcart response is ", res.data);
                 if (res.data.length > 0) {
                     setcart(res.data[0]);
                     var products = res.data[0].products;
