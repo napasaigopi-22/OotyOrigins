@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('../../Assets/images/ooty_origins_intro.png') no-repeat center center fixed;
+    background: url('../../Assets/images/ooty_origins_intro.gif') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -14,7 +14,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
     padding: 20px;
     border-radius: 10px;
 }

@@ -4,6 +4,85 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto'); // Also ensure crypto is required for generating the receipt ID
 
 
+// Controller to handle editing user profile
+exports.editUserProfile = async (req, res) => {
+    try {
+        const { userId } = req.params;  // Capture user ID from request params
+        const updatedData = req.body;   // Get updated profile data from request body
+
+        // Find user by ID and update with new data
+        const user = await User.findByIdAndUpdate(userId, updatedData, {
+            new: true,  // Return the updated document
+            runValidators: true  // Enforce schema validations on update
+        });
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: "Error updating profile" });
+    }
+};
+
+
+
+// Add a review for a product
+module.exports.addReview = async (req, res, next) => {
+    try {
+        
+        const { userId, productId, rating, feedback } = req.body;
+        console.log(req.body);
+
+        // Check if the user has already reviewed this product
+        const existingReview = await models.Review.findOne({ userId:userId, productId:productId });
+        if (existingReview) {
+            return res.status(400).json({ message: "You have already reviewed this product." });
+        }
+
+        const reviews = await models.Review.find({});
+        
+
+        // Create a new review
+        const newReview = new models.Review({
+            userId,
+            productId,
+            rating,
+            feedback,
+            reviewId :"R"+reviews.length 
+        });
+
+        await newReview.save();
+        return res.status(201).json({ message: "Review added successfully." });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error adding review." });
+    }
+};
+
+
+module.exports.getReviews = async (req, res, next) => {
+    try {
+        const { productId } = req.params; // Retrieve productId from URL parameters
+
+        // Fetch reviews for the specified product
+        const reviews = await reviews.find({ productId }).populate('userId', 'name'); // Populate userName to display reviewer's name
+
+        if (reviews.length === 0) {
+            return res.status(404).json({ message: "No reviews found for this product." });
+        }
+
+        return res.json(reviews); // Send the reviews as the response
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error fetching reviews." });
+    }
+};
+
+
 // Add a new product to the cart
 module.exports.addProductToCart = async (req, res, next) => {
     console.log("add to cart is ===111```",req)
