@@ -248,32 +248,86 @@ module.exports.showCart = async (req, res, next) => {
     try {
         var cart = {};
         cart = await models.Cart.find({ userId: req.body.userId, isActive: 1 });
-        console.log("cart got",cart);
-        const user = await models.User.find({userId:req.body.userId});
-        
-
-        cart = JSON.stringify(cart);
-        cart = JSON.parse(cart);
-        var prdids = [];
-        if (cart.length == 0)
-            return res.json([]);
-        
-
-        cart[0].products.map((prd) => {
-            prdids.push(prd.productId);
-            
-        });
-        
-        let products = await models.Product.find({ productId: prdids });
-        console.log("got cart[0].products ",prdids);
-        
-        for (let i = 0; i < cart[0].products.length; i++) {
-            var prdct = products.filter(ele => ele.productId == cart[0].products[i].productId);
-            cart[0].products[i].product = prdct[0];
-            cart[0].products[i].price = prdct[0].price;
-        };
-        cart[0].userAddress=user[0].address;
-        return res.json(cart);
+        const cartWithSellerAddress = await models.Cart.aggregate([
+            { $match: { userId: req.body.userId, isActive: 1 } }, // Filter cart by userId and active status
+            {
+              $lookup: {
+                from: 'products', // Collection name of Product
+                localField: 'products.productId', // Field in Cart to match
+                foreignField: 'productId', // Field in Product to match
+                as: 'productDetails' // Name for the output array
+              }
+            },
+            {
+              $lookup: {
+                from: 'users', // Collection name of User
+                localField: 'productDetails.uploadedBy', // Field in Product to match
+                foreignField: 'userId', // Field in User to match
+                as: 'sellerDetails' // Name for the seller's details array
+              }
+            },
+            {
+              $addFields: {
+                products: {
+                  $map: {
+                    input: '$products',
+                    as: 'cartProduct',
+                    in: {
+                      $mergeObjects: [
+                        '$$cartProduct',
+                        {
+                          $arrayElemAt: [
+                            {
+                              $map: {
+                                input: {
+                                  $filter: {
+                                    input: '$productDetails',
+                                    as: 'productDetail',
+                                    cond: { $eq: ['$$productDetail.productId', '$$cartProduct.productId'] }
+                                  }
+                                },
+                                as: 'productWithSeller',
+                                in: {
+                                  $mergeObjects: [
+                                    '$$productWithSeller',
+                                    {
+                                      sellerAddress: {
+                                        $arrayElemAt: [
+                                          {
+                                            $map: {
+                                              input: {
+                                                $filter: {
+                                                  input: '$sellerDetails',
+                                                  as: 'seller',
+                                                  cond: { $eq: ['$$seller.userId', '$$productWithSeller.uploadedBy'] }
+                                                }
+                                              },
+                                              as: 'sellerData',
+                                              in: '$$sellerData.address'
+                                            }
+                                          },
+                                          0
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            { $project: { productDetails: 0, sellerDetails: 0 } } // Remove intermediate arrays
+          ]);
+          
+          console.log(JSON.stringify(cartWithSellerAddress, null, 2));
+        return res.json(cartWithSellerAddress);
     } catch (error) {
         return res.status(500).json({ message: "Error showing product from cart" });
     }

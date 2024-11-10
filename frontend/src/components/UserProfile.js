@@ -53,8 +53,9 @@ function Userprofile() {
 
   const setUserProductList = (userdetails) => {
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
-      const tempvar = res.data.filter(r=>r.userId==userdetails.userId);
-      console.log("tempvar is ", tempvar)
+      const tempvar = res.data.filter(r => r.userId == userdetails.userId);
+      console.log("tempvar is ", tempvar);
+      console.log(tempvar.filter(i=>i.status!="Delivered"))
       setUserPrdIds(tempvar);
     }).catch(function (error) {
       console.log(error);
@@ -101,112 +102,92 @@ function Userprofile() {
       <Container maxWidth="xl">
         {userload.IsUser &&
           <>
-            <Grid>
-            <Grid size="grow">
-              <p style={{ color: 'black' }}>Recieve Orders</p>
-              {UserPrdIds.length}
-              {/* {JSON.stringify(UserPrdIds)} */}
-              { UserPrdIds.map((index, item) => (<Grid>
-                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
-                        {index.username}
-                        {/* {JSON.stringify(index.products)} */}
-                        {index.products.map((item, index) => (
-                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
-                            <Grid container columns={4}>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.name}</p>
-                              </Grid>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
-                              </Grid>
-                            </Grid>
-                            <h5>Here{index.username}</h5>
-                          </Card>
-                        ))}
-                        <Grid container columns={4} spacing={4}>
-                          <Grid size={2}>
-                            {index.paymentMethod}
-                          </Grid>
-                          <Grid size={2}>
-                            {index.totalAmount}
-                          </Grid>
-
+            <Grid container maxWidth="xl" spacing={2}>
+              <Grid size="grow">
+                <p style={{ color: 'black' }}>Recieve Orders</p>
+                {/* {JSON.stringify(UserPrdIds)} */}
+                {UserPrdIds.filter(i=>i.status!="Delivered").map((index, item) => (<Grid>
+                  <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
+                    <Grid container maxWidth="xl">
+                      <Grid size="grow">
+                        <Grid container>
+                          <Grid size="grow"> <h3>username</h3></Grid>
+                          <Grid size="grow"><p>{index.username}</p></Grid>
                         </Grid>
-                      </Card>
-                    </Grid>))}
-              {/* {UserPrdIds.length != 0 && UserPrdIds.map((index, item) => (
-                <>
-                  <div>
-                    <Grid>
-                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
-                        {index.username}
-                        {index.products.map((item, index) => (
-                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
-                            <Grid container columns={4}>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.name}</p>
-                              </Grid>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        ))}
-                        <Grid container columns={4} spacing={4}>
-                          <Grid size={2}>
-                            {index.paymentMethod}
-                          </Grid>
-                          <Grid size={2}>
-                            {index.totalAmount}
-                          </Grid>
-
+                      </Grid>
+                      <Grid size="grow">
+                        <Grid container>
+                          <Grid size="grow"> <h3>OrderId</h3></Grid>
+                          <Grid size="grow"><p>{index.orderId}</p></Grid>
                         </Grid>
-                      </Card>
+                      </Grid>
                     </Grid>
-                  </div>
-                </>
-              ))}  */}
-              {
-                adminpproductsActive.length == 0 && "No Products"
-              }
-              <p style={{ color: 'black' }}>Delivered Products</p>
-              {deliveredproducts.length != 0 && deliveredproducts.map((index, item) => (
-                <>
-                  <div onClick={() => SellerOrderClicked(index)}>
-                    <Grid size="grow" >
-                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
-                        {index.username}
-                        {index.products.map((item, index) => (
-                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
-                            <Grid container columns={4}>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.name}
-                                </p>
-                              </Grid>
-                              <Grid size={2}>
-                                <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
-                              </Grid>
-                            </Grid>
-                          </Card>
-                        ))}
-                        <Grid container columns={4} spacing={4}>
+                    {/* {JSON.stringify(index.products)} */}
+                    {index.products.map((item, index) => (
+                      <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
+                        <Grid container columns={4}>
                           <Grid size={2}>
-                            {index.paymentMethod}
+                            <p style={{ color: 'black' }}>{item.name}</p>
                           </Grid>
                           <Grid size={2}>
-                            {index.totalAmount}
+                            <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
                           </Grid>
                         </Grid>
+                        <h5>collect {item.name} at {item.uploaderAddress && item.uploaderAddress.street}</h5>
                       </Card>
+                    ))}
+                    <Grid container columns={4} spacing={4}>
+                      <Grid size={2}>
+                        {index.paymentMethod}
+                      </Grid>
+                      <Grid size={2}>
+                        {index.totalAmount}
+                      </Grid>
+
                     </Grid>
-                  </div>
-                </>
-              ))}
-              {
-                deliveredproducts.length == 0 && "No Products"
-              }
-            </Grid>
-              <Grid>
+                  </Card>
+                </Grid>))}
+                {
+                  UserPrdIds.filter(i=>i.status!="Delivered").length == 0 && "No Products"
+                }
+                <p style={{ color: 'black' }}>Delivered Products</p>
+                {UserPrdIds.filter(i=>i.status=="Delivered").length != 0 && UserPrdIds.filter(i=>i.status=="Delivered").map((index, item) => (
+                  <>
+                    <div>
+                      <Grid size="grow" >
+                        <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}  >
+                          {index.username}
+                          {index.products.map((item, index) => (
+                            <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }} >
+                              <Grid container columns={4}>
+                                <Grid size={2}>
+                                  <p style={{ color: 'black' }}>{item.name}
+                                  </p>
+                                </Grid>
+                                <Grid size={2}>
+                                  <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p>
+                                </Grid>
+                              </Grid>
+                            </Card>
+                          ))}
+                          <Grid container columns={4} spacing={4}>
+                            <Grid size={2}>
+                              {index.paymentMethod}
+                            </Grid>
+                            <Grid size={2}>
+                              {index.totalAmount}
+                            </Grid>
+                          </Grid>
+                        </Card>
+                      </Grid>
+                    </div>
+                  </>
+                ))}
+                {
+                  UserPrdIds.filter(i=>i.status=="Delivered").length == 0 && "No Products"
+                }
+              </Grid>
+              <Grid size="grow">
                 <Paper elevation={3} sx={{ padding: 3, mt: 5 }}>
                   <Typography variant="h4" gutterBottom>
                     User Profile
