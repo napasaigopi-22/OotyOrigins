@@ -5,7 +5,8 @@ let path = require('path');
 
 module.exports.UsersController = async (req, res, next) => {
     try {
-        const listOfUsers = await models.User.find({});
+        const listOfUsers = await models.User.find({username:req.body.username});
+        console.log(req.body.username,listOfUsers)
         return res.json(listOfUsers);
     } catch (error) {
         console.log(error);
