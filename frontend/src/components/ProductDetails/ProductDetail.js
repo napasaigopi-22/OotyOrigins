@@ -102,11 +102,12 @@ function ProductDetail() {
 
     const addToCart = () => {
       var luserid = localStorage.getItem("userId");
-      var token = localStorage.getItem("token");
-      var prd = value.productId;
+      var token = localStorage.getItem("Token");
+      var prd = value.prdId;
       if(token) {
           var qty;
           axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
+            console.log("res.data length = ",res.data.length>0)
               if(res.data.length>0){
               qty=res.data[0].products.filter(ele=>ele.productId==prd);
               if(qty.length!=0)
@@ -177,7 +178,7 @@ if (!product) {
     return (
       <>
       <NavBar/>
-      {(user.IsUser && 
+      {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
           <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
@@ -269,7 +270,7 @@ if (!product) {
             />
         </div>
         )}
-              {(!user.IsUser && 
+              {(!(user?user.IsUser:true) && 
 
             <EditProductForm product={product} onSubmit={submitProductEdit}/>
               )}
