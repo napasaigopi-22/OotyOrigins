@@ -171,7 +171,7 @@ function Userprofile() {
             < Paper elevation={3} sx={{ padding: 3, mt: 5 }}>
               <Typography variant="h4" gutterBottom>User Profile</Typography>
               <Typography variant="h5" gutterBottom>Welcome Back, {username}</Typography>
-              <Box sx={{ mt: 2 }}>
+              <Box sx={{ mt: 1 }}>
                 <Typography variant="body1">Phone: {user ? user.phone : " "}</Typography>
               </Box>
               <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>Address</Typography>
