@@ -427,7 +427,7 @@ function NavBar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <nav className="NavBar">
-                        <a href="/">
+                        <a href="/home">
                             <img src={logo} alt="Company Logo" className="logo" />
                         </a>
                     </nav>
@@ -435,7 +435,7 @@ function NavBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href="/home"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -514,7 +514,6 @@ function NavBar() {
                         </Search>
                     </Box>
                     {/* {localStorage.getItem("userId")} */}
-                    <p style={{backgroundColor:'black'}}>{isUser?"yes":"no"}</p>
                     {((localStorage.getItem("userId") == 'undefined') || isUser) &&
                         <CartModal></CartModal>
                     }

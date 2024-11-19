@@ -37,8 +37,8 @@ function HomePage() {
 
 
     var imageobjs={
-        "Jewellry":item_product_1,
-        "Organic Rice":item_product_2,
+        "Jewelry":item_product_1,
+        "Home Decor":item_product_2,
         "Clothing":item_product_3,
         "Food & Beverages":item_product_4,
         "Handicraft":item_product_5,
@@ -46,12 +46,12 @@ function HomePage() {
         "Kitchenware":item_product_7,
         "Furniture":item_product_8,
         "Toys & Games":item_product_9,
-        "Home Decor":item_product_10,
+        "Organic Rice":item_product_10,
        
     }
 
     const developers = [
-        { name: "Dr. T. Senthil Kumar", role: "Principal Investigator", image: dev4 },
+        { name: "Dr. T. Senthil Kumar", role: "Principal ", image: dev4 },
         { name: "N Mahesh", role: " Developer", image: dev1 },
         { name: "N Sai Gopi", role: " Developer", image: dev2 },
         { name: "B Lokesh", role: "Developer", image: dev3 },
