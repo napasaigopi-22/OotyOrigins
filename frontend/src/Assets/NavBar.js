@@ -100,6 +100,7 @@ function NavBar() {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
         localStorage.setItem("userId", "");
         window.location.reload();
+        navigate('/');
         setisUser(true);
         handleClicksnack();
     };
@@ -560,7 +561,7 @@ function NavBar() {
                                                         <TextField type='password' required sx={{ margin: 'auto', display: 'block', width: '100%', padding: '5px' }} onChange={(event) => { setPassword(event.target.value) }} label="Password" variant="outlined" />
                                                     </Grid2>
                                                 </Grid2>
-                                                <Button sx={{ margin: 'auto', display: 'block' }} onClick={submitLogin} variant="contained" style={{ backgroundColor: '#616161' }}>
+                                                <Button className='button-89' sx={{ margin: 'auto', display: 'block' }} onClick={submitLogin} variant="contained" style={{ backgroundColor: '#616161' }}>
                                                     Log In
                                                 </Button>
                                             </form>

@@ -44,14 +44,15 @@ function Userprofile() {
     Axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
       setusername(localStorage.getItem("username"));
       setuserload(res.data[0]);
-      console.log("res.data[0] is ----====,res.data[0] ",res.data[0].IsUser)
-      setUserProductList(res.data);
+      console.log("res.data[0] is ----====,res.data[0] ",res.data[0].userId)
+      setUserProductList(res.data[0]);
       store.getState().user = res.data;
       setuser(res.data[0]);
     }).catch(function (error) { console.log(error); });
   }, []);
 
   const setUserProductList = (userdetails) => {
+    console.log("localStorage.getItem('userId')" ,localStorage.getItem("userId"),"userdetails.userid is ",userdetails.userId)
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r => r.userId === userdetails.userId);
       setUserPrdIds(tempvar);

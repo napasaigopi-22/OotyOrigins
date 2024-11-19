@@ -101,12 +101,11 @@ function CartPage() {
                         {products.map((ele, i) => {
                             return (
                                 <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '5px 0', justifyContent: 'center' }}>
                                         <Grid container >
-                                            <Grid size="grow" ><CartProduct name={ele.name} price={ele.price} quantity={ele.quantity} /></Grid>
+                                            <Grid size='grow' ml={8}>
+                                                <CartProduct name={ele.name} price={ele.price} quantity={ele.quantity} /></Grid>
                                             <Grid size="grow" ><p>collect at {ele.sellerAddress && ele.sellerAddress.street}</p></Grid>
                                         </Grid>
-                                    </div>
                                     <Divider sx={{ my: 2 }} variant="middle" />
                                 </Box>)
                         })}

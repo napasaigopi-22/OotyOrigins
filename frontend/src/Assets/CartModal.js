@@ -298,7 +298,6 @@ export default function CartModal(props) {
           <DialogContent id="dialog-description">
 
             <List sx={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
-              {CartProductsList.length > 0 && CartProductsList.map((item, index) => (<p>{item.stock}</p>))}
                {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
                 <React.Fragment key={index}>
                   <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 3 }}>

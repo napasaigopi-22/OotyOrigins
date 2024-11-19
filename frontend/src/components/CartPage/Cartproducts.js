@@ -8,7 +8,7 @@ export default function CartProduct({ name, price, quantity }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '15px',
+        padding: '10px',
         borderRadius: '8px',
         backgroundColor: '#f5f5f5',
         background: 'linear-gradient(135deg, #2a2d39, #1c1e26)',

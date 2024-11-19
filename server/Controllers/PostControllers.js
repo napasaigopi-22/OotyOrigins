@@ -233,7 +233,7 @@ module.exports.deleteProductFromCart = async (req, res) => {
 // Show existing cart
 // show existing cart
 module.exports.showCart = async (req, res, next) => {
-  console.log("req.body is ", req.body);
+  // console.log("req.body is ", req.body);
   try {
     var cart = {};
     cart = await models.Cart.find({ userId: req.body.userId, isActive: 1 });
@@ -344,7 +344,7 @@ module.exports.CreateOrder = async (req, res) => {
     // Create a new order
     const ordersCount = await models.Order.countDocuments({});
     const newOrder = new models.Order({
-      orderId: `O${ordersCount}`,
+      orderId: `O${ordersCount+1}`,
       userId,
       products,
       totalAmount,
@@ -354,6 +354,8 @@ module.exports.CreateOrder = async (req, res) => {
       paymentMethod,
       shippingAddress: userAddress
     });
+
+    console.log("Order is ",newOrder)
 
     await newOrder.save();
 
@@ -458,9 +460,9 @@ module.exports.UpdateUser = async (req, res) => {
 
 module.exports.UpdateProduct = async (req, res, next) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     const { productId } = req.body; // Extract productId from request parameters
-    console.log(productId);
+    // console.log(productId);
     const updateData = req.body; // Data to update, assumed to be in the request body
 
     // Find the product by productId and update with the provided data

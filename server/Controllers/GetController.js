@@ -69,9 +69,17 @@ module.exports.getProductById = async (req, res) => {
 
 // Order Controller
 module.exports.OrderController = async (req, res, next) => {
-    console.log("in orders controlelr")
+    
     try {
         const listOfOrders = await models.Order.find({userId:req.body.userId});
+        const user = await models.User.findOne({ userId: req.body.userId });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const userId = user.userId; 
+        console.log("in orders controlelr",listOfOrders)
         const orders = await models.Order.aggregate([
             { $match: { userId: req.body.userId } }, // Filter orders by userId
             {
