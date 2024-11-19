@@ -99,8 +99,9 @@ function NavBar() {
     const logout = () => {
         localStorage.setItem("Token", ""); localStorage.setItem("username", ""); setToken(""); setsnackMessage("Log Out Succesfull!");
         localStorage.setItem("userId", "");
+        navigate('/home');
         window.location.reload();
-        navigate('/');
+        
         setisUser(true);
         handleClicksnack();
     };
@@ -428,7 +429,7 @@ function NavBar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <nav className="NavBar">
-                        <a href="/">
+                        <a href="/home">
                             <img src={logo} alt="Company Logo" className="logo" />
                         </a>
                     </nav>
@@ -436,7 +437,7 @@ function NavBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href="/home"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
