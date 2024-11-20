@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.Signup = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
 
     // Validate input
     if (!username || !password || password.length < 6) {
@@ -14,7 +14,14 @@ module.exports.Signup = async (req, res) => {
     }
 
     console.log("password var value is ", password, User);
-    const existingUser = await User.findOne({ 'username': username });
+    var existingUser = await User.findOne({ 'username': username });
+
+    if (existingUser) {
+      console.log("Existing user:", req.body.email);
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    existingUser = await User.findOne({ 'email': email });
 
     if (existingUser) {
       console.log("Existing user:", req.body.email);

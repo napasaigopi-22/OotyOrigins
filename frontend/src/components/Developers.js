@@ -132,7 +132,7 @@ function AboutUs() {
 
      {/* Guide Section */}
      <Container sx={{ background: 'linear-gradient(to right, #FFD1A4, #FFEB9E)',
-            padding: '50px 0',
+            padding: '40px 0',
             marginTop: '100px',
             borderRadius: '40px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', }}>
@@ -152,11 +152,10 @@ function AboutUs() {
                     backgroundColor: '#fff',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     borderRadius: '15px',
-                    height: '350px', // Fixed height to ensure all boxes are the same
+                    height: '200px', // Fixed height to ensure all boxes are the same
                     transition: 'all 0.3s ease-in-out', // Smooth hover effect
                     '&:hover': {
                       boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)', // Enhanced shadow on hover
-                      transform: 'scale(1.05)', // Slight zoom effect on hover
                     },
                   }}
               >
@@ -166,7 +165,7 @@ function AboutUs() {
                   style={{
                     width: '150px',
                     height: '150px',
-                    borderRadius: '50%',
+                    borderRadius: '100%',
                     objectFit: 'cover',
                     marginBottom: '15px',
                   }}
