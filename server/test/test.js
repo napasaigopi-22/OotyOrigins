@@ -130,5 +130,7 @@ test('POST /login - should return 400 for missing fields', async () => {
   expect(res.body).toHaveProperty('message', "Email and password are required");
   expect(res.body).toHaveProperty('success', false);
 });
-
+after(() => {
+  server.close(); // Ensures the server is properly shut down
+});
 })
