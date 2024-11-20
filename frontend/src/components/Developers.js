@@ -14,12 +14,12 @@ import dev2 from '../Assets/images/dev2.png';
 function AboutUs() {
 
     const guide = [
-        { name: "Dr. T. Senthil Kumar", role: "Principal ", image: guide_1 },
-        { name: "Dr. S. Rajendra Kumar", role: " Developer", image: guide_2 },
-        { name: "Rajeev Ramakrishnan", role: " Developer", image: guide_3 },
-        { name: "Dr. Udhay Kumar", role: "Developer", image: guide_4 },
-        { name: "P.Gunanithi", role: " Developer", image: guide_5 },
-        { name: "Dr. P. Subramaniam", role: "Developer", image: guide_6 },
+        { name: "Dr. T. Senthil Kumar", role: "Principal Investigator", image: guide_1 },
+        { name: "Dr. S. Rajendra Kumar", role: " Co-Principal investigator", image: guide_2 },
+        { name: "Rajeev Ramakrishnan", role: " Junior Research Fellow", image: guide_3 },
+        { name: "Dr. Udhay Kumar", role: "Co-Principal Investigator", image: guide_4 },
+        { name: "P.Gunanithi", role: "Project Assistannt", image: guide_5 },
+        { name: "Dr. P. Subramaniam", role: "Mentor", image: guide_6 },
         
     ];
 
