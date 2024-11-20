@@ -13,10 +13,14 @@ const PORT = 4000;
 mongoose
   .connect(MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
-  .then(() => console.log("MongoDB is connected successfully"))
+  .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
 
 app.use(
   cors({
@@ -26,12 +30,13 @@ app.use(
   })
 );
 app.use(cookieParser());
+
 app.use(express.json());
 
 app.use("/", authRoute);
-app.use("/get", Rout);
-app.use("/post", PostRout);
 
-app.use(express.static("Controllers/public"));
+app.use("/get",Rout );
 
-module.exports = app; // Export the app for testing
+app.use("/post",PostRout);
+ 
+app.use(express.static('Controllers/public'))
