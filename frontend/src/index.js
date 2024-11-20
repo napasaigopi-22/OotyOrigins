@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import { legacy_createStore as createStore } from 'redux';
-import rootReducer from './reducers'
+import rootReducer from './reducers';
 
 const store = createStore(rootReducer)
 

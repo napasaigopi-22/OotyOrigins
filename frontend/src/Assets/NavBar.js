@@ -504,7 +504,7 @@ function NavBar() {
                             )
                         ))}
                     </Box>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
@@ -514,7 +514,7 @@ function NavBar() {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </Search>
-                    </Box>
+                    </Box> */}
                     {/* {localStorage.getItem("userId")} */}
                     {((localStorage.getItem("userId") == 'undefined') || isUser) &&
                         <CartModal></CartModal>
