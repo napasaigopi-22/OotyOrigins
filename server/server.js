@@ -33,7 +33,10 @@ app.use(cookieParser());
 
 app.use(express.json());
 
+app.use("/public", express.static("Controllers/public"));
 app.use("/", authRoute);
+
+
 
 app.use("/get",Rout );
 

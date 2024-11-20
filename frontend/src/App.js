@@ -1,7 +1,8 @@
 import './App.css';
 import IntroPage from './components/IntroPage/IntroPage'
 import Homepage from './components/Homepage/HomePage';
-import Category from './components/Category'
+import Category from './components/Category';
+import Developers from './components/Developers';
 import {
     BrowserRouter as Router,
     Routes,
@@ -44,6 +45,11 @@ function App() {
                             path="/home"
                             element={<Homepage />}
                         />
+
+                        <Route 
+                            path="/Developers"
+                            element={<Developers />}
+                        />    
 
                         {/* This route is for about component 
           with exact path "/about", in component 

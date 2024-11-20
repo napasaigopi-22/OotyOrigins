@@ -6,10 +6,6 @@ import { useNavigate } from "react-router-dom";
 import '../../Assets/Header.css';
 
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
-import dev1 from '../../Assets/images/dev1.png';
-import dev2 from '../../Assets/images/dev2.png';
-import dev3 from '../../Assets/images/dev3.png';
-import dev4 from '../../Assets/images/dev4.png';
 import item_product_1 from '../../Assets/images/item_product_1.png'
 import item_product_2 from '../../Assets/images/item_product_2.png'
 import item_product_3 from '../../Assets/images/item_product_3.png'
@@ -50,12 +46,12 @@ function HomePage() {
        
     }
 
-    const developers = [
-        { name: "Dr. T. Senthil Kumar", role: "Principal ", image: dev4 },
-        { name: "N Mahesh", role: " Developer", image: dev1 },
-        { name: "N Sai Gopi", role: " Developer", image: dev2 },
-        { name: "B Lokesh", role: "Developer", image: dev3 },
-    ];
+    // const developers = [
+    //     { name: "Dr. T. Senthil Kumar", role: "Principal ", image: dev4 },
+    //     { name: "N Mahesh", role: " Developer", image: dev1 },
+    //     { name: "N Sai Gopi", role: " Developer", image: dev2 },
+    //     { name: "B Lokesh", role: "Developer", image: dev3 },
+    // ];
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -218,7 +214,7 @@ function HomePage() {
 
             </div>
 
-            <div className="developers-section">
+            {/* <div className="developers-section">
                 <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
                 
                 <Grid container spacing={0.1}>
@@ -241,7 +237,7 @@ function HomePage() {
                         </Grid>
                     ))}
                 </Grid>
-            </div>
+            </div> */}
         
         </>
     )
