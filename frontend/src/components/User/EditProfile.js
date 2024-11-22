@@ -187,7 +187,7 @@ function EditProfile() {
       <Button onClick={()=>navigate('/UserProfile')} 
         sx= {{marginTop: '10px', width: '100%'}}>Back</Button>
 
-      <Button variant="outlined" color="error"
+      {/* <Button variant="outlined" color="error"
         onClick={() => setOpenDialog(true)}
         sx={{ marginTop: '10px', width: '100%' }}
       >
@@ -214,7 +214,7 @@ function EditProfile() {
             Delete
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </form>
   );
 }
