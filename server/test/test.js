@@ -1,7 +1,19 @@
 const request = require("supertest");
 const app = require("../server"); // Adjust the path to your app
+const { before } = require("mocha");
+
+let server;
 
 describe("Signup Endpoint Tests", () => {
+
+  beforeAll(() => {
+    server = app.listen(4000);
+  });
+  
+  afterAll(() => {
+    server.close();
+  });
+
   test("Valid Signup - should return 200 and a success message", async () => {
     const newUser = {
       username: "newuse0r123",
@@ -58,6 +70,13 @@ describe("Signup Endpoint Tests", () => {
 });
 
 describe("Login Endpoint Tests",()=>{
+  beforeAll(() => {
+    server = app.listen(4000);
+  });
+  
+  afterAll(() => {
+    server.close();
+  });
   test('POST /login - should authenticate user and return a JWT token', async () => {
   const testUser = {
     username: "newuse0r123",
@@ -130,5 +149,4 @@ test('POST /login - should return 400 for missing fields', async () => {
   expect(res.body).toHaveProperty('message', "Email and password are required");
   expect(res.body).toHaveProperty('success', false);
 });
-
 })

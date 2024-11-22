@@ -217,8 +217,8 @@ export default function CartModal(props) {
   const deleteitem = (prdId) => {
     console.log("deleting item", prdId);
     Axios.delete('http://localhost:4000/post/deleteProductFromCart', { data: { userId: localStorage.getItem("userId"), productId: prdId } }).then(res => {
-      console.log(res.data);
-      setsnackMessage("Deleted " + res.data.deleted.name + " from cart");
+      console.log("cart.products.find(e => e.productId === prdId)[0].name  ",cart.products.find(e => e.productId === prdId).name);
+      setsnackMessage("Deleted " + cart.products.find(e => e.productId === prdId).name+ " from cart");
       handleClicksnack();
       Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
         console.log("showcart after deletion is ", res.data)
@@ -385,7 +385,8 @@ export default function CartModal(props) {
                               <Button
                                 className="cartdeleteactions"
                                 startIcon={<DeleteIcon />}
-                                onClick={() => deleteitem(cart.products.find(e => e.product.name === item.product.name)?.productId)}
+                                onClick={() =>{console.log("cart is ",item.name)
+                                   deleteitem(cart.products.find(e => e.name === item.name)?.productId)}}
                                 // sx={{ color: 'error.main', ml: 1 }}
                                 sx={{
                                   background: 'linear-gradient(45deg, #ff4e50, #f9d423)',
