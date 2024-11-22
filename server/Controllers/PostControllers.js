@@ -448,7 +448,9 @@ module.exports.UpdateUser = async (req, res) => {
     // Update the updatedAt field
     userOBJ.updatedAt = new Date();
 
+    // const password = await models.User.findone({userId:body.userId});
     // Save the updated user object
+    body.password=userOBJ.password
     const updateduser = await models.User.updateOne({userId:body.userId},{$set: body});
 
 
