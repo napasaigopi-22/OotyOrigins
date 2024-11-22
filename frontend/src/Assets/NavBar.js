@@ -441,7 +441,7 @@ function NavBar() {
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
+                            fontFamily: 'cursive',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             color: 'inherit',
