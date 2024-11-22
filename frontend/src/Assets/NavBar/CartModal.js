@@ -9,10 +9,10 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import Axios from 'axios';
 import axios from 'axios'
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
-import store from '../Store';
+import store from '../../Store';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
-import { a, addQtyToPrdct } from '../Services/Serve';
+import { a, addQtyToPrdct } from '../../Services/Serve';
 
 
 

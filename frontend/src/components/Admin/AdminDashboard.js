@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import { Button, Card, Paper } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import Axios from "axios";

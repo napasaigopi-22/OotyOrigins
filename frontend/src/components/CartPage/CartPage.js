@@ -1,5 +1,5 @@
 import Axios from "axios";
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import PropTypes from 'prop-types';
 import React, { useState } from "react";
 import { Box, Container, Divider, Typography, FormLabel, RadioGroup, FormControlLabel, Radio, FormControl, Tab, Tabs, TextField } from "@mui/material";

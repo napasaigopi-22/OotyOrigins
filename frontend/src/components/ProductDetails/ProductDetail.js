@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";

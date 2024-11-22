@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import { Box, Typography,  Container, Divider, Card } from "@mui/material";
 import Axios from "axios";
 import CartProduct from "../../components/CartPage/Cartproducts";

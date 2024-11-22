@@ -15,10 +15,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import store from '../Store';
-import '../index.css';
-import logo from "./images/logo512.png";
-import "./NavBar.css";
+import store from '../../Store';
+import '../../index.css';
+import logo from "../images/logo512.png";
+import "../NavBar/NavBar.css";
 import CartModal from './CartModal';
 import SignupForm from './SignupForm';
 

@@ -11,7 +11,6 @@ const Footer = () => {
         <div className="footer-top-strip">
           <h4>OOTY, TAMILNADU</h4>
         </div>
-
         <div className="footer-middle">
           <div className="footer-container">
             <div className="footer-section about">

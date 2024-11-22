@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import NavBar from "../Assets/NavBar";
+import NavBar from "../Assets/NavBar/NavBar";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { Box, Grid2} from "@mui/material";
