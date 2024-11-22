@@ -454,7 +454,7 @@ module.exports.UpdateUser = async (req, res) => {
     const updateduser = await models.User.updateOne({userId:body.userId},{$set: body});
 
 
-    return res.json({ message: "lvangam" })
+    return res.json({ message: "User Details Updated" })
   } catch (Error) {
     console.log(Error)
   }

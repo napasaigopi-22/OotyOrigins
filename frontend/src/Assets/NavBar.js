@@ -5,33 +5,22 @@ import {
     AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, InputBase, Modal,
     TextField, Snackbar,
     Grid2,
-    Tabs,
-    List,
-    ListItem,
-    ListItemText,
-    Divider,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-    FormControl
+    Tabs
 } from '@mui/material';
-import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import FormHelperText from '@mui/material/FormHelperText';
 import store from '../Store';
-import DeleteIcon from '@mui/icons-material/Delete';
 import '../index.css';
 import logo from "./images/logo512.png";
 import "./NavBar.css";
 import CartModal from './CartModal';
+import SignupForm from './SignupForm';
 
 
 function CustomTabPanel(props) {
@@ -80,7 +69,6 @@ const pages = ['Products', 'Category'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function NavBar() {
-    console.log("loading navbar");
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
     const openNavMenu = Boolean(anchorEl.nav);
     const openUserMenu = Boolean(anchorEl.user);
@@ -101,9 +89,6 @@ function NavBar() {
         localStorage.setItem("userId", "");
         navigate('/home');
         window.location.reload();
-        
-        setisUser(true);
-        handleClicksnack();
     };
     const navAcc = () => { navigate('/accounts') }
     const navProf = () => { navigate('/UserProfile') }
@@ -115,7 +100,6 @@ function NavBar() {
     }
 
     React.useEffect(() => {
-        console.log("localstorage userId is ---",localStorage.getItem("userId"),isUser)
         setToken(localStorage.getItem('Token'));
         return () => {
             handleClose();
@@ -158,21 +142,15 @@ function NavBar() {
         },
     }));
 
-    const handleMenuClick = (menu) => (event) => {
-        setAnchorEl((prev) => ({ ...prev, [menu]: event.currentTarget }));
-    };
+    const handleMenuClick = (menu) => (event) => setAnchorEl((prev) => ({ ...prev, [menu]: event.currentTarget }));
 
-    const handleCloseMenu = (menu) => () => {
-        setAnchorEl((prev) => ({ ...prev, [menu]: null }));
-    };
+    const handleCloseMenu = (menu) => () => setAnchorEl((prev) => ({ ...prev, [menu]: null }));
 
     const handleSettingClick = (val) => {
-        // event.preventDefault();
         console.log(clickedvals[val]);
         clickedvals[val]();
         if (val === "Account")
             console.log("clicked -", val);
-        // navigate('/category', val);
     };
 
     const renderMenuItems = (menuItems, handleClose) => (
@@ -282,9 +260,7 @@ function NavBar() {
     );
 
     const handleCategoryClick = (val) => {
-        // event.preventDefault();
         navigate('/category', val);
-        console.log("navigating to category ", val)
     };
 
     //-------------------------------------showCart----------------------------------
@@ -292,34 +268,9 @@ function NavBar() {
     const [CartProductsList, setCartProductsList] = React.useState([])
     var i = 0;
     React.useEffect(() => {
-        console.log("userid here is ", localStorage.getItem("username"), localStorage.getItem("userId"));
         axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
-
             localStorage.setItem("userId", res.data[0].userId);
-            // localStorage.setItem("userId",localStorage.getItem("userId"));
-            console.log('res.data.userId is -----------',res.data[0].userId);
             setisUser(res.data[0].IsUser);
-            Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-                console.log("showcart response is ", res.data);
-                if (res.data.length > 0) {
-                    setcart(res.data[0]);
-                    var products = res.data[0].products;
-                    while (CartProductsList.length > 0)
-                        CartProductsList.pop();
-                    products.forEach(element => {
-                        CartProductsList.push(element);
-                    });
-                    console.log("carts product is == cost is ", res.data[0].products[0].product.price * res.data[0].products[0].quantity, " ", cart,);
-
-                    setCartProductsList(CartProductsList);
-                    console.log("cart is ", cart);
-                }
-            }).catch(function (error) {
-                console.log(error);
-                while (CartProductsList.length > 0)
-                    CartProductsList.pop();
-            })
-            console.log("userdata ======== ", res.data);
         }).catch(function (error) {
             console.log(error);
         })
@@ -356,7 +307,6 @@ function NavBar() {
         const newErrors = {};
         const phonePattern = /^\d{10}$/; // Adjusting regex for phone format
         const zipPattern = /^\d{6}$/;
-
         if (!formData.username) newErrors.username = "Username is required.";
         if (!formData.email) newErrors.email = "Email is required.";
         if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
@@ -366,7 +316,6 @@ function NavBar() {
         if (!zipPattern.test(formData.zipcode)) newErrors.zipcode = "Zip Code must be 6 digits.";
         if (!phonePattern.test(formData.phone)) newErrors.phone = "Phone must be in the format +91XXXXXXXXXX.";
         if (!formData.isUser) { setIsUserError("This Field Is Required"); return false; }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Returns true if no errors
     };
@@ -568,176 +517,10 @@ function NavBar() {
                                             </form>
                                         </CustomTabPanel>
                                         <CustomTabPanel value={value} index={1}>
-                                            <form className='form' onSubmit={signup}>
-                                                <Typography variant="h5" gutterBottom>User Information</Typography>
-
-                                                <Grid2 container spacing={2}>
-                                                    <Grid2 item xs={6} md={1} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="username"
-                                                            name="username"
-                                                            label="Username"
-                                                            variant="outlined"
-                                                            value={formData.username}
-                                                            onChange={handleChange}
-                                                            error={!!errors.username}
-                                                            helperText={errors.username}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-
-                                                    <Grid2 item xs={24} md={8} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="email"
-                                                            name="email"
-                                                            label="Email"
-                                                            variant="outlined"
-                                                            type="email"
-                                                            value={formData.email}
-                                                            onChange={handleChange}
-                                                            error={!!errors.email}
-                                                            helperText={errors.email}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="password"
-                                                            name="password"
-                                                            label="Password"
-                                                            variant="outlined"
-                                                            type="password"
-                                                            value={formData.password}
-                                                            onChange={handleChange}
-                                                            error={!!errors.password}
-                                                            helperText={errors.password}
-                                                            required
-                                                            inputProps={{ minLength: 8 }}
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
-                                                        <Typography variant="h6" gutterBottom>
-                                                            Account Type
-                                                        </Typography>
-
-                                                        <RadioGroup
-                                                            id="IsUser"
-                                                            name="isUser"
-                                                            value={formData.isUser} // Ensure this is a string like "true" or "false"
-                                                            onChange={handleChange}
-                                                            row // Aligns radio buttons horizontally
-                                                        >
-                                                            <FormControlLabel
-                                                                value="true" // Value for User
-                                                                control={<Radio />}
-                                                                label="User"
-                                                            />
-                                                            <FormControlLabel
-                                                                value="false" // Value for Seller
-                                                                control={<Radio />}
-                                                                label="Seller"
-                                                            />
-                                                        </RadioGroup>
-
-                                                        {/* Error Handling */}
-                                                        {isuererror && <FormHelperText error>{isuererror}</FormHelperText>}
-                                                    </Grid2>
-                                                </Grid2>
-                                                <Typography variant="h6" gutterBottom>Address</Typography>
-                                                <Grid2 container spacing={3}>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="street"
-                                                            name="street"
-                                                            label="Street"
-                                                            variant="outlined"
-                                                            value={formData.street}
-                                                            onChange={handleChange}
-                                                            error={!!errors.street}
-                                                            helperText={errors.street}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="city"
-                                                            name="city"
-                                                            label="City"
-                                                            variant="outlined"
-                                                            value={formData.city}
-                                                            onChange={handleChange}
-                                                            error={!!errors.city}
-                                                            helperText={errors.city}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="state"
-                                                            name="state"
-                                                            label="State"
-                                                            variant="outlined"
-                                                            value={formData.state}
-                                                            onChange={handleChange}
-                                                            error={!!errors.state}
-                                                            helperText={errors.state}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="zipcode"
-                                                            name="zipcode"
-                                                            label="Zip Code"
-                                                            variant="outlined"
-                                                            value={formData.zipcode}
-                                                            onChange={handleChange}
-                                                            error={!!errors.zipcode}
-                                                            helperText={errors.zipcode}
-                                                            inputProps={{ pattern: "\\d{6}" }}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
-                                                        <TextField
-                                                            id="phone"
-                                                            name="phone"
-                                                            label="Phone"
-                                                            variant="outlined"
-                                                            value={formData.phone}
-                                                            onChange={handleChange}
-                                                            error={!!errors.phone}
-                                                            helperText={errors.phone}
-                                                            required
-                                                            fullWidth
-                                                            margin="normal"
-                                                        />
-                                                    </Grid2>
-                                                </Grid2>
-                                                <Grid2 item xs={12} mr={2} ml={2} mt={4}>
-                                                    <Button variant="contained" color="primary" type="submit">
-                                                        Submit
-                                                    </Button>
-                                                </Grid2>
-                                            </form>
+                                            <SignupForm handleChange = {handleChange} signup={signup} formData={formData} errors={errors} isuererror={isuererror} ></SignupForm>
                                         </CustomTabPanel>
                                     </Box>
                                 </Box>
-
                             </Modal>
                         </Box>
                     }
