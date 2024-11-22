@@ -28,22 +28,43 @@ To run this project locally, follow the steps below:
     git clone https://github.com/your-username/ooty-tribal-products.git
     ```
 
-2. Install dependencies:
+2. Navigate to the project folder:
 
     ```bash
     cd ooty-tribal-products
-    npm install
     ```
 
-3. Set up environment variables for your project (e.g., database credentials, payment gateway keys).
+3. Open **two separate terminal windows**:
 
-4. Run the development server:
+    - **In the first terminal**:
+      1. Navigate to the **frontend** directory:
+      
+        ```bash
+        cd frontend
+        ```
+      
+      2. Install dependencies and start the frontend server:
+      
+        ```bash
+        npm install
+        npm start
+        ```
 
-    ```bash
-    npm start
-    ```
+    - **In the second terminal**:
+      1. Navigate to the **server** directory:
+      
+        ```bash
+        cd server
+        ```
+      
+      2. Install dependencies and start the backend server:
+      
+        ```bash
+        npm install
+        npm start
+        ```
 
-    This will launch the application locally at `http://localhost:3000`.
+This will launch both the frontend and backend servers locally. The frontend will run at `http://localhost:3000` by default.
 
 ## 📦 Usage
 
