@@ -130,17 +130,13 @@ function Userprofile() {
                 </Card>
               </Grid>
             ))}
-
             {UserPrdIds.filter(i => i.status !== "Delivered").length === 0 && "No Products"}
-
             <p style={{ color: 'black' }}>Delivered Products</p>
-
             {UserPrdIds.filter(i => i.status === "Delivered").length !== 0 && UserPrdIds.filter(i => i.status === "Delivered").map((index) => (<>
               <div>
                 <Grid size="grow">
                   <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                    {index.username}...
-
+                    {index.username}
                     {index.products.map((item) => (
                       <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
                         <Grid container columns={4}>
