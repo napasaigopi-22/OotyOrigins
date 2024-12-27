@@ -1,7 +1,7 @@
 import NavBar from "../../Assets/NavBar/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Grid2, Typography, Grid } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import '../../Assets/Header.css';
 
@@ -87,7 +87,7 @@ function HomePage() {
             <div className="HeroSection">
                 <div className="header">
                     <div className="header-container">
-                <Typography sx={{ color: 'white', mb: 2.5, mt: 2.5 }} variant="h1">Ooty Origins</Typography>
+                <Box sx={{ color: 'white', mb: 2.5, mt: 2.5,fontSize: 100 }} >Ooty Origins</Box>
                 <Typography variant="h6" sx={{ color: 'white' }}>
                         Experience the rich heritage and culture of Ooty through our tribal crafts and products.
                     </Typography>
