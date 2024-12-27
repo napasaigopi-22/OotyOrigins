@@ -56,9 +56,10 @@
   background-image: linear-gradient(rgb(94, 15, 15), rgb(8, 8, 8)); /* Example */
   color: white;             /* Example */
   padding: 10px;   
-  height : auto;
+  height : 65px;
 }
 
 .MuiToolbar-root.MuiToolbar-regular.css-1u9o2lj-MuiToolbar-root{
+  min-height: 45px !important;
   /* pad */
 }
