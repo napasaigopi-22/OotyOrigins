@@ -9,10 +9,10 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import Axios from 'axios';
 import axios from 'axios'
 import { blueGrey, deepOrange, deepPurple } from '@mui/material/colors';
-import store from '../Store';
+import store from '../../Store';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
-import { a, addQtyToPrdct } from '../Services/Serve';
+import { a, addQtyToPrdct } from '../../Services/Serve';
 
 
 
@@ -48,20 +48,15 @@ export default function CartModal(props) {
 
 
   const handleCloseSnakbar = (event, reason) => {
-    console.log("handling snackbar clicks");
-    // const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpensnack(false);
-    // };
-    // console.log("Opensnackbar is ", opensnack)
   }
   const handleClicksnack = () => {
     setOpensnack(true);
   };
   const handlecartOpen = () => {
-    console.log("localStorage.getItem('userId')  ",localStorage.getItem("userId"))
     if (localStorage.getItem("userId") != "undefined" && localStorage.getItem("userId"))
       Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
         if (res.data.length > 0) {
@@ -108,22 +103,7 @@ export default function CartModal(props) {
       if (qty.length != 0) {
         axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: -1 }).then(res => {
           console.log("add qty to prod is -", res.data);
-          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-            products.forEach(element => {
-              CartProductsList.push(element);
-            });
-            setCartProductsList(CartProductsList);
-            setcart(res.data[0]);
-
-            console.log("cart is ", cart);
-          }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-          });
+          handlecartOpen();
         }).catch(function (error) {
           console.log(error);
         });
@@ -131,21 +111,7 @@ export default function CartModal(props) {
       else
         axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
           console.log(res.data);
-          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-            products.forEach(element => {
-              CartProductsList.push(element);
-            });
-            setCartProductsList(CartProductsList);
-            setcart(res.data[0]);
-            console.log("cart is ", cart);
-          }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-          });
+          handlecartOpen();
         }).catch(function (error) {
           console.log(error);
         });
@@ -167,51 +133,19 @@ export default function CartModal(props) {
       if (qty.length != 0)
         axios.post("http://localhost:4000/post/addQuantityToProduct", { productId: index, userId: luserid, additionalQuantity: 1 }).then(res => {
           console.log("add qty to prod is -", res.data);
-          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-            products.forEach(element => {
-              CartProductsList.push(element);
-            });
-            setCartProductsList(CartProductsList);
-            setcart(res.data[0]);
-
-            console.log("cart is ", cart);
-          }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-          });
+          handlecartOpen();
         }).catch(function (error) {
           console.log(error);
         });
       else
         axios.post("http://localhost:4000/post/addToCart", { productId: index, userId: luserid }).then(res => {
           console.log(res.data);
-          Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-
-            var products = res.data[0].products;
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-            products.forEach(element => {
-              CartProductsList.push(element);
-            });
-            setCartProductsList(CartProductsList);
-            setcart(res.data[0]);
-            console.log("cart is ", cart);
-          }).catch(function (error) {
-            console.log(error);
-            while (CartProductsList.length > 0)
-              CartProductsList.pop();
-          });
+          handlecartOpen();
         }).catch(function (error) {
           console.log(error);
         });
       console.log("{productId: prd, userId: luserid, additionalQuantity: qty }", { productId: prd, userId: luserid, additionalQuantity: qty })
-
     }
-
   }
 
   const deleteitem = (prdId) => {
@@ -220,29 +154,7 @@ export default function CartModal(props) {
       console.log("cart.products.find(e => e.productId === prdId)[0].name  ",cart.products.find(e => e.productId === prdId).name);
       setsnackMessage("Deleted " + cart.products.find(e => e.productId === prdId).name+ " from cart");
       handleClicksnack();
-      Axios.post('http://localhost:4000/post/showCart', { userId: localStorage.getItem("userId") }).then(res => {
-        console.log("showcart after deletion is ", res.data)
-        if (res.data.length > 0) {
-          var products = res.data[0].products;
-          while (CartProductsList.length > 0)
-            CartProductsList.pop();
-          products.forEach(element => {
-            CartProductsList.push(element);
-          });
-          setCartProductsList(CartProductsList);
-          setcart(res.data[0]);
-          console.log("cart is ", cart);
-        }
-        else {
-          console.log("empty cart");
-          setcart([]);
-          setCartProductsList([]);
-        }
-      }).catch(function (error) {
-        console.log(error);
-        while (CartProductsList.length > 0)
-          CartProductsList.pop();
-      });
+      handlecartOpen();
     }).catch(function (error) {
       console.log(error);
     });
@@ -266,11 +178,7 @@ export default function CartModal(props) {
 
 
 
-  const goToCartPage = (userId) => {
-    console.log(userId);
-    navigate('/Cart')
-
-  }
+  const goToCartPage = (userId) => navigate('/Cart')
 
 
   return (

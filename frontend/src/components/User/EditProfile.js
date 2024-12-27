@@ -58,7 +58,6 @@ function EditProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("userDetails is ==================================",userDetails)
       const response = await Axios.post(`http://localhost:4000/post/UpdateUser`, userDetails);
       console.log('Profile updated:', response.data);
       setSnackMessage("Profile updated successfully!");

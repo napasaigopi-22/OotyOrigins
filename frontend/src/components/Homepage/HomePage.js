@@ -1,4 +1,4 @@
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
 import { Card, CardContent, CardMedia, Grid2, Typography, Grid } from "@mui/material";

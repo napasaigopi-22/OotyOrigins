@@ -1,5 +1,5 @@
 import { Box, Grid2, Typography, Slider } from "@mui/material";
-import NavBar from "../Assets/NavBar";
+import NavBar from "../Assets/NavBar/NavBar";
 import Product from "../Assets/Product";
 import { useEffect, useState } from "react";
 import axios from "axios";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavBar from "../../Assets/NavBar";
+import NavBar from "../../Assets/NavBar/NavBar";
 import Axios from 'axios';
 import { Box, Container, Paper, Typography, Button, Card } from "@mui/material";
 import Grid from '@mui/material/Grid2';
@@ -44,7 +44,6 @@ function Userprofile() {
     Axios.post('http://localhost:4000/get/users', { "username": localStorage.getItem("username") }).then(res => {
       setusername(localStorage.getItem("username"));
       setuserload(res.data[0]);
-      console.log("res.data[0] is ----====,res.data[0] ",res.data[0].userId)
       setUserProductList(res.data[0]);
       store.getState().user = res.data;
       setuser(res.data[0]);
@@ -52,7 +51,6 @@ function Userprofile() {
   }, []);
 
   const setUserProductList = (userdetails) => {
-    console.log("localStorage.getItem('userId')" ,localStorage.getItem("userId"),"userdetails.userid is ",userdetails.userId)
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r => r.userId === userdetails.userId);
       setUserPrdIds(tempvar);
@@ -132,17 +130,13 @@ function Userprofile() {
                 </Card>
               </Grid>
             ))}
-
             {UserPrdIds.filter(i => i.status !== "Delivered").length === 0 && "No Products"}
-
             <p style={{ color: 'black' }}>Delivered Products</p>
-
             {UserPrdIds.filter(i => i.status === "Delivered").length !== 0 && UserPrdIds.filter(i => i.status === "Delivered").map((index) => (<>
               <div>
                 <Grid size="grow">
                   <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                    {index.username}...
-
+                    {index.username}
                     {index.products.map((item) => (
                       <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
                         <Grid container columns={4}>
