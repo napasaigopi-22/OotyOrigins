@@ -81,10 +81,10 @@ function HomePage() {
             <div className="HeroSection">
                 <div className="header">
                     <div className="header-container">
-                <Box sx={{ color: 'white', mb: 3.5, mt: 3.5, fontSize: 100 }}>Ooty Origins</Box>
-                <Typography variant="h6" sx={{ color: 'white' }}>
-                        Experience the rich heritage and culture of Ooty through our tribal crafts and products.
-                    </Typography>
+                <Box class = "text" sx={{ color: 'white', mb: 3.5, mt: 3.5 }}>Ooty Origins</Box>
+                <Box sx={{ color: 'white',fontWeight: 'bold' }}>
+                        <h3>Experience the rich heritage and culture of Ooty through our tribal crafts and products.</h3>
+                    </Box>
                 </div>
                 </div>
             </div>

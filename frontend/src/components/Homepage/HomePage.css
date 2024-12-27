@@ -39,15 +39,25 @@ body {
 }
 
 .header{
-    background: url(https://t3.ftcdn.net/jpg/08/45/34/92/240_F_845349269_65tHLJs2jbB3NGPqoE15M9e8HmVOQyZS.jpg) no-repeat;
+    background: url(https://t3.ftcdn.net/jpg/08/50/34/86/240_F_850348622_DjtMDqzFoeySz1wWy6YXVGb6sKSuma49.jpg) no-repeat;
     background-position: center;
     background-size: cover;
     height: 80vh;
     margin-bottom: 30px ;
     border: none;
     position: relative;
-
+    opacity: 1.5;   
   }
+
+
+  .text {
+    background-image: url('https://t4.ftcdn.net/jpg/03/95/71/27/240_F_395712753_PJd09W95zvtM0UAGNlY33vPVe8qGb8Sq.jpg');
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+    font-size:150px;
+}
+
   .header-container{
     position: relative;
     padding-top: 150px;
