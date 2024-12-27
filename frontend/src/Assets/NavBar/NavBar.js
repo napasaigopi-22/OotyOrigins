@@ -420,14 +420,14 @@ function NavBar() {
                     </Box>
 
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Box sx={{ flexGrow: 2, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             page !== 'Category' ? (
                                 <Button
                                     key={page}
                                     onClick={handleCloseMenu('nav')}
                                     href={'/' + page}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{ my: 0, color: 'white', display: 'block' }}
                                 >
                                     {page}
                                 </Button>
@@ -439,7 +439,7 @@ function NavBar() {
                                         onClick={handleMenuClick('drop')}
                                         sx={{ my: 0, color: 'white', display: 'block' }}
                                     >
-                                        <p style={{ display: 'inline-block' }} >{page}</p>
+                                        {page}
                                     </Button>
                                     <Menu
                                         className='navDrop'
