@@ -39,7 +39,7 @@ body {
 }
 
 .header{
-    background: url(https://t3.ftcdn.net/jpg/08/50/34/86/240_F_850348622_DjtMDqzFoeySz1wWy6YXVGb6sKSuma49.jpg) no-repeat;
+    background: url(../../Assets/images/mainpage.png) no-repeat;
     background-position: center;
     background-size: cover;
     height: 80vh;
@@ -51,7 +51,7 @@ body {
 
 
   .text {
-    background-image: url('https://t4.ftcdn.net/jpg/03/95/71/27/240_F_395712753_PJd09W95zvtM0UAGNlY33vPVe8qGb8Sq.jpg');
+    background-image: url(../../Assets/images/backgroundooty.png);
     background-clip:text;
     -webkit-background-clip:text;
     color:transparent;
