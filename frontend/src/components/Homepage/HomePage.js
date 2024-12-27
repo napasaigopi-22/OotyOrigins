@@ -1,9 +1,9 @@
 import NavBar from "../../Assets/NavBar/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Grid2, Typography, Grid } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import '../../Assets/Header.css';
+
 
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
 import item_product_1 from '../../Assets/images/item_product_1.png'
@@ -19,6 +19,7 @@ import item_product_10 from '../../Assets/images/item_product_10.png'
 import { useSelector } from "react-redux";
 import store from '../../Store';
 import './HomePage.css';
+import zIndex from "@mui/material/styles/zIndex";
 
 
 
@@ -45,13 +46,6 @@ function HomePage() {
         "Organic Rice":item_product_10,
        
     }
-
-    // const developers = [
-    //     { name: "Dr. T. Senthil Kumar", role: "Principal ", image: dev4 },
-    //     { name: "N Mahesh", role: " Developer", image: dev1 },
-    //     { name: "N Sai Gopi", role: " Developer", image: dev2 },
-    //     { name: "B Lokesh", role: "Developer", image: dev3 },
-    // ];
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -85,9 +79,12 @@ function HomePage() {
                 <NavBar></NavBar>
             </div>
             <div className="HeroSection">
+                <div style = {{width: '1px', height: '80px',position : 'absolute', zIndex: 5000, color : "black" }}>
+
+                </div>
                 <div className="header">
                     <div className="header-container">
-                <Typography sx={{ color: 'white', mb: 2.5, mt: 2.5 }} variant="h1">Ooty Origins</Typography>
+                <Box sx={{ color: 'white', mb: 3.5, mt: 3.5, fontSize: 150 }}>Ooty Origins</Box>
                 <Typography variant="h6" sx={{ color: 'white' }}>
                         Experience the rich heritage and culture of Ooty through our tribal crafts and products.
                     </Typography>
