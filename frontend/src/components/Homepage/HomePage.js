@@ -79,12 +79,9 @@ function HomePage() {
                 <NavBar></NavBar>
             </div>
             <div className="HeroSection">
-                <div style = {{width: '1px', height: '80px',position : 'absolute', zIndex: 5000, color : "black" }}>
-
-                </div>
                 <div className="header">
                     <div className="header-container">
-                <Box sx={{ color: 'white', mb: 2.5, mt: 2.5,fontSize: 100 }} >Ooty Origins</Box>
+                <Box sx={{ color: 'white', mb: 3.5, mt: 3.5, fontSize: 100 }}>Ooty Origins</Box>
                 <Typography variant="h6" sx={{ color: 'white' }}>
                         Experience the rich heritage and culture of Ooty through our tribal crafts and products.
                     </Typography>

@@ -53,11 +53,10 @@
 }
 
 .MuiPaper-root.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorSecondary.MuiAppBar-positionStatic {
-  /* Your styles here */
-  background-color: #ff5722; 
-  color: white;             
-  padding: 0px;            
-  height: 75px;
+  background-image: linear-gradient(rgb(94, 15, 15), rgb(8, 8, 8)); /* Example */
+  color: white;             /* Example */
+  padding: 10px;   
+  height : auto;
 }
 
 .MuiToolbar-root.MuiToolbar-regular.css-1u9o2lj-MuiToolbar-root{
