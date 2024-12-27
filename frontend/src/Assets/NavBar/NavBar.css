@@ -1,12 +1,12 @@
 .NavBar {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0px;
     justify-content: space-between;
   }
   
   .logo {
-    width: 60px;
+    width: 40px;
     height: auto;
     border-radius: 55px;
   }
@@ -53,9 +53,12 @@
 }
 
 .MuiPaper-root.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorSecondary.MuiAppBar-positionStatic {
-  /* Your styles here */
   background-image: linear-gradient(rgb(94, 15, 15), rgb(8, 8, 8)); /* Example */
   color: white;             /* Example */
   padding: 10px;   
-  height : auto;         /* Example */
+  height : auto;
+}
+
+.MuiToolbar-root.MuiToolbar-regular.css-1u9o2lj-MuiToolbar-root{
+  /* pad */
 }

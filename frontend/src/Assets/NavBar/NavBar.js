@@ -379,7 +379,7 @@ function NavBar() {
                 <Toolbar disableGutters>
                     <nav className="NavBar">
                         <a href="/home">
-                            <img src={logo} alt="Company Logo" className="logo" />
+                            <img width={'10'} src={logo} alt="Company Logo" className="logo" />
                         </a>
                     </nav>
                     <Typography
