@@ -51,3 +51,10 @@
   background: var(--color) !important;
   color: #fff !important;
 }
+
+.MuiPaper-root.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorSecondary.MuiAppBar-positionStatic {
+  /* Your styles here */
+  background-color: #ff5722; /* Example */
+  color: white;             /* Example */
+  padding: 10px;            /* Example */
+}
