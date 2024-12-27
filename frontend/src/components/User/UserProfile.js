@@ -53,7 +53,7 @@ function Userprofile() {
   const setUserProductList = (userdetails) => {
     Axios.post('http://localhost:4000/post/userOrders', { "userId": localStorage.getItem("userId") }).then(res => {
       const tempvar = res.data.filter(r => r.userId === userdetails.userId);
-      setUserPrdIds(tempvar);
+      setUserPrdIds(tempvar.reverse());
     }).catch(function (error) { console.log(error); });
   };
 
