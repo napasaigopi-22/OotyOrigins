@@ -36,7 +36,7 @@ function Products() {
             <NavBar></NavBar>
             <div className="product-page-container">
                 {/* Filter Section */}
-                <Box className="filter-section">
+                <Box className="filter-section cardproductui ">
                     <Typography variant="h5" gutterBottom>
                         Filter by
 

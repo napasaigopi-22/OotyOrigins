@@ -70,6 +70,7 @@
 
 .cardproductui{
     border-radius: 25px !important;
+    background-image: linear-gradient(rgb(248, 185, 185), rgb(255, 255, 255)) !important; /* Example */
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px !important;
 }
 
