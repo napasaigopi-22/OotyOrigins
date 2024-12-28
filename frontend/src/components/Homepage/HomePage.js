@@ -100,8 +100,10 @@ function HomePage() {
 
                 </div>
             </div>
-
-
+            <Container sx={{ padding: '10px 0' }}>
+            <h2 className= "shop" style={{ textAlign: 'left' }}>Shop by Category</h2>
+           <hr className="solid" />
+           </Container>
             <div>
                 <ul >
                     {
