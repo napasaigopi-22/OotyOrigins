@@ -130,6 +130,7 @@ function AboutUs() {
         </Box>
       </Container>
 
+
      {/* Guide Section */}
      <Container sx={{ background: 'linear-gradient(to right, #FFD1A4, #FFEB9E)',
             padding: '40px 0',
