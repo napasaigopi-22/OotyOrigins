@@ -20,7 +20,6 @@ import ProductDetail from './components/ProductDetails/ProductDetail';
 import EditProfile from './components/User/EditProfile';
 
 
-
 function App() {
     const location = useLocation();
     
@@ -34,10 +33,13 @@ function App() {
                         {/* This route is for home component 
           with exact path "/", in component props 
           we passes the imported component*/}
-
+                        <Route
+                            path="*"
+                            element={<Navigate to="/" />}
+                        />
                     
                         <Route
-                            path="/home"
+                            path="/"
                             element={<Homepage />}
                         />
 
@@ -77,10 +79,6 @@ function App() {
                         />
 
                         <Route
-                            path="*"
-                            element={<Navigate to="/" />}
-                        />
-                        <Route
                             path="/Cart"
                             element={<CartPage />}
                         />
@@ -101,7 +99,7 @@ function App() {
                     </Routes>
                    
               
-                {location.pathname !== "/" && <Footer />}
+            <Footer />
             </>
         </div>
     );

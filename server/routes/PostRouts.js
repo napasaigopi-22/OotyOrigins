@@ -1,10 +1,14 @@
-const {addProductToCart, showCart, addQuantityToProduct, deleteProductFromCart, CreateOrder, DeliverProduct, orderProduct, verify, addReview, getReviews, UpdateUser, UpdateProduct} = require('../Controllers/PostControllers');
+const {CreateOrder, DeliverProduct, verify, addReview, getReviews, UpdateUser} = require('../Controllers/PostControllers');
 const router = require("express").Router();
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 const { CreateProduct } = require('../Controllers/AddProductController');
 const { SellerOrders, OrderController } = require('../Controllers/GetController');
+
+const {deleteUserProfile, editUserProfile, ChangePassword} = require('../Controllers/UserController');
+const {addProductToCart, addQuantityToProduct, showCart, deleteProductFromCart} = require('../Controllers/CartController');
+const {orderProduct, UpdateProduct} = require('../Controllers/ProductController')
 
 
 const storageobj = multer.diskStorage({
@@ -50,6 +54,8 @@ router.post('/userOrders', OrderController);
 router.post('/UpdateUser',UpdateUser);
 
 router.post("/UpdateProduct", UpdateProduct);
+
+router.post("/ChangePassword", ChangePassword)
 
 // router.put('/user/edit/:userId', userController.editUserProfile);
 
