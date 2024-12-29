@@ -23,6 +23,7 @@ import CartModal from './CartModal';
 import SignupForm from './SignupForm';
 
 
+
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -453,17 +454,7 @@ function NavBar() {
                             )
                         ))}
                     </Box>
-                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                    </Box> */}
+                
                     {/* {localStorage.getItem("userId")} */}
                     {((localStorage.getItem("userId") == 'undefined') || isUser) &&
                         <CartModal></CartModal>

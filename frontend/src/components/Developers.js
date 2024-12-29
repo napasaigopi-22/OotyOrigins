@@ -133,11 +133,20 @@ function AboutUs() {
 
 
      {/* Guide Section */}
-     <div>
-     <Container sx={{padding: '10px 0'}}>  
+   
+     <Container sx={{padding: '1px 0'}}>  
       <h1 className = 'guide' style={{ textAlign: 'left' }}> Meet Our Guides</h1>
            <hr className="solid" />
         </Container>
+        <Container 
+      sx={{ 
+        padding: '30px 0',
+        color: 'white',
+        marginTop: '40px',
+        borderRadius: '40px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      }}
+    >
       <Grid container spacing={4} justifyContent='center' display= 'flex' flexDirection= 'row'>
         {guide.map((guide, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -165,78 +174,42 @@ function AboutUs() {
           </Grid>
         ))}
       </Grid>
-    </div>
+      </Container>
+      
+    
     
 
-       {/* <div className="developers-section">
-                <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
-                
-                <Grid container spacing={0.1}>
-                    {developers.map((dev, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Card className="developer-card">
-                                <CardMedia
-                                    component="img"
-                                    className="developer-photo"
-                                    image={dev.image}
-                                    alt={`${dev.name}'s photo`}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6" component="div" sx={{ color: 'green', fontWeight: 'bold' }}>{dev.name}</Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ color: 'voilet', fontWeight: 'bold' }}>
-                                        {dev.role}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </div> */}
-
       {/* Developer Section */}
-      <Container sx={{ background: 'linear-gradient(to right, #FFD1A4, #FFEB9E)',padding: '50px 0', color: 'white',
-            padding: '20px',
-            marginTop: '100px',
-            borderRadius: '40px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}}>
-        <Typography variant="h4" color= 'red' align="center" gutterBottom>
-          <b>Meet Our Developers</b>
-        </Typography>
-        <Grid container spacing={4} justifyContent="center">
-            {dev.map((dev, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card sx={{
-                borderRadius: '15px',
-                boxShadow: 3,
-                '&:hover': {
-                  boxShadow: 10, 
-                  transition: 'all 0.3s ease-in-out',
-                },
-              }}
-            >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={dev.image}
-                  alt={`${dev.name}'s photo`}
-                  sx={{
-                    borderTopLeftRadius: '15px',
-                    borderTopRightRadius: '15px',
-                    objectFit: 'cover',
-                  }}
-                />
-                <CardContent>
-                  <Typography variant="h6">{dev.name}</Typography>
-                  <Typography color="textSecondary">Role: {dev.role}</Typography>
-                  <Typography variant="body2">
-                    Roll No: {dev.roll}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <Container 
+      sx={{ 
+        padding: '50px 0',
+        color: 'white',
+        marginTop: '100px',
+        borderRadius: '40px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <Typography variant="h4" color="red" align="center" gutterBottom>
+        <b>Meet Our Developers</b>
+      </Typography>
+      <Grid container spacing={4} justifyContent="center">
+        {dev.map((developer, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <div className="profile-container">
+              <div className="profile-wrapper">
+                <div className="profile-card">
+                  <img src={developer.image} alt={`${developer.name}`} />
+                  <h2>{developer.name}</h2>
+                  <h4>Role: {developer.role}</h4>
+                  <p>Roll No: {developer.roll}</p>
+                  <p><h3>Amrita School Of Engineering</h3></p>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
 
     </div>
   );

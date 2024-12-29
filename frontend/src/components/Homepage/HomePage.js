@@ -232,7 +232,7 @@ function HomePage() {
                             </Card>
                             <Card
                                 sx={{
-                                    width: '415px', height: '400px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
+                                    width: '450px', height: '450px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
                                     border: '1px solid black',
                                     borderRadius: '10px',
                                     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
@@ -256,7 +256,7 @@ function HomePage() {
                             </Card>
 
                             <Card sx={{
-                                width: '415px', height: '400px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
+                                width: '450px', height: '450px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
                                 border: '1px solid black',
                                 borderRadius: '10px',
                                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
@@ -309,31 +309,6 @@ function HomePage() {
                 }
 
             </div>
-
-            {/* <div className="developers-section">
-                <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
-                
-                <Grid container spacing={0.1}>
-                    {developers.map((dev, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Card className="developer-card">
-                                <CardMedia
-                                    component="img"
-                                    className="developer-photo"
-                                    image={dev.image}
-                                    alt={`${dev.name}'s photo`}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6" component="div" sx={{ color: 'green', fontWeight: 'bold' }}>{dev.name}</Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ color: 'voilet', fontWeight: 'bold' }}>
-                                        {dev.role}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </div> */}
 
         </>
     )
