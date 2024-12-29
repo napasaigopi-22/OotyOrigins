@@ -1,5 +1,4 @@
 import './App.css';
-import IntroPage from './components/IntroPage/IntroPage'
 import Homepage from './components/Homepage/HomePage';
 import Category from './components/Category';
 import Developers from './components/Developers';
@@ -36,11 +35,7 @@ function App() {
           with exact path "/", in component props 
           we passes the imported component*/}
 
-                        <Route 
-                            path="/" 
-                            element={<IntroPage />}
-                        />
-
+                    
                         <Route
                             path="/home"
                             element={<Homepage />}

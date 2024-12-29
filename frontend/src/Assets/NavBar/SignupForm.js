@@ -183,7 +183,6 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                     variant="contained" 
                                                     color="primary" 
                                                     type="submit"
-                                                    className="login-container form button"
                                                     >
                                                         Submit
                                                     </Button>

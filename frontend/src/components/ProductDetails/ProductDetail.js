@@ -9,6 +9,7 @@ import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";
 
 
+
 function ProductDetail() {
     const [product, setProduct] = useState(null);
     const [msg,setMsg] = React.useState("Added To Cart Succesfully");
@@ -180,39 +181,41 @@ if (!product) {
       <NavBar/>
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
-        <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-          <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
-            <Card className= "product-card">
+        <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px', bgcolor:'red' }}>
+          <Card className="card">
+            <div className= "left">
             <CardMedia 
               component="img"
               height="500"
               src={`http://localhost:4000/images/${value.imageUrl[0]}`}
               alt={product.name}
-              sx={{  width: 400, height: 'auto', objectFit: 'cover'  }}
+              className="product-image"
             />
-            <CardContent style={{margin:'auto'}}>
-              <Typography variant="h4" className="product-name" sx={{ fontWeight: 'bold', color: '#333', mb:1 }} >{product.name}</Typography>
-              <Typography variant="body1" className="product-description" sx={{ color: '#666', mb: 2 }}>{product.description}</Typography>
-              <Typography variant="h5"className="product-price" sx={{ mb: 2, color: '#3f51b5'}}>
+            </div>
+            <div className="right">
+            <CardContent className="product-info">
+              <Typography variant="h4" className="product-name">{product.name}</Typography>
+              <Typography variant="body1" className="product-description">{product.description}</Typography>
+              <Typography variant="h5"className="product-price">
                 Price: Rs {product.price}/-
                 </Typography>
-              <Typography variant="h5" className="product-rating" sx={{ mb: 2,color: '#ff9800' }}>
+              <Typography variant="h5" className="product-rating">
                 Rating: {product.rating}
               </Typography>
               <Box sx= {{display: 'flex', gap: 2, mt:2, flexDirection: 'column', alignItems: 'center'}}>
-              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large" sx={{width: 'fit-content'}}>Add To Cart</Button>
+              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
               {userRole !== 'admin' && (
-              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large" sx={{width: 'fit-content'}} >Review</Button>
+              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large">Review</Button>
               )}
               </Box>
               </CardContent>
+              </div>
             </Card>
-          </Card>
         </Box>
         
         
         <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>Customer Reviews</Typography>
+        <Typography variant="h5">Customer Reviews</Typography>
         {reviews && reviews.length > 0 ? reviews.map((review, index) => (
         <Card key={index} sx={{ mb: 2 }}>
             <CardContent>
