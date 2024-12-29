@@ -3,29 +3,7 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 
-module.exports.UsersController = async (req, res, next) => {
-    try {
-        const listOfUsers = await models.User.find({username:req.body.username});
-        console.log(req.body.username,listOfUsers)
-        return res.json(listOfUsers);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Error fetching users" });
-    }
-};
 
-// GET Route to Fetch User Details
-module.exports.getUser= async (req, res) => {
-    try {
-      console.log('Fetching user with ID:', req.params.id);
-      const user = await userModel.findById(req.params.id);
-      if (!user) return res.status(404).json({ message: 'User not found' });
-      res.status(200).json(user);
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
 
 // Category Controller
 module.exports.CategoryController = async (req, res, next) => {
@@ -186,16 +164,6 @@ module.exports.ReviewController = async (req, res, next) => {
     }
 };
 
-// Cart Controller
-module.exports.CartController = async (req, res, next) => {
-    try {
-        const listOfCarts = await models.Cart.find({});
-        return res.json(listOfCarts);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Error fetching carts" });
-    }
-};
 
 // Payment Controller
 module.exports.PaymentController = async (req, res, next) => {

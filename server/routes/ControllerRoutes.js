@@ -1,16 +1,16 @@
 const { Signup } = require('../Controllers/Auth');
 const {
-    UsersController,
     CategoryController,
     ProductController,
     OrderController,
     ReviewController,
-    CartController,
     PaymentController,
     getProductById,
     SellerOrders
 } = require('../Controllers/GetController');
 const router = require("express").Router();
+const {UsersController} = require('../Controllers/UserController');
+const {CartController} = require('../Controllers/CartController')
 
 // Route for fetching users
 router.post('/users', UsersController);
@@ -35,8 +35,6 @@ router.get('/carts', CartController);
 
 // Route for fetching payments
 router.get('/payments', PaymentController);
-
-// router.get('/api/user/:id', UserController.getUser);
 
 router.get('/')
 

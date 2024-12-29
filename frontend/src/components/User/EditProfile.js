@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TextField, Button, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function EditProfile() {
   const [userDetails, setUserDetails] = useState({
@@ -17,6 +18,28 @@ function EditProfile() {
   const [snackMessage, setSnackMessage] = useState('');
   const [openSnack, setOpenSnack] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scroll, setScroll] = React.useState('paper');
+  const [changedpassword, setchangedpassword] = useState('');
+
+  const handleClickOpen = (scrollType) => () => {
+    setOpen(true);
+    setScroll(scrollType);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const descriptionElementRef = React.useRef(null);
+  React.useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
 
   const navigate = useNavigate();
 
@@ -55,26 +78,23 @@ function EditProfile() {
     }
   };
 
+  const handlePassInput = (e) =>{console.log(changedpassword); setchangedpassword(e.target.value);}
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await Axios.post(`http://localhost:4000/post/UpdateUser`, userDetails);
       console.log('Profile updated:', response.data);
       setSnackMessage("Profile updated successfully!");
-      console.log("setting userDetails.username ",userDetails.username)
-      localStorage.setItem("username",userDetails.username)
+      console.log("setting userDetails.username ", userDetails.username)
+      localStorage.setItem("username", userDetails.username)
       setOpenSnack(true);
+      navigate('/UserProfile');
     } catch (error) {
       console.error('Error saving profile details:', error);
       setSnackMessage("Failed to update profile. Please try again.");
       setOpenSnack(true);
     }
-  };
-
-  const handleCloseSnack = () => {
-    setOpenSnack(false);
-    if(snackMessage=="Profile updated successfully!")
-      navigate('/UserProfile');
   };
 
   const handleDeleteAccount = async () => {
@@ -85,9 +105,9 @@ function EditProfile() {
       console.log('Account deleted:', response.data);
       setSnackMessage('Account deleted successfully!');
       setOpenSnack(true);
-      localStorage.removeItem("username"); 
+      localStorage.removeItem("username");
       setOpenDialog(false);
-      navigate('/'); 
+      navigate('/');
     } catch (error) {
       console.error('Error deleting account:', error);
       setSnackMessage('Failed to delete account. Please try again.');
@@ -123,9 +143,15 @@ function EditProfile() {
     fontSize: '16px',
     fontWeight: 'bold',
   };
+
+  const handlePassChange = () =>{
+    axios.post('http://localhost:4000/post/ChangePassword', { 'password':changedpassword, 'userId':localStorage.getItem('userId') })
+        .then(res => {    console.log(res)    })
+        .catch(error => console.log(error));
+  }
   return (
     <form onSubmit={handleSubmit} style={formStyles}>
-       <h2 style={headerStyles}>Edit Profile</h2>
+      <h2 style={headerStyles}>Edit Profile</h2>
       <TextField
         label="Username"
         name="username"
@@ -134,7 +160,7 @@ function EditProfile() {
         fullWidth
         margin="normal"
       />
-      <TextField 
+      <TextField
         label="Phone"
         name="phone"
         value={userDetails.phone}
@@ -142,8 +168,8 @@ function EditProfile() {
         fullWidth
         margin="normal"
       />
-      
-      <TextField 
+
+      <TextField
         label="Street"
         name="street"
         value={userDetails.address.street}
@@ -151,7 +177,7 @@ function EditProfile() {
         fullWidth
         margin="normal"
       />
-      <TextField 
+      <TextField
         label="City"
         name="city"
         value={userDetails.address.city}
@@ -159,7 +185,7 @@ function EditProfile() {
         fullWidth
         margin="normal"
       />
-      <TextField 
+      <TextField
         label="State"
         name="state"
         value={userDetails.address.state}
@@ -167,7 +193,7 @@ function EditProfile() {
         fullWidth
         margin="normal"
       />
-      <TextField 
+      <TextField
         label="Zipcode"
         name="zipcode"
         value={userDetails.address.zipcode}
@@ -176,7 +202,13 @@ function EditProfile() {
         margin="normal"
       />
 
-      <Button 
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: 'lightgreen', color: 'brown', '&:hover': { backgroundColor: 'light' }, mr: 10 }}
+        onClick={handleClickOpen('paper')}        >
+        Change Password
+      </Button>
+      <Button
         type="submit"
         variant="contained"
         sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
@@ -184,37 +216,38 @@ function EditProfile() {
         Save Changes
       </Button>
 
-      <Button onClick={()=>navigate('/UserProfile')} 
-        sx= {{marginTop: '10px', width: '100%'}}>Back</Button>
+      <Button onClick={() => navigate('/UserProfile')}
+        sx={{ marginTop: '10px', width: '100%' }}>Back</Button>
 
-      {/* <Button variant="outlined" color="error"
-        onClick={() => setOpenDialog(true)}
-        sx={{ marginTop: '10px', width: '100%' }}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll={scroll}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
       >
-        Delete Account
-      </Button>
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={3000}
-        onClose={handleCloseSnack}
-        message={snackMessage}
-      />
-       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Delete Account</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete your account? This action is permanent and cannot be undone.
+        <DialogTitle id="scroll-dialog-title">Change Password</DialogTitle>
+        <DialogContent dividers={scroll === 'paper'}>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+          ><TextField  id="outlined-basic" label="New Password" onChange={handlePassInput}          type="password"
+           variant="outlined" />
+          <br/>
+
+          <TextField sx={{mt:3}} id="outlined-basic" label="Re Enter"           type="password"
+ variant="outlined" />
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteAccount} color="error">
-            Delete
-          </Button>
+          <Button variant="outlined"         sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
+ onClick={handleClose}>Cancel</Button>
+          <Button variant="outlined"         sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
+ onClick={handlePassChange}>Change</Button>
         </DialogActions>
-      </Dialog> */}
+      </Dialog>
     </form>
   );
 }

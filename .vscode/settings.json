@@ -2,5 +2,6 @@
     "javascript.experimental.updateImportsOnPaste": true,
     "typescript.experimental.updateImportsOnPaste": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.cursorSmoothCaretAnimation": "on"
 }
