@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions,CardHeader } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import NavBar from "../../Assets/NavBar/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";
-
+import bg from '../../Assets/images/bg.png'
 
 
 function ProductDetail() {
@@ -169,7 +169,35 @@ axios.post('http://localhost:4000/post/UpdateProduct',form).then(res=>{
   window.location.reload();
 })
 
-}
+};
+
+// product review retrieving
+// const ReviewRetriew = () => {
+//   axios.post('  http://localhost:4000/get/reviews', {
+//     productId: product._id,
+//     userId: localStorage.getItem("userId"),
+//     rating,
+//     comment,
+//   })
+//   .then(() => {
+//     setOpenDialog(false);
+//     setOpenSnackbar(true);
+//     setAlreadyReviwed(true);
+
+
+//     axios
+//     .get(`http://localhost:4000/get/reviews?productId=${product._id}`)
+//     .then((response) => {
+//       setReviews(response.data.reviews); // Assuming the API response contains a 'reviews' array
+//     });
+// })
+// .catch((error) => {
+//   console.error("Error submitting review:", error);
+// });
+  
+// };
+
+
 
 if (!product) {
   return <div><h1>Loading....</h1></div>;
@@ -181,8 +209,13 @@ if (!product) {
       <NavBar/>
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
-        <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px', bgcolor:'red' }}>
-          <Card className="card">
+        <Box className= 'box' sx={{ display: 'flex', justifyContent: 'center', padding: '20px'}}> 
+            <Card className="card" sx={{color:'red'}}>
+            <div className= 'box'>
+            <div className="title-name">
+  <h1>{product.name}</h1>
+</div>
+
             <div className= "left">
             <CardMedia 
               component="img"
@@ -192,6 +225,7 @@ if (!product) {
               className="product-image"
             />
             </div>
+            
             <div className="right">
             <CardContent className="product-info">
               <Typography variant="h4" className="product-name">{product.name}</Typography>
@@ -210,6 +244,7 @@ if (!product) {
               </Box>
               </CardContent>
               </div>
+              </div>
             </Card>
         </Box>
         
@@ -219,11 +254,21 @@ if (!product) {
         {reviews && reviews.length > 0 ? reviews.map((review, index) => (
         <Card key={index} sx={{ mb: 2 }}>
             <CardContent>
+            <Typography variant="subtitle1">
+            <strong>Reviewer:</strong> {review.userName || "Anonymous"}
+          </Typography>
+          <Typography variant="subtitle1">
+            <strong>Product:</strong> {product.name}
+          </Typography>
                 <Typography variant="subtitle1">Rating: {review.rating} / 5</Typography>
                 <Typography variant="body2">{review.comment}</Typography>
             </CardContent>
         </Card>
-            )):  ("Not yet, your are the first one to review")}
+            )):  (
+              <Typography variant="body2" color="text.secondary">
+              No reviews yet. Be the first to review!
+            </Typography>
+          )}
           </Box>
 
 

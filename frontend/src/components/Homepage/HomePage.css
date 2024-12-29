@@ -1,4 +1,9 @@
 
+.bold-black {
+  color: black;
+  font-weight: bold;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;

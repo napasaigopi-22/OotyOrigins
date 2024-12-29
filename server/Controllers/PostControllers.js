@@ -3,6 +3,8 @@ const models = require("../Models/Models");
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const Models = require("../Models/Models");
+const router = require("../routes/AuthRoutes");
+
 // Add a review for a product
 module.exports.addReview = async (req, res) => {
   try {
@@ -29,6 +31,17 @@ module.exports.addReview = async (req, res) => {
     return res.status(500).json({ message: "Error adding review." });
   }
 };
+
+module.exports.ReviewRetriew = ('/get/reviews', async (req, res) => {
+  try {
+    const { productId } = req.query;
+    const reviews = await ReviewModel.find({ productId });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch reviews' });
+  }
+});
+
 
 // Fetch reviews for a specified product
 module.exports.getReviews = async (req, res) => {
