@@ -4,12 +4,14 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
 {
 
     return(
-
+ 
     <form className='form' onSubmit={signup}>
-                                                <Typography variant="h5" gutterBottom>User Information</Typography>
+                                                <Typography variant="h5" gutterBottom>
+                                                    User Information
+                                                </Typography>
 
                                                 <Grid2 container spacing={2}>
-                                                    <Grid2 item xs={6} md={1} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="username"
                                                             name="username"
@@ -22,10 +24,11 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                           
                                                         />
                                                     </Grid2>
 
-                                                    <Grid2 item xs={24} md={8} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="email"
                                                             name="email"
@@ -39,9 +42,11 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                          
+                                                            
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="password"
                                                             name="password"
@@ -56,9 +61,10 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             inputProps={{ minLength: 8 }}
                                                             fullWidth
                                                             margin="normal"
+                                                           
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={8} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <Typography variant="h6" gutterBottom>
                                                             Account Type
                                                         </Typography>
@@ -86,9 +92,11 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                         {isuererror && <FormHelperText error>{isuererror}</FormHelperText>}
                                                     </Grid2>
                                                 </Grid2>
-                                                <Typography variant="h6" gutterBottom>Address</Typography>
-                                                <Grid2 container spacing={3}>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
+                                                <Typography variant="h6" gutterBottom>
+                                                    Address
+                                                </Typography>
+                                                <Grid2 container spacing={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="street"
                                                             name="street"
@@ -101,9 +109,10 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                           
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="city"
                                                             name="city"
@@ -116,9 +125,10 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                         
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6} >
                                                         <TextField
                                                             id="state"
                                                             name="state"
@@ -131,9 +141,10 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                           
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="zipcode"
                                                             name="zipcode"
@@ -147,9 +158,10 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                           
                                                         />
                                                     </Grid2>
-                                                    <Grid2 item xs={12} md={6} mr={2} ml={2}>
+                                                    <Grid2 item xs={12} md={6}>
                                                         <TextField
                                                             id="phone"
                                                             name="phone"
@@ -162,15 +174,22 @@ function SignupForm({handleChange, signup, formData, errors, isuererror})
                                                             required
                                                             fullWidth
                                                             margin="normal"
+                                                          
                                                         />
                                                     </Grid2>
                                                 </Grid2>
-                                                <Grid2 item xs={12} mr={2} ml={2} mt={4}>
-                                                    <Button variant="contained" color="primary" type="submit">
+                                                <Grid2 item xs={12}>
+                                                    <Button 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    type="submit"
+                                                    className="login-container form button"
+                                                    >
                                                         Submit
                                                     </Button>
                                                 </Grid2>
                                             </form>
+                                    
     );
 }
 

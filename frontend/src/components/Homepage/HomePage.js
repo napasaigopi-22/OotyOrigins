@@ -1,10 +1,10 @@
 import NavBar from "../../Assets/NavBar/NavBar";
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Axios from 'axios';
-import { Card, CardContent, CardMedia, Grid2, Typography, Grid, Box } from "@mui/material";
+import { Card, CardContent, CardMedia, Grid2, Typography, Grid, Box,Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/splide/dist/css/splide.min.css';
 import explorecategories from '../../components/Explorecategories/Explorecategories.css'
 import item_product_1 from '../../Assets/images/item_product_1.png'
 import item_product_2 from '../../Assets/images/item_product_2.png'
@@ -16,6 +16,14 @@ import item_product_7 from '../../Assets/images/item_product_7.png'
 import item_product_8 from '../../Assets/images/item_product_8.png'
 import item_product_9 from '../../Assets/images/item_product_9.png'
 import item_product_10 from '../../Assets/images/item_product_10.png'
+import scroll1 from '../../Assets/images/scroll1.png'
+import scroll2 from '../../Assets/images/scroll2.png'
+import scroll3 from '../../Assets/images/scroll3.png'
+import scroll4 from '../../Assets/images/scroll4.png'
+import scroll5 from '../../Assets/images/scroll5.png'
+import scroll6 from '../../Assets/images/scroll6.png'
+import scroll7 from '../../Assets/images/scroll7.png'
+import mainpage from '../../Assets/images/mainpage.png'
 import { useSelector } from "react-redux";
 import store from '../../Store';
 import './HomePage.css';
@@ -46,6 +54,7 @@ function HomePage() {
         "Organic Rice": item_product_10,
 
     }
+
 
     useEffect(() => {
         Axios.get('http://localhost:4000/get/categories').then(res => {
@@ -79,17 +88,22 @@ function HomePage() {
                 <NavBar></NavBar>
             </div>
             <div className="HeroSection">
+
                 <div className="header">
-                    <div className="header-container">
-                <Box class = "text" sx={{ color: 'white', mb: 3.5, mt: 3.5 }}>Ooty Origins</Box>
-                <Box sx={{ color: 'white',fontWeight: 'bold' }}>
-                        <h3>Experience the rich heritage and culture of Ooty through our tribal crafts and products.</h3>
-                    </Box>
-                </div>
+                    <div class="bg-image"></div>
+                        <div className="header-container">
+                            <Box class="text" sx={{ color: 'white', mb: 3.5, mt: 3.5 }}>Ooty Origins</Box>
+                            <Box sx={{ color: 'white', fontWeight: 'bold' }}>
+                                <h3>Experience the rich heritage and culture of Ooty through our tribal crafts and products.</h3>
+                            </Box>
+                    </div>
+
                 </div>
             </div>
-
-
+            <Container sx={{ padding: '10px 0' }}>
+            <h2 className= "shop" style={{ textAlign: 'left' }}>Shop by Category</h2>
+           <hr className="solid" />
+           </Container>
             <div>
                 <ul >
                     {
@@ -105,7 +119,90 @@ function HomePage() {
                 </ul>
 
 
-                <div style={{ height: "50px" }} ></div>
+        <Box
+            sx={{
+            background: 'rgb(0, 0, 0)',
+            padding: '30px',
+            marginTop: '50px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgb(0, 0, 0)',
+          }}
+        >
+             <Typography variant="h2" color='red'  align="center" gutterBottom>
+             <b>Ooty Stories</b>
+             </Typography>
+                <div style={{ height: "5px" }} ></div>
+                <div className="slider-container">
+                    <section id="image-carousel" aria-label="Beautiful Images">
+                        <Splide
+                            options={{
+                                type: 'loop',
+                                autoplay: true,
+                                interval: 2500,
+                                pauseOnHover: false,
+                                pagination: true,
+                            
+                            }}
+                        >
+                            <SplideSlide>
+                                <img src={scroll1} style={{width:"100%"}}/>
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll2}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll3}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll4}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll5}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll6}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                            <SplideSlide>
+                                <img src={scroll7}  style= {{width:"100%"}} />
+                            </SplideSlide>
+                        </Splide>
+                    </section>
+                </div>
+</Box>
+
+
+            <Container sx={{ padding: '20px 0' }}>
+        <Box
+          sx={{
+            background: 'rgb(112, 106, 106)',
+            padding: '30px',
+            marginTop: '100px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgb(235, 224, 224)',
+          }}
+        >
+          <Typography variant="h4" color='red'  align="center" gutterBottom>
+            <b>Our Main Goal</b>
+          </Typography>
+          <Typography variant="h6" align="center">
+          "Ooty Origins" is an ecommerce platform that empowers the tribal communities of Ooty, India, by connecting them 
+          <Typography variant="h6" align="center">
+          directly with customers and tourists. The platform showcases their unique, handcrafted products, preserving the rich </Typography>
+          <Typography variant="h6" align="center">
+          cultural heritage of Ooty. By eliminating intermediaries, artisans can receive fair returns, ensuring sustainable income </Typography>
+          <Typography variant="h6" align="center">
+          and growth. Through "Ooty Origins," customers experience authentic craftsmanship while supporting the livelihoods of</Typography>
+          <Typography variant="h6" align="center">
+          local artisans. This initiative bridges the gap between tradition and modern commerce, offering a meaningful market</Typography>
+          <Typography variant="h6" align="center">
+          place for Ooty's tribal communities.We offer a range of handmade, culturally significant products crafted by the tribal</Typography>
+          <Typography variant="h6" align="center">
+          crafted by the tribal communities in Ooty. These unique pieces showcase the rich heritage of the region.</Typography>
+          </Typography>
+        </Box>
+      </Container>
+
+                <div style={{ height: "80px" }} ></div>
                 {
                     pageLoaded && (
                         <Grid2 container spacing={2} sx={{ width: '100%' }} >
@@ -135,7 +232,7 @@ function HomePage() {
                             </Card>
                             <Card
                                 sx={{
-                                    width: '415px', height: '400px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
+                                    width: '450px', height: '450px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
                                     border: '1px solid black',
                                     borderRadius: '10px',
                                     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
@@ -159,7 +256,7 @@ function HomePage() {
                             </Card>
 
                             <Card sx={{
-                                width: '415px', height: '400px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
+                                width: '450px', height: '450px', margin: 'auto', fontWeight: 'bold', padding: '20px', backgroundColor: '#f9f9f9',
                                 border: '1px solid black',
                                 borderRadius: '10px',
                                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
@@ -212,31 +309,6 @@ function HomePage() {
                 }
 
             </div>
-
-            {/* <div className="developers-section">
-                <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
-                
-                <Grid container spacing={0.1}>
-                    {developers.map((dev, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Card className="developer-card">
-                                <CardMedia
-                                    component="img"
-                                    className="developer-photo"
-                                    image={dev.image}
-                                    alt={`${dev.name}'s photo`}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6" component="div" sx={{ color: 'green', fontWeight: 'bold' }}>{dev.name}</Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ color: 'voilet', fontWeight: 'bold' }}>
-                                        {dev.role}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </div> */}
 
         </>
     )

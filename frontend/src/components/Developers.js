@@ -10,16 +10,17 @@ import guide_5 from '../Assets/images/guide_5.jpg';
 import guide_6 from '../Assets/images/guide_6.jpg';
 import dev1 from '../Assets/images/dev1.png';
 import dev2 from '../Assets/images/dev2.png';
+import './Developers.css';
 
 function AboutUs() {
 
     const guide = [
-        { name: "Dr. T. Senthil Kumar", role: "Principal Investigator", image: guide_1 },
-        { name: "Dr. S. Rajendra Kumar", role: " Co-Principal investigator", image: guide_2 },
-        { name: "Rajeev Ramakrishnan", role: " Junior Research Fellow", image: guide_3 },
-        { name: "Dr. Udhay Kumar", role: "Co-Principal Investigator", image: guide_4 },
-        { name: "P.Gunanithi", role: "Project Assistannt", image: guide_5 },
-        { name: "Dr. P. Subramaniam", role: "Mentor", image: guide_6 },
+        { name: "Dr. T. Senthil Kumar", role: "Principal Investigator",designation: "Associate Professor",Department: "Computer Science and Engineering Department", school: "Amrita School of Engineering",address:"Coimbatore-641112",link: "https://www.amrita.edu/faculty/s-rajendrakumar/",image: guide_1 },
+        { name: "Dr. S. Rajendra Kumar", role: " Co-Principal investigator",Department:"Department of Chemical Engineering and Materials Science" ,school: "Amrita Vishwa Vidyapeetham",address:"Coimbatore-641112",image: guide_2 },
+        { name: "Rajeev Ramakrishnan", role: " Junior Research Fellow",school: "Amrita Vishwa Vidyapeetham",address:"Coimbatore-641112",image: guide_3 },
+        { name: "Dr. Udhay Kumar", role: "Co-Principal Investigator",school: "Amrita Vishwa Vidyapeetham",address:"Coimbatore-641112", image: guide_4 },
+        { name: "P.Gunanithi", role: "Project Assistannt",school: "Amrita Vishwa Vidyapeetham",address:"Coimbatore-641112", image: guide_5 },
+        { name: "Dr. P. Subramaniam", role: "Mentor",school: "Amrita Vishwa Vidyapeetham", address:"Coimbatore-641112",image: guide_6 },
         
     ];
 
@@ -130,125 +131,85 @@ function AboutUs() {
         </Box>
       </Container>
 
-     {/* Guide Section */}
-     <Container sx={{ background: 'linear-gradient(to right, #FFD1A4, #FFEB9E)',
-            padding: '40px 0',
-            marginTop: '100px',
-            borderRadius: '40px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Meet Our Guides
-        </Typography>
-        <Grid container spacing={4}>
-            {guide.map((guide, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-              <Box
-                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    textAlign: 'center',
-                    padding: '20px',
-                    backgroundColor: '#fff',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '15px',
-                    height: '200px', // Fixed height to ensure all boxes are the same
-                    transition: 'all 0.3s ease-in-out', // Smooth hover effect
-                    '&:hover': {
-                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)', // Enhanced shadow on hover
-                    },
-                  }}
-              >
-                <img
-                  src={guide.image}
-                  alt={`${guide.name}'s photo`}
-                  style={{
-                    width: '150px',
-                    height: '150px',
-                    borderRadius: '100%',
-                    objectFit: 'cover',
-                    marginBottom: '15px',
-                  }}
-                />
-                <div>
-                  <Typography variant="h6">{guide.name}</Typography>
-                  <Typography variant="body2">{guide.role}</Typography>
-                </div>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
 
-       {/* <div className="developers-section">
-                <Typography variant="h4" className="section-title" sx={{ fontWeight: 'bold', color: 'text.heading', mb: 1.5 }}>Meet the Guide and Developers</Typography>
-                
-                <Grid container spacing={0.1}>
-                    {developers.map((dev, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Card className="developer-card">
-                                <CardMedia
-                                    component="img"
-                                    className="developer-photo"
-                                    image={dev.image}
-                                    alt={`${dev.name}'s photo`}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6" component="div" sx={{ color: 'green', fontWeight: 'bold' }}>{dev.name}</Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ color: 'voilet', fontWeight: 'bold' }}>
-                                        {dev.role}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </div> */}
+     {/* Guide Section */}
+   
+     <Container sx={{padding: '1px 0'}}>  
+      <h1 className = 'guide' style={{ textAlign: 'left' }}> Meet Our Guides</h1>
+           <hr className="solid" />
+        </Container>
+        <Container 
+      sx={{ 
+        padding: '30px 0',
+        color: 'white',
+        marginTop: '40px',
+        borderRadius: '40px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <Grid container spacing={4} justifyContent='center' display= 'flex' flexDirection= 'row'>
+        {guide.map((guide, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card className="our-team">
+                <div className="picture">
+                  <img
+                    src={guide.image}
+                    alt={`${guide.name}'s photo`}
+                    className="img-fluid"
+                  />
+                </div>
+                <h1 className="title">{guide.name}</h1>
+                <p className="role">{guide.role}</p>
+                <p className="role">{guide.designation}</p>
+                <p className="role">{guide.Department}</p>
+                <p className="role">{guide.school}</p>
+                <p className="role">{guide.address}</p>
+                <ul className="social">
+                  <li>
+              
+              {/* guide link  */}
+                  </li>
+                </ul>
+              </Card>
+          </Grid>
+        ))}
+      </Grid>
+      </Container>
+      
+    
+    
 
       {/* Developer Section */}
-      <Container sx={{ background: 'linear-gradient(to right, #FFD1A4, #FFEB9E)',padding: '50px 0', color: 'white',
-            padding: '20px',
-            marginTop: '100px',
-            borderRadius: '40px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}}>
-        <Typography variant="h4" color= 'red' align="center" gutterBottom>
-          <b>Meet Our Developers</b>
-        </Typography>
-        <Grid container spacing={4} justifyContent="center">
-            {dev.map((dev, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card sx={{
-                borderRadius: '15px',
-                boxShadow: 3,
-                '&:hover': {
-                  boxShadow: 10, 
-                  transition: 'all 0.3s ease-in-out',
-                },
-              }}
-            >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={dev.image}
-                  alt={`${dev.name}'s photo`}
-                  sx={{
-                    borderTopLeftRadius: '15px',
-                    borderTopRightRadius: '15px',
-                    objectFit: 'cover',
-                  }}
-                />
-                <CardContent>
-                  <Typography variant="h6">{dev.name}</Typography>
-                  <Typography color="textSecondary">Role: {dev.role}</Typography>
-                  <Typography variant="body2">
-                    Roll No: {dev.roll}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <Container 
+      sx={{ 
+        padding: '50px 0',
+        color: 'white',
+        marginTop: '100px',
+        borderRadius: '40px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      }}
+    >
+      <Typography variant="h4" color="red" align="center" gutterBottom>
+        <b>Meet Our Developers</b>
+      </Typography>
+      <Grid container spacing={4} justifyContent="center">
+        {dev.map((developer, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <div className="profile-container">
+              <div className="profile-wrapper">
+                <div className="profile-card">
+                  <img src={developer.image} alt={`${developer.name}`} />
+                  <h2>{developer.name}</h2>
+                  <h4>Role: {developer.role}</h4>
+                  <p>Roll No: {developer.roll}</p>
+                  <p><h3>Amrita School Of Engineering</h3></p>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
 
     </div>
   );
