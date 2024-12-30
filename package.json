@@ -1,15 +1,18 @@
 {
- 
+ 
   "dependencies": {
- 
-   
+ 
+   
   "@mui/styles": "^6.1.7",
- 
-   
+ 
+   
   "@splidejs/react-splide": "^0.7.12",
- 
-   
-  "react-multi-carousel": "^2.8.5"
- 
+ 
+   
+  "react-multi-carousel": "^2.8.5",
+ 
+   
+  "sass": "^1.83.0"
+ 
   }
 }

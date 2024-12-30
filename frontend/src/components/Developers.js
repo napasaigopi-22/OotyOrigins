@@ -135,7 +135,7 @@ function AboutUs() {
      {/* Guide Section */}
    
      <Container sx={{padding: '1px 0'}}>  
-      <h1 className = 'guide' style={{ textAlign: 'left' }}> Meet Our Guides</h1>
+      <h1 className = 'guide' style={{ textAlign: 'left',padding: '19px 0'}}> Meet Our Guides</h1>
            <hr className="solid" />
         </Container>
         <Container 
@@ -189,10 +189,13 @@ function AboutUs() {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
       }}
     >
-      <Typography variant="h4" color="red" align="center" gutterBottom>
-        <b>Meet Our Developers</b>
-      </Typography>
-      <Grid container spacing={4} justifyContent="center">
+
+      
+     <Container sx={{padding: '6px 0'}}>  
+      <h1 className = 'guide' style={{ textAlign: 'left',padding: '19px 0'}}> Meet Our Developers</h1>
+           <hr className="solid" />
+           </Container>
+      <Grid container spacing={4} justifyContent="center" sx={{padding: '16px 0'}}>
         {dev.map((developer, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <div className="profile-container">
@@ -210,7 +213,6 @@ function AboutUs() {
         ))}
       </Grid>
     </Container>
-
     </div>
   );
 }

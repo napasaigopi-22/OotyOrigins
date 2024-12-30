@@ -174,31 +174,18 @@ function HomePage() {
             <Container sx={{ padding: '20px 0' }}>
         <Box
           sx={{
-            background: 'rgb(112, 106, 106)',
+            background: 'rgb(255, 255, 255)',
             padding: '30px',
             marginTop: '100px',
             borderRadius: '10px',
             boxShadow: '0 4px 8px rgb(235, 224, 224)',
           }}
         >
-          <Typography variant="h4" color='red'  align="center" gutterBottom>
-            <b>Our Main Goal</b>
+          <Typography variant="h4" color='black'  align="center" gutterBottom>
+            <b>About Ooty Origins</b>
           </Typography>
           <Typography variant="h6" align="center">
-          "Ooty Origins" is an ecommerce platform that empowers the tribal communities of Ooty, India, by connecting them 
-          <Typography variant="h6" align="center">
-          directly with customers and tourists. The platform showcases their unique, handcrafted products, preserving the rich </Typography>
-          <Typography variant="h6" align="center">
-          cultural heritage of Ooty. By eliminating intermediaries, artisans can receive fair returns, ensuring sustainable income </Typography>
-          <Typography variant="h6" align="center">
-          and growth. Through "Ooty Origins," customers experience authentic craftsmanship while supporting the livelihoods of</Typography>
-          <Typography variant="h6" align="center">
-          local artisans. This initiative bridges the gap between tradition and modern commerce, offering a meaningful market</Typography>
-          <Typography variant="h6" align="center">
-          place for Ooty's tribal communities.We offer a range of handmade, culturally significant products crafted by the tribal</Typography>
-          <Typography variant="h6" align="center">
-          crafted by the tribal communities in Ooty. These unique pieces showcase the rich heritage of the region.</Typography>
-          </Typography>
+          <span class="bold-black">OotyOrigins.com</span> is an ecommerce platform that empowers the tribal communities  of Ooty, India, by connecting them directly with customers and tourists. We pride ourselves on delivering factory-fresh products from Ooty.Enjoy the unique and authentic taste and experience every product.</Typography>
         </Box>
       </Container>
 

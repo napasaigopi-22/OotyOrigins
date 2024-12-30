@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button, Typography, Rating, Snackbar, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions,CardHeader } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import NavBar from "../../Assets/NavBar/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";
+import bg from '../../Assets/images/bg.png'
 
 
 function ProductDetail() {
@@ -168,7 +169,35 @@ axios.post('http://localhost:4000/post/UpdateProduct',form).then(res=>{
   window.location.reload();
 })
 
-}
+};
+
+// product review retrieving
+// const ReviewRetriew = () => {
+//   axios.post('  http://localhost:4000/get/reviews', {
+//     productId: product._id,
+//     userId: localStorage.getItem("userId"),
+//     rating,
+//     comment,
+//   })
+//   .then(() => {
+//     setOpenDialog(false);
+//     setOpenSnackbar(true);
+//     setAlreadyReviwed(true);
+
+
+//     axios
+//     .get(`http://localhost:4000/get/reviews?productId=${product._id}`)
+//     .then((response) => {
+//       setReviews(response.data.reviews); // Assuming the API response contains a 'reviews' array
+//     });
+// })
+// .catch((error) => {
+//   console.error("Error submitting review:", error);
+// });
+  
+// };
+
+
 
 if (!product) {
   return <div><h1>Loading....</h1></div>;
@@ -180,47 +209,66 @@ if (!product) {
       <NavBar/>
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
-        <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-          <Card sx={{ boxShadow: 3, borderRadius: '15px', overflow: 'hidden' }}>
-            <Card className= "product-card">
+        <Box className= 'box' sx={{ display: 'flex', justifyContent: 'center', padding: '20px'}}> 
+            <Card className="card" sx={{color:'red'}}>
+            <div className= 'box'>
+            <div className="title-name">
+  <h1>{product.name}</h1>
+</div>
+
+            <div className= "left">
             <CardMedia 
               component="img"
               height="500"
               src={`http://localhost:4000/images/${value.imageUrl[0]}`}
               alt={product.name}
-              sx={{  width: 400, height: 'auto', objectFit: 'cover'  }}
+              className="product-image"
             />
-            <CardContent style={{margin:'auto'}}>
-              <Typography variant="h4" className="product-name" sx={{ fontWeight: 'bold', color: '#333', mb:1 }} >{product.name}</Typography>
-              <Typography variant="body1" className="product-description" sx={{ color: '#666', mb: 2 }}>{product.description}</Typography>
-              <Typography variant="h5"className="product-price" sx={{ mb: 2, color: '#3f51b5'}}>
+            </div>
+            
+            <div className="right">
+            <CardContent className="product-info">
+              <Typography variant="h4" className="product-name">{product.name}</Typography>
+              <Typography variant="body1" className="product-description">{product.description}</Typography>
+              <Typography variant="h5"className="product-price">
                 Price: Rs {product.price}/-
                 </Typography>
-              <Typography variant="h5" className="product-rating" sx={{ mb: 2,color: '#ff9800' }}>
+              <Typography variant="h5" className="product-rating">
                 Rating: {product.rating}
               </Typography>
               <Box sx= {{display: 'flex', gap: 2, mt:2, flexDirection: 'column', alignItems: 'center'}}>
-              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large" sx={{width: 'fit-content'}}>Add To Cart</Button>
+              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
               {userRole !== 'admin' && (
-              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large" sx={{width: 'fit-content'}} >Review</Button>
+              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large">Review</Button>
               )}
               </Box>
               </CardContent>
+              </div>
+              </div>
             </Card>
-          </Card>
         </Box>
         
         
         <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>Customer Reviews</Typography>
+        <Typography variant="h5">Customer Reviews</Typography>
         {reviews && reviews.length > 0 ? reviews.map((review, index) => (
         <Card key={index} sx={{ mb: 2 }}>
             <CardContent>
+            <Typography variant="subtitle1">
+            <strong>Reviewer:</strong> {review.userName || "Anonymous"}
+          </Typography>
+          <Typography variant="subtitle1">
+            <strong>Product:</strong> {product.name}
+          </Typography>
                 <Typography variant="subtitle1">Rating: {review.rating} / 5</Typography>
                 <Typography variant="body2">{review.comment}</Typography>
             </CardContent>
         </Card>
-            )):  ("Not yet, your are the first one to review")}
+            )):  (
+              <Typography variant="body2" color="text.secondary">
+              No reviews yet. Be the first to review!
+            </Typography>
+          )}
           </Box>
 
 
