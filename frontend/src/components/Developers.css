@@ -15,13 +15,13 @@ hr.solid {
     text-align: center;
     overflow: hidden;
     position: relative;
-    height:400px;
+    height:500px;
     width:300px
   }
   
   .our-team .picture {
     display: inline-block;
-    height: 110px;
+    height: 140px;
     width: 150px;
     margin-bottom: 50px;
     z-index: 1;
@@ -62,7 +62,7 @@ hr.solid {
   .our-team .picture img {
     width: 100%;
     height: auto;
-    border-radius: 50%;
+    border-radius: 70%;
     transform: scale(1);
     transition: all 0.9s ease 0s;
   }
@@ -81,7 +81,7 @@ hr.solid {
   
   .our-team .social {
     width: 100%;
-    height: 75px;
+    height: 100px;
     padding: 0;
     margin: 0;
     background-color: #730707;
@@ -182,7 +182,7 @@ hr.solid {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, #2371ae 0%, #bb47d4 100%);
+    background: linear-gradient(to right, #2371ae 0%,  #630c0a 100%);
     transform: skew(30deg) translateX(125%);
     opacity: 0.9;
     transition: all 0.6s ease;
@@ -195,7 +195,7 @@ hr.solid {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, #2371ae 0%, #bb47d4 100%);
+    background: linear-gradient(to right, #2371ae 0%,  #630c0a 100%);
     transform: skew(60deg) translateX(-125%);
     opacity: 0.9;
     transition: all 0.6s ease;
@@ -203,12 +203,12 @@ hr.solid {
   
   .profile-container:hover .profile-wrapper::after{
     transform: skew(62deg) translateX(135%);
-    background: linear-gradient(to right, #bb47d4 0%, #2371ae 100%);
+    background: linear-gradient(to right, #630c0a 0%, #2371ae 100%);
     
   }
   .profile-container:hover .profile-wrapper::before{
     transform: skew(30deg) translateX(-125%);
-    background: linear-gradient(to right, #bb47d4 0%, #2371ae 100%);
+    background: linear-gradient(to right,  #630c0a 0%, #2371ae 100%);
   }
   
   /* Profile Card */
