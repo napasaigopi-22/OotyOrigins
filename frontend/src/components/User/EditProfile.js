@@ -78,7 +78,7 @@ function EditProfile() {
     }
   };
 
-  const handlePassInput = (e) =>{console.log(changedpassword); setchangedpassword(e.target.value);}
+  const handlePassInput = (e) =>{console.log(changedpassword.length); setchangedpassword(e.target.value);}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -204,7 +204,7 @@ function EditProfile() {
 
       <Button
         variant="contained"
-        sx={{ backgroundColor: 'lightgreen', color: 'brown', '&:hover': { backgroundColor: 'light' }, mr: 10 }}
+        sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'green' }, mr: 10 }}
         onClick={handleClickOpen('paper')}        >
         Change Password
       </Button>
@@ -244,7 +244,7 @@ function EditProfile() {
         <DialogActions>
           <Button variant="outlined"         sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
  onClick={handleClose}>Cancel</Button>
-          <Button variant="outlined"         sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
+          <Button variant="outlined"   disabled={changedpassword.length>5?false:true}      sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
  onClick={handlePassChange}>Change</Button>
         </DialogActions>
       </Dialog>

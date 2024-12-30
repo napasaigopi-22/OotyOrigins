@@ -37,8 +37,29 @@ export default function CartModal(props) {
   const [snackMessage, setsnackMessage] = React.useState("");
   const [opensnack, setOpensnack] = React.useState(false);
   const [token, setToken] = React.useState("");
+  const [isHovered, setIsHovered] = React.useState(false);
   const navigate = useNavigate();
 
+  const buttonStyle = {
+    background: 'linear-gradient(45deg, rgb(0, 0, 0), rgb(85, 85, 85))',
+    borderRadius: '15px',
+    color: '#fff',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    padding: '5px 15px',
+    margin: '0 5px',
+    minWidth: '40px',
+    boxShadow: '0 0 3px rgb(48, 34, 38), 0 0 4px #ff4b2b, 0 0 6px #ff4b2b',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    cursor: 'pointer',
+  };
+
+  const hoverStyle = {
+    boxShadow: '0 0 4px rgb(59, 23, 32), 0 0 6px rgb(56, 55, 54), 0 0 8px rgb(61, 35, 30)',
+  };
 
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
@@ -151,8 +172,8 @@ export default function CartModal(props) {
   const deleteitem = (prdId) => {
     console.log("deleting item", prdId);
     Axios.delete('http://localhost:4000/post/deleteProductFromCart', { data: { userId: localStorage.getItem("userId"), productId: prdId } }).then(res => {
-      console.log("cart.products.find(e => e.productId === prdId)[0].name  ",cart.products.find(e => e.productId === prdId).name);
-      setsnackMessage("Deleted " + cart.products.find(e => e.productId === prdId).name+ " from cart");
+      console.log("cart.products.find(e => e.productId === prdId)[0].name  ", cart.products.find(e => e.productId === prdId).name);
+      setsnackMessage("Deleted " + cart.products.find(e => e.productId === prdId).name + " from cart");
       handleClicksnack();
       handlecartOpen();
     }).catch(function (error) {
@@ -183,33 +204,35 @@ export default function CartModal(props) {
 
   return (
     <>
-      {<Box sx={{ flexGrow: 0.2 }}>
+      {<Box sx={{ flexGrow: 0.2 }} >
         <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
-          <IconButton onClick={handlecartOpen} sx={{ p: 1, m: 0, bgcolor: deepPurple[300] }}>
+          <IconButton onClick={handlecartOpen} sx={{ p: 1, m: 0, bgcolor: deepPurple[300], ":hover": { bgcolor: deepPurple[500] } }}>
             <ShoppingCartIcon />
           </IconButton>
         </Tooltip>
-        <Dialog
+        <Dialog        
           open={opencart}
           onClose={handlecartClose}
           aria-labelledby="dialog-title"
           aria-describedby="dialog-description"
           fullWidth
           maxWidth="md" // Adjust the dialog width as needed
+          PaperProps={{ sx: { borderRadius: "25px" } }}
         >
+          <div className='center' fullWidth>
           <DialogTitle id="dialog-title">
             My Cart
             <IconButton onClick={handleCartClose} aria-label="close" style={{ position: 'absolute', right: 8, top: 8, color: 'red' }}>
-            <CancelRoundedIcon />
+              <CancelRoundedIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent id="dialog-description">
+          <DialogContent id="dialog-description" >
 
             <List sx={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
-               {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
+              {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
                 <React.Fragment key={index}>
-                  <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 3 }}>
-                    <ListItem sx={{ alignItems: 'center' }}>
+                  <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 6 ,borderRadius: "15px"}} className='innercardui'>
+                    <ListItem sx={{ alignItems: 'center' }} >
                       <ListItemText
                         primary={
                           <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -224,50 +247,63 @@ export default function CartModal(props) {
                             </Typography>
                           </Box>
                         }
-                        
+
                         secondary={
-                          <Box display="flex" alignItems="center" mt={1}>
+                          <Box display="flex" alignItems="center" mt={1} >
                             <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
                               ₹ {item.price}
                             </Typography>
                             <Tooltip title="Add Item">
-                              <Button
-                                className="cartactions"
-                                endIcon={<AddIcon />}
-                                onClick={() => increasecountof(cart.products.find(e => e.name === item.name)?cart.products.find(e => e.name === item.name).productId:"")}
-                                // sx={{ color: 'success.main', ml: 1 }}
-                                sx={{
-                                  background: 'linear-gradient(45deg, #00c6ff, #0072ff)',
+                              <Button sx={{
+                                  background: 'linear-gradient(45deg,rgb(0, 255, 98),rgb(152, 255, 57))',
                                   borderRadius: '15px',
-                                  color: '#fff',
+                                  color: 'black',
                                   fontSize: '16px',
                                   fontWeight: 'bold',
                                   padding: '5px 15px',
                                   margin: '0 5px',
                                   minWidth: '40px',
-                                  boxShadow: '0 0 3px #00c6ff, 0 0 4px #0072ff, 0 0 6px #0072ff',
+                                  boxShadow: '0 0 3px rgb(169, 224, 39), 0 0 4px rgb(127, 201, 31), 0 0 6px rgb(130, 170, 20)',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   transition: 'transform 0.3s, box-shadow 0.3s',
                                   '&:hover': {
-                                    boxShadow: '0 0 4px #00c6ff, 0 0 6px #0072ff, 0 0 8px #0072ff',
-                                    transform: 'scale(1.1)',
+                                    boxShadow: '0 0 4px rgb(50, 165, 50), 0 0 6px rgb(126, 194, 81), 0 0 8px rgb(97, 138, 22)',
+                                    
+                                  },
+                                }}
+                                onClick={() => increasecountof(cart.products.find(e => e.name === item.name) ? cart.products.find(e => e.name === item.name).productId : "")}><AddIcon /></Button>
+                              {/* <Button
+                                className="cartactions"
+                                endIcon={<AddIcon />}
+                                onClick={() => increasecountof(cart.products.find(e => e.name === item.name) ? cart.products.find(e => e.name === item.name).productId : "")}
+                                // sx={{ color: 'success.main', ml: 1 }}
+                                sx={{
+                                  background: 'linear-gradient(45deg,rgb(0, 255, 98),rgb(152, 255, 57))',
+                                  borderRadius: '15px',
+                                  color: 'black',
+                                  fontSize: '16px',
+                                  fontWeight: 'bold',
+                                  padding: '5px 15px',
+                                  margin: '0 5px',
+                                  minWidth: '40px',
+                                  boxShadow: '0 0 3px rgb(169, 224, 39), 0 0 4px rgb(127, 201, 31), 0 0 6px rgb(130, 170, 20)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  transition: 'transform 0.3s, box-shadow 0.3s',
+                                  '&:hover': {
+                                    boxShadow: '0 0 4px rgb(50, 165, 50), 0 0 6px rgb(126, 194, 81), 0 0 8px rgb(97, 138, 22)',
+                                    
                                   },
                                 }}
                               >
-                                Add
-                              </Button>
+                              </Button> */}
                             </Tooltip>
                             <Tooltip title="Remove Item">
-                              <Button
-                                className="cartactions"
-                                endIcon={<RemoveIcon />}
-                                onClick={() => decreasecountof(cart.products.find(e => e.name === item.name)?.productId)}
-                                // sx={{ color: 'warning.main', ml: 1 }}
-                                variant="contained"
-                                sx={{
-                                  background: 'linear-gradient(45deg, #ff3cac, #784ba0)',
+                              <Button sx={{
+                                  background: 'linear-gradient(45deg,rgb(71, 53, 63),rgb(47, 25, 66))',
                                   borderRadius: '15px',
                                   color: '#fff',
                                   fontSize: '16px',
@@ -275,29 +311,59 @@ export default function CartModal(props) {
                                   padding: '5 15px',
                                   margin: '15px',
                                   minWidth: '40px',
-                                  boxShadow: '0 0 3px #ff3cac, 0 0 4px #784ba0, 0 0 6px #784ba0',
+                                  boxShadow: '0 0 3px rgb(58, 42, 51), 0 0 4px rgb(35, 20, 49), 0 0 6px rgb(46, 39, 53)',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   transition: 'transform 0.3s, box-shadow 0.3s',
                                   '&:hover': {
-                                    boxShadow: '0 0 4px #ff3cac, 0 0 6px #784ba0, 0 0 8px #784ba0',
-                                    transform: 'scale(1.1)',
+                                    boxShadow: '0 0 4px rgb(58, 36, 48), 0 0 6px rgb(40, 25, 54), 0 0 8px rgb(44, 28, 58)',                                    
+                                  },
+                                }}                                 onClick={() => decreasecountof(cart.products.find(e => e.name === item.name)?.productId)}> <RemoveIcon /> </Button>
+                              {/* <Button 
+                                className="cartactions"
+                                endIcon={<RemoveIcon />}
+                                onClick={() => decreasecountof(cart.products.find(e => e.name === item.name)?.productId)}
+                                // sx={{ color: 'warning.main', ml: 1 }}
+                                variant="contained"
+                                sx={{
+                                  background: 'linear-gradient(45deg,rgb(71, 53, 63),rgb(47, 25, 66))',
+                                  borderRadius: '15px',
+                                  color: '#fff',
+                                  fontSize: '16px',
+                                  fontWeight: 'bold',
+                                  padding: '5 15px',
+                                  margin: '15px',
+                                  minWidth: '40px',
+                                  boxShadow: '0 0 3px rgb(58, 42, 51), 0 0 4px rgb(35, 20, 49), 0 0 6px rgb(46, 39, 53)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  transition: 'transform 0.3s, box-shadow 0.3s',
+                                  '&:hover': {
+                                    boxShadow: '0 0 4px rgb(58, 36, 48), 0 0 6px rgb(40, 25, 54), 0 0 8px rgb(44, 28, 58)',                                    
                                   },
                                 }}
                               >
-                                Remove
-                              </Button>
+                              </Button> */}
                             </Tooltip>
                             <Tooltip title="Delete Item">
-                              <Button
+                              <Button style={{ ...buttonStyle, ...(isHovered ? hoverStyle : {}) }} 
+                              onClick={() => {
+                                console.log("cart is ", item.name)
+                                deleteitem(cart.products.find(e => e.name === item.name)?.productId)
+                              }}
+                              ><DeleteIcon /></Button>
+                              {/* <Button
                                 className="cartdeleteactions"
                                 startIcon={<DeleteIcon />}
-                                onClick={() =>{console.log("cart is ",item.name)
-                                   deleteitem(cart.products.find(e => e.name === item.name)?.productId)}}
-                                // sx={{ color: 'error.main', ml: 1 }}
+                                onClick={() => {
+                                  console.log("cart is ", item.name)
+                                  deleteitem(cart.products.find(e => e.name === item.name)?.productId)
+                                }}
                                 sx={{
-                                  background: 'linear-gradient(45deg, #ff4e50, #f9d423)',
+                                   margin: '0',
+                                  background: 'linear-gradient(45deg,rgb(0, 0, 0),rgb(85, 85, 85))',
                                   borderRadius: '15px',
                                   color: '#fff',
                                   fontSize: '16px',
@@ -305,19 +371,18 @@ export default function CartModal(props) {
                                   padding: '5px 15px',
                                   margin: '0 5px',
                                   minWidth: '40px',
-                                  boxShadow: '0 0 3px #ff416c, 0 0 4px #ff4b2b, 0 0 6px #ff4b2b',
+                                  boxShadow: '0 0 3px rgb(48, 34, 38), 0 0 4px #ff4b2b, 0 0 6px #ff4b2b',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   transition: 'transform 0.3s, box-shadow 0.3s',
                                   '&:hover': {
-                                    boxShadow: '0 0 4px #ff416c, 0 0 6px #ff4b2b, 0 0 8px #ff4b2b',
-                                    transform: 'scale(1.1)',
+                                    boxShadow: '0 0 4px rgb(59, 23, 32), 0 0 6px rgb(56, 55, 54), 0 0 8px rgb(61, 35, 30)',
+                                    
                                   },
                                 }}
                               >
-                                Delete
-                              </Button>
+                              </Button> */}
                             </Tooltip>
                           </Box>
                         }
@@ -326,7 +391,7 @@ export default function CartModal(props) {
                   </Card>
                   {index < CartProductsList.length - 1 && <Divider />}
                 </React.Fragment>
-              ))} 
+              ))}
             </List>
 
             {CartProductsList.length == 0 && "Cart Is Empty"}
@@ -345,6 +410,7 @@ export default function CartModal(props) {
               </Grid>
             </Grid>
           </DialogContent>
+          </div>
         </Dialog>
 
       </Box>}
