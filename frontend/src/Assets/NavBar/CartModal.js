@@ -204,33 +204,35 @@ export default function CartModal(props) {
 
   return (
     <>
-      {<Box sx={{ flexGrow: 0.2 }}>
+      {<Box sx={{ flexGrow: 0.2 }} >
         <Tooltip title="Show Cart" sx={{ p: 1, m: 1 }} >
           <IconButton onClick={handlecartOpen} sx={{ p: 1, m: 0, bgcolor: deepPurple[300], ":hover": { bgcolor: deepPurple[500] } }}>
             <ShoppingCartIcon />
           </IconButton>
         </Tooltip>
-        <Dialog
+        <Dialog        
           open={opencart}
           onClose={handlecartClose}
           aria-labelledby="dialog-title"
           aria-describedby="dialog-description"
           fullWidth
           maxWidth="md" // Adjust the dialog width as needed
+          PaperProps={{ sx: { borderRadius: "25px" } }}
         >
+          <div className='center' fullWidth>
           <DialogTitle id="dialog-title">
             My Cart
             <IconButton onClick={handleCartClose} aria-label="close" style={{ position: 'absolute', right: 8, top: 8, color: 'red' }}>
               <CancelRoundedIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent id="dialog-description">
+          <DialogContent id="dialog-description" >
 
             <List sx={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
               {CartProductsList.length > 0 && CartProductsList.map((item, index) => (
                 <React.Fragment key={index}>
-                  <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 3 }}>
-                    <ListItem sx={{ alignItems: 'center' }}>
+                  <Card variant="outlined" sx={{ p: 2, m: 1, boxShadow: 6 ,borderRadius: "15px"}} className='innercardui'>
+                    <ListItem sx={{ alignItems: 'center' }} >
                       <ListItemText
                         primary={
                           <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -247,7 +249,7 @@ export default function CartModal(props) {
                         }
 
                         secondary={
-                          <Box display="flex" alignItems="center" mt={1}>
+                          <Box display="flex" alignItems="center" mt={1} >
                             <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
                               ₹ {item.price}
                             </Typography>
@@ -408,6 +410,7 @@ export default function CartModal(props) {
               </Grid>
             </Grid>
           </DialogContent>
+          </div>
         </Dialog>
 
       </Box>}
