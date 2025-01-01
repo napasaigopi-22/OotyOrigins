@@ -1,0 +1,37 @@
+/* Styling for the address fields container */
+.address-field {
+    padding: 16px;
+    text-align: left;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Typography styling */
+  .address-field .MuiTypography-body2 {
+    font-weight: bold;
+    color: #030303;
+    margin-bottom: 8px;
+  }
+  
+  .address-field .MuiTypography-root {
+    color: #555;
+    font-size: 14px;
+  }
+  
+  /* Responsive grid adjustments */
+  .MuiGrid-container {
+    margin-top: 16px;
+  }
+  
+  .MuiGrid-item {
+    padding: 8px;
+  }
+  
+  /* Add hover effect for paper elements */
+  .address-field:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+  }
+  

@@ -220,7 +220,7 @@ export default function CartModal(props) {
           PaperProps={{ sx: { borderRadius: "25px" } }}
         >
           <div className='center' fullWidth>
-          <DialogTitle id="dialog-title">
+          <DialogTitle id="dialog-title" sx= {{fontWeight: 'bold', fontSize: '30px'}}>
             My Cart
             <IconButton onClick={handleCartClose} aria-label="close" style={{ position: 'absolute', right: 8, top: 8, color: 'red' }}>
               <CancelRoundedIcon />
@@ -236,13 +236,13 @@ export default function CartModal(props) {
                       <ListItemText
                         primary={
                           <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'white',fontSize:'20px' }}>
                               {item.name}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                            <Typography variant="body2" color="red" fontSize='17px' sx={{ ml: 1 }}>
                               x {cart.products.find(e => e.name === item.name)?.quantity}
                             </Typography>
-                            <Typography variant="body1" color="secondary" sx={{ ml: 2 }}>
+                            <Typography variant="body1" color="red" fontSize='20px' sx={{ ml: 2 }}>
                               ₹{cart.products[index].quantity * cart.products[index].price}
                             </Typography>
                           </Box>
@@ -250,8 +250,8 @@ export default function CartModal(props) {
 
                         secondary={
                           <Box display="flex" alignItems="center" mt={1} >
-                            <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
-                              ₹ {item.price}
+                            <Typography variant="body2" color="white" fontSize='20px'sx={{ flexGrow: 1 }}>
+                             <span style={{color: 'red'}}>₹ </span> {item.price}
                             </Typography>
                             <Tooltip title="Add Item">
                               <Button sx={{
@@ -400,11 +400,12 @@ export default function CartModal(props) {
             <Grid container spacing={2}>
               {CartProductsList.length != 0 && <Grid item xs={6} md={8}>
                 <Typography variant="h6" align="left">
-                  <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={() => { goToCartPage(localStorage.getItem("userId")) }}>Proceed To Buy</Button>
+                  <Button variant="contained" style={{ backgroundColor: 'red' }} 
+                  onClick={() => { goToCartPage(localStorage.getItem("userId")) }}>Proceed To Buy</Button>
                 </Typography>
               </Grid>}
               <Grid item xs={4}>
-                <Typography variant="h6" align="right">
+                <Typography variant="h6" align='right'>
                   Total: ₹ {cart && cart.totalAmount} {!cart && "0"}
                 </Typography>
               </Grid>

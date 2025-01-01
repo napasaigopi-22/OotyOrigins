@@ -31,7 +31,7 @@ function Category() {
             <NavBar></NavBar>
             <div>
                 <h1>Category Page</h1>
-                <h5>{value.name}</h5>
+               <h5 style={{ fontSize: '20px', padding: '10px' }}>{value.name}</h5>
 
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid2
