@@ -113,7 +113,8 @@ function CartPage() {
                         <Divider sx={{ my: 2 }} />
                         <Grid container >
                             <Grid size="grow">
-                                <Button variant="contained" sx={{ backgroundColor: 'red', fontWeight: 'bold', padding: '10px 20px', }} onClick={() => { confirmBuy(localStorage.getItem('userId')) }} >Confirm buy</Button>
+                                <Button variant="contained" sx={{ backgroundColor: 'red', fontWeight: 'bold', padding: '10px 20px', }} 
+                                onClick={() => { confirmBuy(localStorage.getItem('userId')) }}>Confirm buy</Button>
                             </Grid>
                             <Grid size="grow" >
                                 <Typography variant="h6" sx={{ fontWeight: 'bold' }} >

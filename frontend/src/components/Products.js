@@ -52,6 +52,7 @@ function Products() {
                             min={0}
                             max={1500}
                             className="slider"
+                            style={{color: 'brown'}}
                         />
                         <Typography>₹{priceRange[0]} - ₹{priceRange[1]}</Typography>
                     </Box>
@@ -67,6 +68,7 @@ function Products() {
                             max={5}
                             step={0.5}
                             className="slider"
+                            style={{color: 'brown'}}
                         />
                         <Typography>{rating[0]} - {rating[1]} Stars</Typography>
 

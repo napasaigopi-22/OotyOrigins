@@ -61,7 +61,7 @@
 
 .MuiToolbar-root.MuiToolbar-regular.css-1u9o2lj-MuiToolbar-root{
   min-height: 45px !important;
-  /* pad */
+
 }
 
 .center{
@@ -77,8 +77,10 @@ radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 95%);
 width: 100%;
 }
 
-.innercardui{
-  background-image: radial-gradient(at 57.150378039618% 17.55409370364587%, hsla(117.87234042553193, 76.21621621621621%, 63.725490196078425%, 1) 0%, hsla(117.87234042553193, 76.21621621621621%, 63.725490196078425%, 0) 50%), 
-  radial-gradient(at 73.25871247416826% 56.30325187751926%, hsla(105.3146853146853, 77.29729729729729%, 63.725490196078425%, 1) 0%, hsla(105.3146853146853, 77.29729729729729%, 63.725490196078425%, 0) 80%), 
-  radial-gradient(at 27.113831794997356% 95.38762593556747%, hsla(95.49295774647888, 77.17391304347825%, 63.921568627450974%, 1) 0%, hsla(95.49295774647888, 77.17391304347825%, 63.921568627450974%, 0) 95%);
+.innercardui {
+  background: linear-gradient(135deg,rgb(119, 41, 19), #1c1e26);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgb(190, 187, 187);
 }
+

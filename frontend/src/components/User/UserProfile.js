@@ -7,6 +7,7 @@ import store from '../../Store';
 import { useNavigate } from "react-router-dom";
 import MyProducts from "../Admin/MyProducts";
 import EditProfile from "./EditProfile";
+import './UserProfile.css'
 
 function Userprofile() {
   const [username, setusername] = React.useState("");
@@ -93,7 +94,7 @@ function Userprofile() {
       {userload.IsUser && <>
         <Grid container maxWidth="xl" spacing={2}>
           <Grid size="grow">
-            <p style={{ color: 'black' }}>Receive Orders</p>
+            <p style={{ color: 'black',fontWeight:'bold',fontSize:'25px' }}>Receive Orders</p>
             {/* JSON.stringify(UserPrdIds) */}
             {UserPrdIds.filter(i => i.status !== "Delivered").map((index) => (
               <Grid key={index.orderId}> {/* Added key prop for list items */}
@@ -131,7 +132,7 @@ function Userprofile() {
               </Grid>
             ))}
             {UserPrdIds.filter(i => i.status !== "Delivered").length === 0 && "No Products"}
-            <p style={{ color: 'black' }}>Delivered Products</p>
+            <p style={{ color: 'black',fontWeight:'bold',fontSize:'25px' }}>Delivered Products</p>
             {UserPrdIds.filter(i => i.status === "Delivered").length !== 0 && UserPrdIds.filter(i => i.status === "Delivered").map((index) => (<>
               <div>
                 <Grid size="grow">

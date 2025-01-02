@@ -6,12 +6,14 @@ export default function CartProduct({ name, price, quantity }) {
     <Box
       sx={{
         display: 'flex',
+        width: '500px',
+        height:'120px',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '10px',
         borderRadius: '8px',
         backgroundColor: '#f5f5f5',
-        background: 'linear-gradient(135deg, #2a2d39, #1c1e26)',
+        background: 'linear-gradient(135deg,rgb(87, 21, 3), #1c1e26)',
         boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
         marginBottom: '10px',
         color: '#333',
@@ -25,8 +27,8 @@ export default function CartProduct({ name, price, quantity }) {
         variant="h6"
         sx={{
           fontWeight: '500',
-          flex: '2',
-          color: '#1976d2',
+          flex: '3',
+          color: 'white',
           
         }}
       >
@@ -39,19 +41,19 @@ export default function CartProduct({ name, price, quantity }) {
         sx={{
           flex: '1',
           textAlign: 'center',
-          color: '#4caf50',
+          color: 'white',
         }}
       >
-        ₹{price.toFixed(2)}
+      <span style={{color:'red'}}>₹</span>{price.toFixed(2)}
       </Typography>
 
       {/* Quantity */}
       <Typography
         variant="body1"
         sx={{
-          flex: '1',
+          flex: '2',
           textAlign: 'center',
-          color: '#f57c00',
+          color:'red',
         }}
       >
         x {quantity}
@@ -64,7 +66,7 @@ export default function CartProduct({ name, price, quantity }) {
           flex: '1',
           textAlign: 'center',
           fontWeight: '600',
-          color: '#d32f2f',
+          color: 'red',
         }}
       >
         ₹{(price * quantity).toFixed(2)}

@@ -209,11 +209,11 @@ if (!product) {
       <NavBar/>
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
-        <Box className= 'box' sx={{ display: 'flex', justifyContent: 'center', padding: '20px'}}> 
+        <Box className= 'box' sx={{ display: 'flex',  background: "#fff !important", justifyContent: 'center', padding: '20px'}}> 
             <Card className="card" sx={{color:'red'}}>
             <div className= 'box'>
             <div className="title-name">
-  <h1>{product.name}</h1>
+  <h1 style={{ color: "orange" }}>{product.name}</h1>
 </div>
 
             <div className= "left">
@@ -230,8 +230,8 @@ if (!product) {
             <CardContent className="product-info">
               <Typography variant="h4" className="product-name">{product.name}</Typography>
               <Typography variant="body1" className="product-description">{product.description}</Typography>
-              <Typography variant="h5"className="product-price">
-                Price: Rs {product.price}/-
+              <Typography variant="h5"className="product-price" style={{ marginTop: "30px" }}>
+                Price: Rs {product.price}/- 
                 </Typography>
               <Typography variant="h5" className="product-rating">
                 Rating: {product.rating}
