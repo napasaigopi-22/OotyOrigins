@@ -213,7 +213,7 @@ if (!product) {
             <Card className="card" sx={{color:'red'}}>
             <div className= 'box'>
             <div className="title-name">
-  <h1 style={{ color: "#fff" }}>{product.name}</h1>
+  <h1 style={{ color: "orange" }}>{product.name}</h1>
 </div>
 
             <div className= "left">
