@@ -6,7 +6,7 @@ export default function CartProduct({ name, price, quantity }) {
     <Box
       sx={{
         display: 'flex',
-        width: '500px',
+        width: '600px',
         height:'120px',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -44,7 +44,7 @@ export default function CartProduct({ name, price, quantity }) {
           color: 'white',
         }}
       >
-      <span style={{color:'red'}}>₹</span>{price.toFixed(2)}
+      <span style={{color:'red'}}>₹ </span>{price.toFixed(2)}
       </Typography>
 
       {/* Quantity */}
@@ -69,7 +69,7 @@ export default function CartProduct({ name, price, quantity }) {
           color: 'red',
         }}
       >
-        ₹{(price * quantity).toFixed(2)}
+        ₹ {(price * quantity).toFixed(2)}
       </Typography>
     </Box>
   );
