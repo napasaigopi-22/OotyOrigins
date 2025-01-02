@@ -93,26 +93,28 @@ function CartPage() {
     return (
         <>
             <NavBar />
+          
             <div>
-                <Container maxWidth="md">
-                    <Card maxWidth="md">
-                        <h2>Shopping Cart</h2>
-                        <Divider sx={{ my: 1 }} />
+                <Container  maxWidth='lg' sx={{ marginTop: '26px', padding: '1px 0',marginBottom:'26px'}} >
+                    <Card  maxWidth="md" >
+                        <h2 className='center' fullWidth style={{width: '100%', height: '60px', textAlign: 'center', fontSize: '30px',fontFamily: 'sans-serif' }}> 
+                            Shopping Cart</h2>
+                            <hr className='' />
                         {products.map((ele, i) => {
                             return (
-                                <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }}>
+                                <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }} className='center' fullWidth>
                                         <Grid container >
                                             <Grid size='grow' ml={8}>
                                                 <CartProduct name={ele.name} price={ele.price} quantity={ele.quantity} /></Grid>
                                             <Grid size="grow" ><p>collect at {ele.sellerAddress && ele.sellerAddress.street}</p></Grid>
                                         </Grid>
-                                    <Divider sx={{ my: 2 }} variant="middle" />
+                                    
                                 </Box>)
                         })}
 
-                        <Divider sx={{ my: 2 }} />
-                        <Grid container >
-                            <Grid size="grow">
+                       <hr className='' />
+                        <Grid container className='center' fullWidth>
+                            <Grid size="grow" >
                                 <Button variant="contained" sx={{ backgroundColor: 'red', fontWeight: 'bold', padding: '10px 20px', }} 
                                 onClick={() => { confirmBuy(localStorage.getItem('userId')) }}>Confirm buy</Button>
                             </Grid>
@@ -122,10 +124,11 @@ function CartPage() {
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Divider sx={{ my: 1 }} />
                     </Card>
                 </Container>
             </div>
+
+
             <React.Fragment>
                 <Dialog
                     open={open}
