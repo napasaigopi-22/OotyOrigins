@@ -6,7 +6,11 @@ import Grid from '@mui/material/Grid2';
 import store from '../../Store';
 import { useNavigate } from "react-router-dom";
 import MyProducts from "../Admin/MyProducts";
-import EditProfile from "./EditProfile";
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './UserProfile.css'
 
 function Userprofile() {
@@ -92,89 +96,21 @@ function Userprofile() {
     <NavBar />
     <Container maxWidth="xl">
       {userload.IsUser && <>
-        <Grid container maxWidth="xl" spacing={2}>
-          <Grid size="grow">
-            <p style={{ color: 'black',fontWeight:'bold',fontSize:'25px' }}>Receive Orders</p>
-            {/* JSON.stringify(UserPrdIds) */}
-            {UserPrdIds.filter(i => i.status !== "Delivered").map((index) => (
-              <Grid key={index.orderId}> {/* Added key prop for list items */}
-                <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                  <Grid container maxWidth="xl">
-                    <Grid size="grow">
-                      <Grid container>
-                        <Grid size="grow"> <h3>Username</h3> </Grid>
-                        <Grid size="grow"><p>{index.username}</p></Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid size="grow">
-                      <Grid container>
-                        <Grid size="grow"> <h3>Order ID</h3></Grid>
-                        <Grid size="grow"><p>{index.orderId}</p></Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-
-                  {index.products.map((item) => (
-                    <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                      <Grid container columns={4}>
-                        <Grid size={2}> <p style={{ color: 'black' }}>{item.name}</p> </Grid>
-                        <Grid size={2}> <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p> </Grid>
-                      </Grid>
-                      <h5>Collect {item.name} at {item.uploaderAddress && item.uploaderAddress.street}</h5>
-                    </Card>
-                  ))}
-
-                  <Grid container columns={4} spacing={4}>
-                    <Grid size={2}> {index.paymentMethod} </Grid>
-                    <Grid size={2}> {index.totalAmount} </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-            ))}
-            {UserPrdIds.filter(i => i.status !== "Delivered").length === 0 && "No Products"}
-            <p style={{ color: 'black',fontWeight:'bold',fontSize:'25px' }}>Delivered Products</p>
-            {UserPrdIds.filter(i => i.status === "Delivered").length !== 0 && UserPrdIds.filter(i => i.status === "Delivered").map((index) => (<>
-              <div>
-                <Grid size="grow">
-                  <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                    {index.username}
-                    {index.products.map((item) => (
-                      <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
-                        <Grid container columns={4}>
-                          <Grid size={2}> <p style={{ color: 'black' }}>{item.name}</p></ Grid>
-                          <Grid size={2}> <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p></ Grid>
-                        </ Grid >
-                      </ Card >
-                    ))}
-
-                    < Grid container columns={4} spacing={4} >
-                      < Grid size={2} > {index.paymentMethod} </ Grid >
-                      < Grid size={2} > {index.totalAmount} </ Grid >
-                    </Grid >
-                  </Card >
-                </Grid >
-              </ div >
-            </>
-            ))}
-
-            {UserPrdIds.filter(i => i.status === "Delivered").length === 0 && "No Products"}
-
-          </ Grid>
-
-          {/* User Profile Section */}
-          < Grid size="grow">
-            < Paper elevation={3} sx={{ padding: 3, mt: 5 }}>
-              <Typography variant="h4" gutterBottom>User Profile</Typography>
-              <Typography variant="h5" gutterBottom>Welcome Back, {username}</Typography>
+        <div style={{ height: '100px' }} ></div>
+        <div style={{ backgroundColor: 'lightgreen', padding: '20px', borderRadius: '10px' }}>
+          < Grid container maxWidth="xl" spacing={2} size="grow">
+            <Grid size="grow">
+              <Typography variant="h1" gutterBottom>Hi, {username}</Typography>
               <Box sx={{ mt: 1 }}>
-                <Typography variant="body1">Phone: {user ? user.phone : " "}</Typography>
+                <Typography variant="body1"><b>Phone</b>: {user ? user.phone : " "}</Typography>
               </Box>
+            </Grid>
+            <Grid size="grow">
               <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>Address</Typography>
 
-              {/* Address Fields */}
-              < Grid container spacing={2}>
+              < Grid container spacing={10}>
                 {['Street', 'City', 'State', 'Zipcode'].map((label, index) => (
-                  < Grid item xs={12} sm={6} key={index}>
+                  < Grid item xs={1} sm={12} key={index}>
                     < Paper className="address-field">
                       < Typography variant="body2" gutterBottom>{label}</Typography>
                       < Typography>{user ? user.address[label.toLowerCase()] : ""}</Typography>
@@ -182,12 +118,99 @@ function Userprofile() {
                   </ Grid >
                 ))}
               </ Grid >
+            </Grid>
+          </ Grid>
+          < Button variant="contained" sx={{ backgroundColor: '#b2102f', color: 'white', '&:hover': { backgroundColor: 'darkwhite' } }} onClick={handleEditClick}>
+            Edit Profile
+          </ Button >
 
-              {/* Edit Profile Button */}
-              < Button variant="contained" sx={{ backgroundColor: '#b2102f', color: 'white', '&:hover': { backgroundColor: 'darkwhite' } }} onClick={handleEditClick}>
-                Edit Profile
-              </ Button >
-            </ Paper >
+        </div>
+
+
+
+
+
+        <Grid container maxWidth="xl" spacing={2}>
+          <Grid size="grow">
+            <p style={{ color: 'black', fontWeight: 'bold', fontSize: '25px' }}>Receive Orders</p>
+            {/* JSON.stringify(UserPrdIds) */}
+
+            {UserPrdIds.filter(i => i.status !== "Delivered").map((index) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  <Grid size="grow"> <h3>Order ID</h3></Grid>
+                  <Grid size="grow"><p>{index.orderId}</p></Grid>
+                </AccordionSummary><AccordionDetails>
+                  <Grid key={index.orderId}> {/* Added key prop for list items */}
+                    <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
+
+
+
+
+                      {index.products.map((item) => (
+                        <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
+                          <Grid container columns={4}>
+                            <Grid size={2}> <p style={{ color: 'black' }}>{item.name}</p> </Grid>
+                            <Grid size={2}> <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p> </Grid>
+                          </Grid>
+                          <h5>Collect {item.name} at {item.uploaderAddress && item.uploaderAddress.street}</h5>
+                        </Card>
+                      ))}
+
+
+
+                      <Grid container columns={4} spacing={4}>
+                        <Grid size={2}> {index.paymentMethod} </Grid>
+                        <Grid size={2}> {index.totalAmount} </Grid>
+                      </Grid>
+
+                    </Card>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+            {UserPrdIds.filter(i => i.status !== "Delivered").length === 0 && "No Products"}
+            <p style={{ color: 'black', fontWeight: 'bold', fontSize: '25px' }}>Delivered Products</p>
+            {UserPrdIds.filter(i => i.status === "Delivered").length !== 0 && UserPrdIds.filter(i => i.status === "Delivered").map((index) => (<>
+              <div>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header">
+                  <Grid size="grow"> <h3>Order ID</h3></Grid>
+                  <Grid size="grow"><p>{index.orderId}</p></Grid>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid size="grow">
+                      <Card style={{ margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
+                        {index.username}
+                        {index.products.map((item) => (
+                          <Card sx={3} style={{ width: '75%', margin: 'auto', marginBottom: "15px", marginTop: "15px" }}>
+                            <Grid container columns={4}>
+                              <Grid size={2}> <p style={{ color: 'black' }}>{item.name}</p></ Grid>
+                              <Grid size={2}> <p style={{ color: 'black' }}>{item.price + " X " + item.quantity + " = " + item.quantity * item.price}</p></ Grid>
+                            </ Grid >
+                          </ Card >
+                        ))}
+
+                        < Grid container columns={4} spacing={4} >
+                          < Grid size={2} > {index.paymentMethod} </ Grid >
+                          < Grid size={2} > {index.totalAmount} </ Grid >
+                        </Grid >
+                      </Card >
+                    </Grid >
+                  </AccordionDetails>
+                </Accordion>
+              </ div >
+            </>
+            ))}
+
+            {UserPrdIds.filter(i => i.status === "Delivered").length === 0 && "No Products"}
+
           </ Grid>
         </ Grid>
       </>
@@ -337,12 +360,12 @@ function Userprofile() {
                     .filter((ele) => ele.uploadedBy === localStorage.getItem("userId"))
                     .map((index) => (
                       <Grid size={{ xs: 1, sm: 2, md: 2 }} key={index.name}>
-                        <div onClick={()=>{
-                          console.log("clicked",index);
-                          index.prdId=index.productId;
-                          navigate('/productDetail',{state:index})
+                        <div onClick={() => {
+                          console.log("clicked", index);
+                          index.prdId = index.productId;
+                          navigate('/productDetail', { state: index })
                         }}>
-                        <MyProducts  name={index.name} src={index.images[0]} stock={index.stock} />
+                          <MyProducts name={index.name} src={index.images[0]} stock={index.stock} />
                         </div>
                       </Grid>
                     ))
