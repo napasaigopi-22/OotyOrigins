@@ -97,9 +97,10 @@ function CartPage() {
             <div>
                 <Container  maxWidth='lg' sx={{ marginTop: '26px', padding: '1px 0',marginBottom:'26px'}} >
                     <Card  maxWidth="md" >
-                        <h2 className='center' fullWidth style={{width: '100%', height: '60px', textAlign: 'center', fontSize: '30px',fontFamily: 'sans-serif' }}> 
+                        <h2 className='center' fullWidth style={{width: '100%', height: '60px', textAlign: 'center', fontSize: '40px',fontFamily: 'sans-serif' }}> 
                             Shopping Cart</h2>
-                            <hr className='' />
+                            <hr className='solid'/>
+
                         {products.map((ele, i) => {
                             return (
                                 <Box key={i} sx={{ textAlign: 'center', margin: 'auto' }} className='center' fullWidth>
@@ -112,7 +113,7 @@ function CartPage() {
                                 </Box>)
                         })}
 
-                       <hr className='' />
+                       <hr className='solid' />
                         <Grid container className='center' fullWidth>
                             <Grid size="grow" >
                                 <Button variant="contained" sx={{ backgroundColor: 'red', fontWeight: 'bold', padding: '10px 20px', }} 
