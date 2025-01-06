@@ -210,13 +210,13 @@ if (!product) {
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
         <Box className= 'box' sx={{ display: 'flex',  background: "#fff !important", justifyContent: 'center', padding: '20px'}}> 
-            <Card className="card" sx={{color:'red'}}>
+            <Card className="card" sx={{color:'red', border: '1px solid orange', margin: '20px'}}>
             <div className= 'box'>
             <div className="title-name">
   <h1 style={{ color: "orange" }}>{product.name}</h1>
 </div>
 
-            <div className= "left">
+            <div className= "name">
             <CardMedia 
               component="img"
               height="500"
