@@ -226,7 +226,7 @@ function ProductDetail() {
       {((localStorage.getItem("Token") || user?user.IsUser:true) && 
       <div>
         <Box className= 'box' sx={{ display: 'flex',  background: "#fff !important", justifyContent: 'center', padding: '20px'}}> 
-            <Card className="card" sx={{color:'red'}}>
+            <Card className="card" sx={{color:'black',borderStyle:'solid',borderRadius:'20px'}}>
             <div className= 'box'>
             <div className="title-name">
   <h1 style={{ color: "orange" }}>{product.name}</h1>
@@ -265,8 +265,8 @@ function ProductDetail() {
           </Box>
 
 
-          <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto', overflow: 'scroll' }}>
-            <Typography variant="h5">Customer Reviews</Typography>
+          <Box className="comments" sx={{ padding: '20px', maxWidth: '800px', margin: 'auto', overflow: 'scroll' }}>
+            <Typography variant="h5" sx= {{color: "black",fontWeight: 'bold'}}>Customer Reviews</Typography>
             {reviews && reviews.length > 0 ? reviews.map((review, index) => (
               <Card key={index} sx={{ mb: 2 }}>
                 <CardContent>
@@ -276,8 +276,8 @@ function ProductDetail() {
                   <Typography variant="subtitle1">
                     <strong>Product:</strong> {product.name}
                   </Typography>
-                  <Typography variant="subtitle1">Rating: {review.rating} / 5</Typography>
-                  <Typography variant="body2">{review.comment}</Typography>
+                  <Typography variant="subtitle1"><strong>Rating: </strong>{review.rating} / 5</Typography>
+                  <Typography variant="body2"><strong>Comment: </strong>{review.comment}</Typography>
                 </CardContent>
               </Card>
             )) : (
