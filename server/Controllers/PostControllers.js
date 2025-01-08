@@ -8,7 +8,9 @@ const router = require("../routes/AuthRoutes");
 // Add a review for a product
 module.exports.addReview = async (req, res) => {
   try {
-    const { userId, productId, rating, feedback } = req.body;
+    var { userId, productId, rating, feedback, comment } = req.body;
+    console.log("\n\n\n\n comment is ",comment, "\n\n\n\n");
+    if(rating==0)rating=1;
 
     const existingReview = await models.Review.findOne({ userId, productId });
     if (existingReview) {
@@ -20,7 +22,7 @@ module.exports.addReview = async (req, res) => {
       userId,
       productId,
       rating,
-      feedback,
+      comment,
       reviewId: `R${reviewsCount}`
     });
 
@@ -47,6 +49,7 @@ module.exports.ReviewRetriew = ('/get/reviews', async (req, res) => {
 module.exports.getReviews = async (req, res) => {
   try {
     const { productId } = req.params;
+    console.log("productId is ", productId);
 
     const reviews = await models.Review.find({ productId }).populate('userId', 'name');
 
