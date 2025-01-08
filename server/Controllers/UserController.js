@@ -9,7 +9,6 @@ const bcrypt = require("bcryptjs");
 module.exports.UsersController = async (req, res, next) => {
     try {
         const listOfUsers = await models.User.find({username:req.body.username});
-        console.log('username and list of users',req.body.username,listOfUsers)
         return res.json(listOfUsers);
     } catch (error) {
         console.log(error);

@@ -65,9 +65,7 @@ function ProductDetail() {
 
 
 
-  useEffect(() => {
-    axios.get('http://localhost:4000/get/AllUsers').then(res => setusers(res.data));
-    axios.post('http://localhost:4000/get/GetproductById', { "id": value.prdId }).
+  useEffect(() => {    axios.post('http://localhost:4000/get/GetproductById', { "id": value.prdId }).
       then(res => {
         setProduct(res.data[0]);
         getReviews();
@@ -90,6 +88,8 @@ function ProductDetail() {
 
   useEffect(() => {
     // Check if the user has already reviewed this product
+    axios.get('http://localhost:4000/get/AllUsers').then(res => {setusers(res.data);console.log(res.data)});
+
     axios.post('http://localhost:4000/get/userReviewForProduct', { productId: value.prdId, userId })
       .then(res => {
         if (res.data.alreadyReviewed) {
@@ -105,7 +105,7 @@ function ProductDetail() {
 
   useEffect(() => {
     axios.post('http://localhost:4000/get/productReviews', { productId: value.prdId })
-      .then(res => setReviews(res.data.reviews))
+      .then(res => {setReviews(res.data.reviews);})
       .catch(error => console.log(error));
   }, [value.prdId]);
 
@@ -267,12 +267,16 @@ function ProductDetail() {
 
           <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto', overflow: 'scroll' }}>
             <Typography variant="h5">Customer Reviews</Typography>
+            <div style={{overflow:'wrap'}}>
+            </div>
+
             {reviews && reviews.length > 0 ? reviews.map((review, index) => (
               <Card key={index} sx={{ mb: 2 }}>
                 <CardContent>
                   <Typography variant="subtitle1">
-                    <strong>Reviewer:</strong> {users.find(ele => ele.userId = review.userId).username || "Anonymous"}
+                    <strong>Reviewer:</strong> {(users.find(ele => ele.userId == review.userId)&&users.find(ele => ele.userId == review.userId).username) || "Anonymous"}
                   </Typography>
+                  {JSON.stringify(review.userId)}
                   <Typography variant="subtitle1">
                     <strong>Product:</strong> {product.name}
                   </Typography>
