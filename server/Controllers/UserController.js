@@ -17,6 +17,16 @@ module.exports.UsersController = async (req, res, next) => {
     }
 };
 
+module.exports.AllUsers = async (req, res, next) => {
+  try {
+      const listOfUsers = await models.User.find({});
+      return res.json(listOfUsers);
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Error fetching users" });
+  }
+};
+
 exports.deleteUserProfile =  async (req, res) => {
     const { _id } = req.body;
     try {

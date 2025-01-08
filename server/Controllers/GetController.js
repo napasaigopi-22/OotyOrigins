@@ -156,6 +156,7 @@ module.exports.OrderController = async (req, res, next) => {
 // Review Controller
 module.exports.ReviewController = async (req, res, next) => {
     try {
+      console.log(req.body.productID);
         const listOfReviews = await models.Review.find({});
         return res.json(listOfReviews);
     } catch (error) {
