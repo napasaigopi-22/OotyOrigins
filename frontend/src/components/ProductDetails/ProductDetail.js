@@ -7,7 +7,7 @@ import NavBar from "../../Assets/NavBar/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";
-import bg from '../../Assets/images/bg.png'
+
 
 
 function ProductDetail() {
@@ -220,46 +220,46 @@ function ProductDetail() {
   }
 
 
-  return (
-    <>
-      <NavBar />
-      {((localStorage.getItem("Token") || user ? user.IsUser : true) &&
-        <div>
-          <Box className='box' sx={{ display: 'flex', background: "#fff !important", justifyContent: 'center', padding: '20px' }}>
-            <Card className="card" sx={{ color: 'red' }}>
-              <div className='box'>
-                <div className="title-name">
-                  <h1 style={{ color: "orange" }}>{product.name}</h1>
-                </div>
+    return (
+      <>
+      <NavBar/>
+      {((localStorage.getItem("Token") || user?user.IsUser:true) && 
+      <div>
+        <Box className= 'box' sx={{ display: 'flex',  background: "#fff !important", justifyContent: 'center', padding: '20px'}}> 
+            <Card className="card" sx={{color:'red'}}>
+            <div className= 'box'>
+            <div className="title-name">
+  <h1 style={{ color: "orange" }}>{product.name}</h1>
+</div>
 
-                <div className="left">
-                  <CardMedia
-                    component="img"
-                    height="500"
-                    src={`http://localhost:4000/images/${value.imageUrl[0]}`}
-                    alt={product.name}
-                    className="product-image"
-                  />
-                </div>
-
-                <div className="right">
-                  <CardContent className="product-info">
-                    <Typography variant="h4" className="product-name">{product.name}</Typography>
-                    <Typography variant="body1" className="product-description">{product.description}</Typography>
-                    <Typography variant="h5" className="product-price" style={{ marginTop: "30px" }}>
-                      Price: Rs {product.price}/-
-                    </Typography>
-                    <Typography variant="h5" className="product-rating">
-                      Rating: {product.rating}
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 2, mt: 2, flexDirection: 'column', alignItems: 'center' }}>
-                      <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
-                      {userRole !== 'admin' && (
-                        <Button onClick={() => setOpenDialog(true)} variant="contained" color="success" size="large">Review</Button>
-                      )}
-                    </Box>
-                  </CardContent>
-                </div>
+            <div className= "left">
+            <CardMedia 
+              component="img"
+              height="500"
+              src={`http://localhost:4000/images/${value.imageUrl[0]}`}
+              alt={product.name}
+              className="product-image"
+            />
+            </div>
+            
+            <div className="right">
+            <CardContent className="product-info">
+              <Typography variant="h4" className="product-name">{product.name}</Typography>
+              <Typography variant="body1" className="product-description">{product.description}</Typography>
+              <Typography variant="h5"className="product-price" style={{ marginTop: "30px" }}>
+                Price: Rs {product.price}/- 
+                </Typography>
+              <Typography variant="h5" className="product-rating">
+                Rating: {product.rating}
+              </Typography>
+              <Box sx= {{display: 'flex', gap: 2, mt:2, flexDirection: 'column', alignItems: 'center'}}>
+              <Button onClick={addToCart} startIcon={<AddShoppingCartIcon />} variant="contained" color="success" size="large">Add To Cart</Button>
+              {userRole !== 'admin' && (
+              <Button onClick={() => setOpenDialog(true)}  variant="contained" color="success" size="large">Review</Button>
+              )}
+              </Box>
+              </CardContent>
+              </div>
               </div>
             </Card>
           </Box>

@@ -12,6 +12,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './UserProfile.css'
+import { red } from "@mui/material/colors";
 
 function Userprofile() {
   const [username, setusername] = React.useState("");
@@ -97,18 +98,18 @@ function Userprofile() {
     <Container maxWidth="xl">
       {userload.IsUser && <>
         <div style={{ height: '100px' }} ></div>
-        <div style={{ backgroundColor: 'lightgreen', padding: '20px', borderRadius: '10px' }}>
+        <div className= "boxx" style={{ padding: '20px', borderRadius: '10px' }}>
           < Grid container maxWidth="xl" spacing={2} size="grow">
             <Grid size="grow">
-              <Typography variant="h1" gutterBottom>Hi, {username}</Typography>
+              <Typography variant="h1" gutterBottom style={{color:"brown"}}>Hi, {username}</Typography>
               <Box sx={{ mt: 1 }}>
-                <Typography variant="body1"><b>Phone</b>: {user ? user.phone : " "}</Typography>
+                <Typography variant="body1" style={{color:"black",fontWeight:"bold",fontSize:'22px'}}><b>Phone</b>: {user ? user.phone : " "}</Typography>
               </Box>
             </Grid>
             <Grid size="grow">
-              <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>Address</Typography>
+              <Typography variant="h6" style={{color:"black",fontWeight:"bold",fontSize:'22px'}} gutterBottom sx={{ mt: 3}}>Address</Typography>
 
-              < Grid container spacing={10}>
+              < Grid container spacing={6}>
                 {['Street', 'City', 'State', 'Zipcode'].map((label, index) => (
                   < Grid item xs={1} sm={12} key={index}>
                     < Paper className="address-field">

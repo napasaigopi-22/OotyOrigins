@@ -88,7 +88,6 @@ h1 {
 .card {
   display: flex;
   align-items: center;
-  background: url('../../Assets/images/bg.png');
   height: 800px;
   width: 700px;
   margin: 3% auto;
