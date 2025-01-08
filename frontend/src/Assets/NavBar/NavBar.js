@@ -67,7 +67,7 @@ const style = {
 };
 
 const pages = ['Products', 'Category'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
@@ -149,9 +149,14 @@ function NavBar() {
 
     const handleSettingClick = (val) => {
         console.log(clickedvals[val]);
-        clickedvals[val]();
+        var clicked = clickedvals[val];
+        console.log(clicked)
         if (val === "Account")
-            console.log("clicked -", val);
+            navigate('/' + val);
+        if (val === "Products")
+            navigate('/' + val);
+        if (val === "Category")
+            navigate('/' + val);
     };
 
     const renderMenuItems = (menuItems, handleClose) => (
@@ -420,7 +425,6 @@ function NavBar() {
                         </Menu>
                     </Box>
 
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             page !== 'Category' ? (
