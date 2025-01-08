@@ -265,7 +265,7 @@ function ProductDetail() {
           </Box>
 
 
-          <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
+          <Box sx={{ padding: '20px', maxWidth: '800px', margin: 'auto', overflow: 'scroll' }}>
             <Typography variant="h5">Customer Reviews</Typography>
             {reviews && reviews.length > 0 ? reviews.map((review, index) => (
               <Card key={index} sx={{ mb: 2 }}>
