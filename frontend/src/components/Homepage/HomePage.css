@@ -43,6 +43,10 @@ body {
    
 }
 
+.steps {
+  color: #f0e9e9;
+}
+
 hr.solid {
   border-top: 1px solid #860c0c;
 }
@@ -66,7 +70,7 @@ hr.solid {
     background-image: url(../../Assets/images/mainpage.png);
     filter: blur(2px);
     -webkit-filter: blur(1.5px);
-    height: 100%; 
+    height: 600px; 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -98,10 +102,10 @@ hr.solid {
 }
 
 .slider-container {
-  max-width: 750px;
+  width: 850px;
   position: relative;
   margin: auto;
-  max-height: 400px
+  max-height: 700px
 }
 
 .SplideSlide{

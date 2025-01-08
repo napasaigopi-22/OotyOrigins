@@ -28,7 +28,7 @@ import { useSelector } from "react-redux";
 import store from '../../Store';
 import './HomePage.css';
 import zIndex from "@mui/material/styles/zIndex";
-
+import choose from '../../Assets/images/choose.png'
 
 
 
@@ -100,7 +100,7 @@ function HomePage() {
 
                 </div>
             </div>
-            <Container sx={{ padding: '10px 0' }}>
+            <Container sx={{ padding: '170px 0' }}>
             <h2 className= "shop" style={{ textAlign: 'left' }}>Shop by Category</h2>
            <hr className="solid" />
            </Container>
@@ -109,8 +109,8 @@ function HomePage() {
                     {
                         categories.map((val, key) => {
                             return <>
-                                <li style={{ display: 'inline-block', padding: '35px', height: '50px' }}>
-                                    <img className="explore-categories" src={imageobjs[val.name]} width={"130px"} height={"130px"} />
+                                <li style={{ display: 'inline-block', padding: '35px' }}>
+                                    <img className="explore-categories" src={imageobjs[val.name]} width={"150px"} height={"150px"} />
                                     <a onClick={() => { redirectWithState({ state: { name: val.name } }) }} className="categoriesList" >{val.name}</a>
                                 </li>
                             </>
@@ -171,12 +171,12 @@ function HomePage() {
 </Box>
 
 
-            <Container sx={{ padding: '20px 0' }}>
+        <Container sx={{ padding: '20px 0' }}>
         <Box
           sx={{
             background: 'rgb(255, 255, 255)',
             padding: '30px',
-            marginTop: '100px',
+            marginTop: '50px',
             borderRadius: '10px',
             boxShadow: '0 4px 8px rgb(235, 224, 224)',
           }}
@@ -185,9 +185,28 @@ function HomePage() {
             <b>About Ooty Origins</b>
           </Typography>
           <Typography variant="h6" align="center">
-          <span class="bold-black">OotyOrigins.com</span> is an ecommerce platform that empowers the tribal communities  of Ooty, India, by connecting them directly with customers and tourists. We pride ourselves on delivering factory-fresh products from Ooty.Enjoy the unique and authentic taste and experience every product.</Typography>
+          <span class="bold-black">OotyOrigins.com</span> is an ecommerce platform that empowers the tribal communities  of Ooty, India, by connecting them directly with customers and tourists. We pride ourselves on delivering factory-fresh products from Ooty.Enjoy the unique and authentic taste and experience every product.
+          </Typography>
         </Box>
-      </Container>
+       </Container>
+
+       
+       <Container sx={{ padding: '5px 0' }}>
+        <Box
+          sx={{
+            background: 'rgb(61, 8, 8)',
+            padding: '30px',
+            marginTop: '100px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgb(71, 15, 15)',
+            width:'100%',
+            height:'450px',
+          }}
+        >
+       <p className="steps"><h2>Steps-To-Order</h2></p>     
+       <img src={choose} style={{padding: '14px',width:"80%"}}/>
+       </Box>
+       </Container>
 
                 <div style={{ height: "80px" }} ></div>
                 {

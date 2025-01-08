@@ -7,7 +7,7 @@ import NavBar from "../../Assets/NavBar/NavBar";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../ProductDetails/ProductDetail.css';
 import EditProductForm from "./ProductEdit";
-import bg from '../../Assets/images/bg.png'
+
 
 
 function ProductDetail() {
