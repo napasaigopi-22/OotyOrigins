@@ -112,9 +112,12 @@ export default function Product(props) {
     const handleProdClick = () => {
         navigate('/ProductDetail', { state: props });
     }
+    
     return (
-        <Box sx={{ width: 250, height: 400, margin: '4px' }} >
 
+     
+
+        <Box sx={{ width: 250, height: 440, margin: '4px' }} >
             <Card className='cardproductui' sx={{ height: '85%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
 
                 <CardContent p={0} onClick={handleProdClick} sx={{ flexGrow: 1, cursor: 'pointer' }}>
@@ -126,7 +129,8 @@ export default function Product(props) {
                         alt="Product Image"
                         style={{ height: '175px', width: '100%', objectFit: 'cover', borderRadius: '2px' }}
                     />
-                    <p style={{ fontWeight: '1000', fontSize: '15px' }} >{props.name}</p>
+                
+                    <p style={{ fontWeight: '1000', fontSize: '15px',padding:'15px' }} >{props.name}</p>
                     <Grid p={0} container spacing={2}>
                         <Grid size={8}  >
                             <div style={{ textAlign: 'left' }} >
@@ -141,6 +145,7 @@ export default function Product(props) {
                             </div>
                         </Grid>
                     </Grid>
+                   
 
                 </CardContent>
                 {((user && user.IsUser) && localStorage.getItem('Token') || !localStorage.getItem('Token')) &&

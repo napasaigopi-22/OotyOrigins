@@ -111,3 +111,8 @@
 button {
     margin: auto;
 }
+
+.productcolor {
+    background: linear-gradient(165deg,#FFEBD4, #F7B5CA,#FFEBD4);
+
+}

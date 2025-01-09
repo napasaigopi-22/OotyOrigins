@@ -29,9 +29,11 @@ function Category() {
     return (
         <>
             <NavBar></NavBar>
+            <Box sx={{background: 'linear-gradient(165deg,#dad3cb,#ffe2c0)'}}>
             <div>
+
                 <h1>Category Page</h1>
-               <h5 style={{ fontSize: '20px', padding: '10px' }}>{value.name}</h5>
+               <h3 style={{ fontSize: '20px', padding: '10px',fontWeight:'bold' }}>{value.name}</h3>
 
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid2
@@ -60,6 +62,7 @@ function Category() {
                     </Grid2>
                 </Box>
             </div>
+            </Box>
         </>
     )
 }

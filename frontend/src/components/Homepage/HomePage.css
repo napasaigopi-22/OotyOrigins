@@ -265,5 +265,8 @@ p {
     font-size: 2rem;
 }
 
+.homecolor {
+  background: linear-gradient(165deg,#dad3cb,#ffe2c0);
 
+}
 

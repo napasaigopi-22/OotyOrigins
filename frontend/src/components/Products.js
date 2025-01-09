@@ -34,6 +34,7 @@ function Products() {
     return (
         <>
             <NavBar></NavBar>
+            <Box className= 'productcolor'>
             <div className="product-page-container">
                 {/* Filter Section */}
                 <Box className="filter-section cardproductui ">
@@ -116,6 +117,7 @@ function Products() {
                     </Grid2>
                 </Box>
             </div>
+            </Box>
         </>
     );
 }

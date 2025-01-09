@@ -255,7 +255,7 @@ export default function CartModal(props) {
                             </Typography>
                             <Tooltip title="Add Item">
                               <Button sx={{
-                                  background: 'linear-gradient(45deg,rgb(0, 255, 98),rgb(152, 255, 57))',
+                                  background: 'linear-gradient(45deg,rgb(218, 222, 219),rgb(15, 13, 13))',
                                   borderRadius: '15px',
                                   color: 'black',
                                   fontSize: '16px',
@@ -303,7 +303,7 @@ export default function CartModal(props) {
                             </Tooltip>
                             <Tooltip title="Remove Item">
                               <Button sx={{
-                                  background: 'linear-gradient(45deg,rgb(71, 53, 63),rgb(47, 25, 66))',
+                                  background: 'linear-gradient(45deg,rgb(218, 222, 219),rgb(15, 13, 13))',
                                   borderRadius: '15px',
                                   color: '#fff',
                                   fontSize: '16px',

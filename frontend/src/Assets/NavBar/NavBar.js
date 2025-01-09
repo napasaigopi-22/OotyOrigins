@@ -67,7 +67,7 @@ const style = {
 };
 
 const pages = ['Products', 'Category'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
@@ -91,7 +91,7 @@ function NavBar() {
         navigate('/home');
         window.location.reload();
     };
-    const navAcc = () => { navigate('/accounts') }
+    const navAcc = () => { navigate('/Developers') }
     const navProf = () => { navigate('/UserProfile') }
 
     const clickedvals = {

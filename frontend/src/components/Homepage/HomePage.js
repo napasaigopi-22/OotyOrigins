@@ -87,6 +87,7 @@ function HomePage() {
             <div>
                 <NavBar></NavBar>
             </div>
+            <Box className='homecolor'>
             <div className="HeroSection">
 
                 <div className="header">
@@ -121,7 +122,7 @@ function HomePage() {
 
         <Box
             sx={{
-            background: 'rgb(0, 0, 0)',
+            background: 'rgb(41, 39, 39)',
             padding: '30px',
             marginTop: '50px',
             borderRadius: '10px',
@@ -194,11 +195,11 @@ function HomePage() {
        <Container sx={{ padding: '5px 0' }}>
         <Box
           sx={{
-            background: 'rgb(61, 8, 8)',
+            background: 'rgb(75, 57, 57)',
             padding: '30px',
             marginTop: '100px',
             borderRadius: '10px',
-            boxShadow: '0 4px 8px rgb(71, 15, 15)',
+            boxShadow: '0 4px 8px rgb(65, 49, 49)',
             width:'100%',
             height:'450px',
           }}
@@ -315,6 +316,7 @@ function HomePage() {
                 }
 
             </div>
+            </Box>
 
         </>
     )
