@@ -67,7 +67,7 @@ const style = {
 };
 
 const pages = ['Products', 'Category'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState({ nav: null, user: null, drop: null });
@@ -149,14 +149,20 @@ function NavBar() {
 
     const handleSettingClick = (val) => {
         console.log(clickedvals[val]);
-        clickedvals[val]();
+        var clicked = clickedvals[val];
         if (val === "Account")
-            console.log("clicked -", val);
+            navigate('/' + val);
+        else if (val === "Products")
+            navigate('/' + val);
+        else if (val === "Category")
+            navigate('/' + val);
+        else clickedvals[val]();
+        
     };
 
     const renderMenuItems = (menuItems, handleClose) => (
         menuItems.map((item) => (
-            <div onClick={() => { handleClose(); handleSettingClick(item) }}>
+            <div onClick={() => { handleClose(); if(item=="logout")logout(); handleSettingClick(item) }}>
                 <MenuItem key={item} >
                     <Typography sx={{ textAlign: 'center' }}>{item}</Typography>
                 </MenuItem>
@@ -420,7 +426,6 @@ function NavBar() {
                         </Menu>
                     </Box>
 
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             page !== 'Category' ? (
