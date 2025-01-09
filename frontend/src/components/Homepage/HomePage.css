@@ -1,46 +1,45 @@
-
 .bold-black {
   color: black;
   font-weight: bold;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
 .HeroSection {
-    color: rgb(96, 92, 92);
-    text-align: center;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  color: rgb(96, 92, 92);
+  text-align: center;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
 .HeroSection h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    color: #f6f2f2;
-    font-weight: bold;
-    padding: 2px;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: #f6f2f2;
+  font-weight: bold;
+  padding: 2px;
 }
 
 .HeroSection p {
-    font-size: 1.2rem;
-    color: #0b0a0a;
-    font-weight: 300;
+  font-size: 1.2rem;
+  color: #0b0a0a;
+  font-weight: 300;
 }
 
-    li {
-    display: flex; 
-    flex-direction: row; 
-    align-items: center; 
-    padding: 20px;
-   
+li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+
 }
 
 .steps {
@@ -51,54 +50,56 @@ hr.solid {
   border-top: 1px solid #860c0c;
 }
 
-.shop{
+.shop {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(82, 11, 11);
 }
 
-.header{
-    background-position: center;
-    background-size: cover;
-    height: 80vh;
-    margin-bottom: 30px ;
-    border: none;
-    position: relative;
-    opacity: 1.5;  
-  }
+.header {
+  background-position: center;
+  background-size: cover;
+  height: 80vh;
+  margin-bottom: 30px;
+  border: none;
+  position: relative;
+  opacity: 1.5;
+}
 
-  .bg-image {
-    background-image: url(../../Assets/images/mainpage.png);
-    filter: blur(2px);
-    -webkit-filter: blur(1.5px);
-    height: 95%; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: 2;
-  }
+.bg-image {
+  background-image: url(../../Assets/images/mainpage.png);
+  filter: blur(2px);
+  -webkit-filter: blur(1.5px);
+  height: 95%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 2;
+}
 
-  .bg-text {
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    color: white;
-    font-weight: bold;
-    border: 3px solid #f1f1f1;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    width: 80%;
-    padding: 20px;
-    text-align: center;
-  }
+.bg-text {
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
 
-  .text {
-    background-image: url(../../Assets/images/backgroundooty.png);
-    background-clip:text;
-    -webkit-background-clip:text;
-    color:transparent;
-    font-size:150px;
+.text {
+  background-image: url(../../Assets/images/backgroundooty.png);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 150px;
 }
 
 .slider-container {
@@ -108,19 +109,20 @@ hr.solid {
   max-height: 700px
 }
 
-.SplideSlide{
+.SplideSlide {
   display: none;
-  width: 300px; 
+  width: 300px;
   height: 200px;
 }
 
 .img {
-    width:  100px;
-    height: 100px;
-    background-size: cover;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
 }
 
-.prev, .next {
+.prev,
+.next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -142,11 +144,13 @@ hr.solid {
 }
 
 /* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.active, .dot:hover {
+.active,
+.dot:hover {
   background-color: #717171;
 }
 
@@ -157,13 +161,36 @@ hr.solid {
 }
 
 
-  .header-container{
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.85); /* Black w/opacity/see-through */
+.header-container {
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.85);
+  /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+
+}
+
+@media only screen and (max-width: 1024px) {
+  .header-container {
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Black w/opacity/see-through */
     color: white;
     font-weight: bold;
     border: 3px solid #f1f1f1;
     position: absolute;
+    height: 50% !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -171,123 +198,109 @@ hr.solid {
     width: 80%;
     padding: 20px;
     text-align: center;
-    
-  }
-  @media only screen and (max-width: 1024px) {
-    .header-container{
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.85); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border: 3px solid #f1f1f1;
-      position: absolute;
-      height: 50% !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      width: 80%;
-      padding: 20px;
-      text-align: center;
-    }
-    .header-container .text{
-      font-size:100px;
-    }
-    .header-container h3{
-      font-size:15px;
-    }
-  }
-  @media only screen and (max-width: 425px){
-    .header-container{
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.85); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border: 3px solid #f1f1f1;
-      position: absolute;
-      height: 50% !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      width: 80%;
-      padding: 20px;
-      text-align: center;
-    }
-    .header-container .text{
-      font-size:45px;
-    }
-    .header-container h3{
-      font-size:10px;
-    }
   }
 
-  
+  .header-container .text {
+    font-size: 100px;
+  }
+
+  .header-container h3 {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .header-container {
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    position: absolute;
+    height: 50% !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 80%;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .header-container .text {
+    font-size: 45px;
+  }
+
+  .header-container h3 {
+    font-size: 10px;
+  }
+}
+
+
 .explore-categories {
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 
 .categoriesList {
-    display: block;
-    font-size: 1.1rem;
-    color: #e3dddd;
-    font-weight: bold;
-    margin-top: 10px;
-    text-decoration: none;
-    transition: color 0.1s;
+  display: block;
+  font-size: 1.1rem;
+  color: #e3dddd;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: color 0.1s;
 }
 
 
 .MuiGrid2-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
 }
 
 .MuiCard-root {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .MuiCard-root {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .MuiCardContent-root {
-    padding: 20px;
+  padding: 20px;
 }
 
 .MuiTypography-h4 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .MuiCardMedia-root {
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
 }
 
 p {
-    font-size: 0.9rem;
-    /* color: #f5f1f1; */
+  font-size: 0.9rem;
+  /* color: #f5f1f1; */
 }
 
 .container {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 
 .section-title {
-    margin-bottom: 40px;
-    color: #f0e9e9;
-    font-weight: bolder;
-    font-size: 2rem;
+  margin-bottom: 40px;
+  color: #f0e9e9;
+  font-weight: bolder;
+  font-size: 2rem;
 }
-
-
-
